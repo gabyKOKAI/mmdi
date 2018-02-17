@@ -20,6 +20,31 @@
         alt='MMDI Logo' class="center">
     </header>
 
+	
+	<div class="navbar navbar-default" role="navigation" id="navigation">
+	        <div class="navbar-header">
+    		     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        			<span class="sr-only">Toggle navigation</span>
+            		<span class="icon-bar"></span>
+            		<span class="icon-bar"></span>
+            		<span class="icon-bar"></span>
+          		</button>
+          	</div>
+        	<div class="collapse navbar-collapse">
+        		<ul class="nav navbar-nav">
+					<li id="menu"><a href="/proyectos">Proyectos</a></li>
+					<li id="menu"><a href='/elementos'>BD Precios Unitarios</a></li>
+                    <li id="menu"><a href='/clientes'>Clientes</a></li>
+					<li id="menu"><a href="/pagosClientes">Pagos Clientes</a></li>
+					<li id="menu"><a href='/cotizaciones'>Cotizaciones</a></li>
+                    <li id="menu"><a href='/proveedores'>Proveedores</a></li>
+					<li id="menu"><a href="/pagosProveedores">Pagos Proveedores</a></li>
+					<li id="menu"><a href="/recursos">Recursos</a></li>
+				</ul>
+			</div>
+			<hr/> <!--	White line -->
+     </div>
+	
 	@if(count($errors) > 0)
     <ul>
         @foreach ($errors->all() as $error)
