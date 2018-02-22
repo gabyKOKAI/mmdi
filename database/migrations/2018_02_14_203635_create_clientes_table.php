@@ -19,7 +19,7 @@ class CreateClientesTable extends Migration
 
             $table->string('nombre')->default("")->nullable(false);
             $table->string('descripcion')->nullable(true);
-            $table->string('razonSocial')->nullable(true);
+            $table->string('razon_social')->nullable(true);
             $table->string('rfc')->nullable(true);
             $table->string('correo_factura')->nullable(true);
             $table->string('comentarios')->nullable(true);

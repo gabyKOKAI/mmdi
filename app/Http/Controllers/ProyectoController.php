@@ -4,6 +4,9 @@ namespace mmdi\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App;
+use mmdi\Proyecto;
+use mmdi\Cliente;
+use mmdi\Concepto;
 
 class ProyectoController extends Controller
 {
@@ -12,16 +15,34 @@ class ProyectoController extends Controller
     */
     public function lista()
     { 
-		##return App::environment(); 
-        ##return 'Here are all the proyectos...';
-		##return view('proyecto.lista')->with(['title' => $title]);
-		return view('proyecto.lista');
+		##return App::environment();
+
+		$proyectos = Proyecto::with('cliente','conceptos')->get();
+		$proyectos = Proyecto::paginate(10 );
+
+        if ($proyectos->isEmpty()) {
+            dump('No matches found');
+        } else {
+            foreach ($proyectos as $proyecto) {
+                ##dump($proyecto->nombre.$proyecto->cliente->nombre);
+                $proyecto->costo = Proyecto::getCosto($proyecto);
+                $proyecto->saldo = Proyecto::getSaldo($proyecto);
+                #foreach ($proyecto->conceptos as $concepto) {
+                    #dump($concepto->elementos->sum('pivot.precio'));
+                    #foreach ($concepto->elementos as $elemento) {
+                    #    dump($elemento->pivot);
+                    #}
+                #}
+            }
+        }
+
+		return view('proyecto.proyectoLista')->with(['proyectos' => $proyectos]);
     }
 
      /**
     * GET /proyectos
     */
-    public function search(Request $request) {
+    public function busca(Request $request) {
 
     # ======== Temporary code to explore $request ==========
 
@@ -87,7 +108,7 @@ class ProyectoController extends Controller
     }
 	
     # Return the view with some placeholder data we'll flesh out in a later step
-    return view('proyecto.search')->with([
+    return view('proyecto.proyectoBusca')->with([
         'searchTerm' => $searchTerm,
         'caseSensitive' => $request->has('caseSensitive'),
         'searchResults' => $searchResults
@@ -97,10 +118,52 @@ class ProyectoController extends Controller
 	/**
 	* GET
 	* /proyecto/agrega
-	* Display the form to add a new book
+	* Display the form to add a new proyecto
 	*/
-	public function agrega(Request $request) {
-		return view('proyecto.agrega');
+	public function proyecto(Request $request,$id= '-1') {
+	    $proyecto = Proyecto::find($id);
+
+	    # Get clientes
+        $clientesForDropdown = Cliente::all();
+        # Get estatus
+        $estatusForDropdown = Proyecto::getEstatusDropDown();
+        # Get conceptos
+        $conceptos = [];
+
+
+        $clienteSelected = "";
+        $estatusSelected = "";
+        if($proyecto){
+            #$conceptos = $proyecto->conceptos();
+            $clienteSelected = $proyecto->cliente_id;
+            $estatusSelected = $proyecto->estatus;
+
+            $proyecto->inicial = $proyecto->getCostoIA($proyecto->id,0);
+            $proyecto->adicional = $proyecto->getCostoIA($proyecto->id,1);
+            $proyecto->honorarios = $proyecto->getHonorarios($proyecto->id,$proyecto->gasto_porc_honorarios);
+            $proyecto->costo = $proyecto->getCosto($proyecto);
+            $proyecto->efectivo = $proyecto->getEfectivo($proyecto->id);
+            $proyecto->transferencias = $proyecto->getTransferencias($proyecto->id);
+            $proyecto->cheques = $proyecto->getCheques($proyecto->id);
+            $proyecto->saldo = $proyecto->getSaldo($proyecto);
+            $proyecto->indirectos = $proyecto->getIndirectos($proyecto->id);
+            $proyecto->utilidades = $proyecto->indirectos + $proyecto->honorarios;
+            $proyecto->mmdi = $proyecto->utilidades * $proyecto->gasto_porc_ganancias_MMDI / 100;
+            $proyecto->errores = $proyecto->utilidades * $proyecto->gasto_porc_errores / 100;
+            $proyecto->ddg = $proyecto->utilidades - $proyecto->mmdi -$proyecto->gasto_viaticos -$proyecto->gasto_IMSS -$proyecto->errores;
+            $proyecto->meg = $proyecto->ddg * $proyecto->ganancia_MEG / 100;
+            $proyecto->amm = $proyecto->ddg * $proyecto->ganancia_AMM / 100;
+            $proyecto->mme = $proyecto->ddg * $proyecto->ganancia_MME / 100;
+            $proyecto->ame = $proyecto->ddg * $proyecto->ganancia_AME / 100;
+            $conceptos = Proyecto::getConceptos($proyecto->id);
+        }
+        else{
+            $proyecto = new Proyecto;
+            $proyecto->id = -1;
+        }
+
+        return view('proyecto.proyecto')->
+        with(['proyecto' => $proyecto,'conceptos' => $conceptos, 'clientesForDropdown' => $clientesForDropdown,'clienteSelected'=>$clienteSelected,'estatusForDropdown' => $estatusForDropdown,'estatusSelected'=>$estatusSelected]);
 	}
 
 
@@ -109,22 +172,53 @@ class ProyectoController extends Controller
 	* /proyecto
 	* Process the form for adding a new book
 	*/
-	public function guarda(Request $request) {
+	public function guardar(Request $request,$id) {
 		# Validate the request data
 		$this->validate($request, [
 			'nombre' => 'required|min:3',
 		]);
-		
-		$nombre = $request->input('nombre');
 
-		#
-		#
-		# [...Code will eventually go here to actually save this book to a database...]
-		#
-		#
+        # First get a proyecto to update
+        #$proyecto = Proyecto::where('nombre', 'LIKE', $nombre)->first();
+        $proyecto = Proyecto::find($id);
+
+
+        if (!$proyecto) {
+            # Instantiate a new Proyecto Model object
+            $proyecto = new Proyecto();
+            $res = "Creado";
+         } else {
+            $res = "Actualizado";
+        }
+
+        # Set the parameters
+        $proyecto->nombre = $request->input('nombre');
+        $proyecto->descripcion = $request->input('descripcion');
+        $proyecto->direccion = $request->input('direccion');
+        $proyecto->comentario =  $request->input('comentario');
+        $proyecto->gasto_viaticos =  $request->input('gasto_viaticos');
+        $proyecto->gasto_IMSS =  $request->input('gasto_IMSS');
+
+        $proyecto->gasto_porc_honorarios =  $request->input('gasto_porc_honorarios');
+        $proyecto->gasto_porc_ganancias_MMDI =  $request->input('gasto_porc_ganancias_MMDI');
+        $proyecto->gasto_porc_errores =  $request->input('gasto_porc_errores');
+        $proyecto->ganancia_MEG =  $request->input('ganancia_MEG');
+        $proyecto->ganancia_AMM =  $request->input('ganancia_AMM');
+        $proyecto->ganancia_MME =  $request->input('ganancia_MME');
+        $proyecto->ganancia_AME =  $request->input('ganancia_AME');
+
+        $proyecto->estatus = $request->input('estatus');
+
+        $cliente = Cliente::find($request->input('cliente_id'));
+        $proyecto->cliente()->associate($cliente); # <--- Associate cliente with this proyecto
+
+
+        # Invoke the Eloquent `save` method to generate a new row in the
+        # `proyecto` table, with the above data
+        $proyecto->save();
 
 		# Redirect the user to the page to view the book
-		##return redirect('/proyecto/'.$title);
-		return redirect('/proyectos');
-	}	
+		return redirect('/proyecto/'.$proyecto->id)->with('success', 'El proyecto '.$proyecto->nombre.' fue '.$res);
+	}
+
 }

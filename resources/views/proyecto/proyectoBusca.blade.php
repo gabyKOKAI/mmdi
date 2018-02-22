@@ -7,7 +7,7 @@
 @section('content')
     <h1>Search</h1>
 
-    <form method='GET' action='/buscaProyectos'>
+    <form method='GET' action='/proyecto/busca'>
 
         <label for='searchTerm'>Busca por titulo:</label>
 		<input type='text' name='searchTerm' id='searchTerm' value='{{ $searchTerm or '' }}'>
