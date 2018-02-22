@@ -21,8 +21,7 @@ class CreateElementosTable extends Migration
 			$table->string('comentario')->nullable(true);
 			$table->float('costo')->nullable(false);
 			$table->float('ganancia')->nullable(false);
-			
-			$table->string('estatus')->default("Cotizado")->nullable(false);
+
 			$table->string('unidades')->default("")->nullable(false);
 			$table->string('tipo')->default("")->nullable(false);
 			$table->string('tipo_ganancia')->default("")->nullable(false);

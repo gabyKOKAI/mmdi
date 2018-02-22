@@ -66,7 +66,20 @@ Route::get('/pruebaBD', function () {
     dump($debug);
 });
 
-Route::get('/proyecto/busca', 'ProyectoController@search');
-Route::get('/proyecto/agrega', 'ProyectoController@agrega');
+
 Route::get('/proyectos', 'ProyectoController@lista');
-Route::post('/proyecto/guarda', 'ProyectoController@guarda');
+Route::get('/proyecto/busca', 'ProyectoController@busca');
+Route::get('/proyecto/{id?}', 'ProyectoController@proyecto');
+Route::get('/proyecto/guardar/{id?}', 'ProyectoController@guardar');
+Route::post('/proyecto/guardar/{id?}', 'ProyectoController@guardar');
+
+Route::get('/concepto/eliminar/{id?}', 'ConceptoController@eliminar');
+Route::get('/concepto/guardar/{id?}', 'ConceptoController@guardar');
+Route::post('/concepto/guardar/{id?}', 'ConceptoController@guardar');
+Route::get('/concepto/{id?}/{idproy?}', 'ConceptoController@concepto');
+
+Route::get('/conceptoElemento/eliminar/{idCon}/{idEle?}', 'ConceptoElementoController@eliminar');
+Route::get('/conceptoElemento/guardar/{idCon}/{idEle?}', 'ConceptoElementoController@guardar');
+Route::post('/conceptoElemento/guardar/{idCon}/{idEle?}', 'ConceptoElementoController@guardar');
+Route::get('/conceptoElemento/{idCon}/{idEle?}', 'ConceptoElementoController@conceptoElemento');
+//Route::post('/conceptoElemento/eliminar/{idCon}/{idEle?}', 'ConceptoElementoController@eliminar');

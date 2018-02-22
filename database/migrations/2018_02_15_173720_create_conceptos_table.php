@@ -24,6 +24,7 @@ class CreateConceptosTable extends Migration
 			
 			$table->string('estatus')->default("Cotizado")->nullable(false);
 			$table->string('unidades')->default("")->nullable(false);
+			$table->date('fecha')->nullable(false);
 			
 			$table->integer('proyecto_id')->unsigned();
 			$table->foreign('proyecto_id')->references('id')->on('proyectos');
