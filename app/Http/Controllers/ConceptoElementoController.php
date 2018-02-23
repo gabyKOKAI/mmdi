@@ -50,18 +50,21 @@ class ConceptoElementoController extends Controller
         ##dump($concepto->getElementos($concepto)->find($request->input('elemento')));
         if($concepto->getElementos($concepto)->find($request->input('elemento'))){
             $res = "actualizado";
+            $concepto->elementos()->sync([ $elemento->id => ['concepto_id'=>$concepto->id,'precio' => $request->input('precio'),'elemento_id'=>$elemento->id]],
+                                        false);
         }
         else{
             $res = "agregado";
+            # Set the parameters
+            $concepto->elementos()->sync([ $elemento->id => ['concepto_id'=>$concepto->id,'precio' => $request->input('precio'),'costo' => $elemento->costo,'elemento_id'=>$elemento->id]],
+                                        false);
         }
 
-        # Set the parameters
-        $concepto->elementos()->sync([ $elemento->id => ['concepto_id'=>$concepto->id,'precio' => $request->input('precio'),'elemento_id'=>$elemento->id]],
-                                        false);
+
 
 		# Redirect the user to the page to view the book
 		return redirect('/concepto/'.$concepto->id)->with('success', 'El elemento '.$elemento->nombre.' fue '.$res.' para el concepto '.$concepto->nombre);
-		return view('layouts.prueba');
+		#return view('layouts.prueba');
 	}
 
 	public function eliminar(Request $request,$idCon='-1',$idEle='-1') {

@@ -20,16 +20,17 @@ class ConceptoController extends Controller
 	    # Get proyectos
         $proyectosForDropdown = Proyecto::all();
         # Get estatus
-        $estatusForDropdown = Proyecto::getEstatusDropDown();
+        $estatusForDropdown = Concepto::getEstatusDropDown();
         $elementos = [];
 
         $proyectoSelected = -1;
         $estatusSelected = -1;
         if($concepto){
             $proyectoSelected = $concepto->proyecto_id;
-            $estatusSelected = $concepto->estatus;# Get elementos
+            $estatusSelected = $concepto->estatus;
+            # Get elementos
             $elementos = Concepto::getElementos($concepto);
-            $concepto->precioCliente = $concepto->precio($concepto);
+            $concepto->precioCliente = $concepto->getprecio($concepto);
             $concepto->ganancia = Concepto::getGananciaReal($concepto);
             $concepto->precioTotal = $concepto->precioCliente * $concepto->cantidad;
             $concepto->gananciaTotal = $concepto->ganancia * $concepto->cantidad ;

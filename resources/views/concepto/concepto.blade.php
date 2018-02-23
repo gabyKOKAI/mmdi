@@ -42,14 +42,13 @@
                                        </div>
 									   <div class="row">
                                             <div class="col-sm-4 form-group required control-label" align="left">
-                                                <label for='proyecto'>Proyecto</label>
-                                                {{$proyectoSelected}}
+                                                <label for='proyecto_id'>Proyecto</label>
+                                                <input type="hidden" name="proyecto" value="{{$proyectoSelected}}" required>
                                                 @if($proyectoSelected != -1)
                                                     <a href="{{ URL::to('proyecto/'.$proyectoSelected) }}"  class="glyphicon glyphicon-edit"></a>
-                                                    <input type="hidden" name="proyecto" value="{{$proyectoSelected}}" required>
-                                                    <select name="proyecto"  class="form-control" disabled>
+                                                    <select name="proyecto_id"  class="form-control" disabled>
                                                 @else
-                                                    <select name="proyecto"  class="form-control">
+                                                    <select name="proyecto_id"  class="form-control">
                                                 @endif
                                                     @foreach($proyectosForDropdown as $proyecto)
                                                     <option value="{{ $proyecto->id }}" {{ $proyecto->id == $proyectoSelected ? 'selected="selected"' : '' }}> {{ $proyecto->nombre }} </option>
@@ -87,20 +86,20 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-4" align="left">
-                                    <div class="container center">
+                                    <div class="col-sm-12 container center">
                                        <div class="row">
-                                            <div class="col-sm-12" align="left">
+                                            <div class="col-sm-4" align="left">
                                                 <hr>
                                             </div>
 										</div>
                                        <div class="row">
-                                             <div class="col-sm-4 form-group required control-label" align="left">
+                                             <div class="col-sm-12 form-group required control-label" align="left">
                                                 <label for='fecha'>Fecha</label>
                                                 <input type='date' name='fecha' id='fecha' value='{{$concepto->fecha}}' class="form-control"  placeholder="Type Your Email Address Here" required>
                                              </div>
                                        </div>
                                        <div class="row">
-                                             <div class="col-sm-4" align="left">
+                                             <div class="col-sm-12" align="left">
                                                 <label for='comentario'>Comentario</label>
                                                 <br>
                                                 <textarea name='comentario' id='comentario' maxlength="250" rows="5"  class="form-control" >{{$concepto->comentario}}</textarea>
@@ -109,14 +108,14 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-4" align="left">
-								    <div class="container center">
+								    <div class="col-sm-12 container center">
 								    <div class="row">
-                                            <div class="col-sm-12" align="left">
+                                            <div class="col-sm-4" align="left">
                                                 <hr>
                                             </div>
 										</div>
                                        <div class="row">
-                                            <div class="col-sm-3 divPagos" align="center">
+                                            <div class="col-sm-10 divPagos" align="center">
                                                 <div class="row">
                                                     <div class="col-sm-12" align="center">
                                                         <h4 class="glyphicon glyphicon-bookmark">Resumen Precios y Ganancias</h4>
@@ -216,7 +215,7 @@
                                                     <td>{{$elemento->tipo}}</td>
                                                     <td>{{$elemento->proveedor->nombre}}</td>
                                                     <td>{{$elemento->unidades}}</td>
-                                                    <td>{{$elemento->costo}}</td>
+                                                    <td>{{$elemento->costoCliente}}</td>
                                                     <td>{{$elemento->ganancia}}</td>
                                                     <td>{{$elemento->precio}}</td>
                                                     <td>{{$elemento->precioCliente}}</td>

@@ -83,3 +83,8 @@ Route::get('/conceptoElemento/guardar/{idCon}/{idEle?}', 'ConceptoElementoContro
 Route::post('/conceptoElemento/guardar/{idCon}/{idEle?}', 'ConceptoElementoController@guardar');
 Route::get('/conceptoElemento/{idCon}/{idEle?}', 'ConceptoElementoController@conceptoElemento');
 //Route::post('/conceptoElemento/eliminar/{idCon}/{idEle?}', 'ConceptoElementoController@eliminar');
+
+Route::get('/elementos', 'ElementoController@lista');
+Route::get('/elemento/guardar/{id?}', 'ElementoController@guardar');
+Route::post('/elemento/guardar/{id?}', 'ElementoController@guardar');
+Route::get('/elemento/{id?}', 'ElementoController@elemento');

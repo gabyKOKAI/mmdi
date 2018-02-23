@@ -18,6 +18,7 @@ class CreateConceptoElementoTable extends Migration
             $table->timestamps();
 			
 			$table->float('precio')->nullable(false);
+			$table->float('costo')->nullable(false);
 			
 			$table->integer('concepto_id')->unsigned();
 			$table->foreign('concepto_id')->references('id')->on('conceptos');

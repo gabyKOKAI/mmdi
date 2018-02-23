@@ -30,6 +30,8 @@ class CreateProyectosTable extends Migration
 			$table->integer('ganancia_AMM')->default(0)->nullable(false);
 			$table->integer('ganancia_MME')->default(0)->nullable(false);
 			$table->integer('ganancia_AME')->default(0)->nullable(false);
+			$table->boolean('distribuido')->default(0)->nullable(false);
+			$table->boolean('adicionalesDistribuido')->default(0)->nullable(false);
 			
 			$table->string('estatus')->default("Prospecto")->nullable(false);
 			

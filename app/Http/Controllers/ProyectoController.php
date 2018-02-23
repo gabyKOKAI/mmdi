@@ -18,7 +18,7 @@ class ProyectoController extends Controller
 		##return App::environment();
 
 		$proyectos = Proyecto::with('cliente','conceptos')->get();
-		$proyectos = Proyecto::paginate(10 );
+		$proyectos = Proyecto::paginate(15);
 
         if ($proyectos->isEmpty()) {
             dump('No matches found');
@@ -141,7 +141,8 @@ class ProyectoController extends Controller
             $proyecto->inicial = $proyecto->getCostoIA($proyecto->id,0);
             $proyecto->adicional = $proyecto->getCostoIA($proyecto->id,1);
             $proyecto->honorarios = $proyecto->getHonorarios($proyecto->id,$proyecto->gasto_porc_honorarios);
-            $proyecto->costo = $proyecto->getCosto($proyecto);
+            $proyecto->costo =  $proyecto->getCosto($proyecto) - $proyecto->adicional;
+            $proyecto->totAdicionales =  $proyecto->getCosto($proyecto);
             $proyecto->efectivo = $proyecto->getEfectivo($proyecto->id);
             $proyecto->transferencias = $proyecto->getTransferencias($proyecto->id);
             $proyecto->cheques = $proyecto->getCheques($proyecto->id);
@@ -151,6 +152,7 @@ class ProyectoController extends Controller
             $proyecto->mmdi = $proyecto->utilidades * $proyecto->gasto_porc_ganancias_MMDI / 100;
             $proyecto->errores = $proyecto->utilidades * $proyecto->gasto_porc_errores / 100;
             $proyecto->ddg = $proyecto->utilidades - $proyecto->mmdi -$proyecto->gasto_viaticos -$proyecto->gasto_IMSS -$proyecto->errores;
+            $proyecto->recMmdi = $proyecto->mmdi + $proyecto->errores + $proyecto->gasto_viaticos +$proyecto->gasto_IMSS + $proyecto->getCostoIndirectos($proyecto->id);
             $proyecto->meg = $proyecto->ddg * $proyecto->ganancia_MEG / 100;
             $proyecto->amm = $proyecto->ddg * $proyecto->ganancia_AMM / 100;
             $proyecto->mme = $proyecto->ddg * $proyecto->ganancia_MME / 100;
