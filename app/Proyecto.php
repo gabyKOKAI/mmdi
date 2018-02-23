@@ -39,7 +39,7 @@ class Proyecto extends Model
 
     public static function getSaldo($proyecto)
     {
-        $saldo = Proyecto::getCosto($proyecto) - Proyecto::getEfectivo($proyecto->id) -Proyecto::getTransferencias($proyecto->id) -Proyecto::getCheques($proyecto->id);
+        $saldo = Proyecto::getCosto($proyecto) + Proyecto::getCostoIA($proyecto->id,1) - Proyecto::getEfectivo($proyecto->id) -Proyecto::getTransferencias($proyecto->id) -Proyecto::getCheques($proyecto->id);
         return $saldo;
     }
 
@@ -63,8 +63,7 @@ class Proyecto extends Model
 
     public static function getIndirectos($proyecto_id)
     {
-        $indirectos = 130;
-        $conceptos = Concepto::where('proyecto_id', 'LIKE', $proyecto_id)->get();
+        $conceptos = Concepto::where('proyecto_id', 'LIKE', $proyecto_id)->where('adicional', '=', 0 )->get();
 
         $indirectos = 0;
         foreach ($conceptos as $concepto) {
@@ -74,9 +73,21 @@ class Proyecto extends Model
         return $indirectos;
     }
 
+    public static function getCostoIndirectos($proyecto_id)
+    {
+        $conceptos = Concepto::where('proyecto_id', 'LIKE', $proyecto_id)->where('adicional', '=', 0 )->get();
+
+        $costo = 0;
+        foreach ($conceptos as $concepto) {
+            $costoCon = Concepto::getCosto($concepto);
+            $costo = $costo + ($costoCon*$concepto->cantidad);
+        }
+        return $costo;
+    }
+
     public static function getHonorarios($proyecto_id,$gasto_porc_honorarios)
     {
-        $honorarios = (Proyecto::getCostoIA($proyecto_id,0)+Proyecto::getCostoIA($proyecto_id,1))*$gasto_porc_honorarios/100;
+        $honorarios = Proyecto::getCostoIA($proyecto_id,0)*$gasto_porc_honorarios/100;
         return $honorarios;
     }
 
@@ -85,7 +96,7 @@ class Proyecto extends Model
         $conceptos = Concepto::where('proyecto_id', 'LIKE', $proyecto_id)->paginate(5);
 
         foreach ($conceptos as $concepto) {
-            $concepto->precio = Concepto::precio($concepto);
+            $concepto->precio = Concepto::getPrecio($concepto);
             $concepto->total = $concepto->precio*$concepto->cantidad;
         }
         return $conceptos;
@@ -97,7 +108,7 @@ class Proyecto extends Model
 
         $total = 0;
         foreach ($conceptos as $concepto) {
-            $precio = Concepto::precio($concepto);
+            $precio = Concepto::getPrecio($concepto);
             $total = $total + ($precio*$concepto->cantidad);
         }
         return $total;

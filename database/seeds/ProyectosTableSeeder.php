@@ -14,11 +14,11 @@ class ProyectosTableSeeder extends Seeder
     public function run()
     {
         $proyectos = [
-            ['proyecto1','descripcion 1','direccion 1', 'comentario 1', 1,2,3,4,5,6,7,8,9,'Prospecto','cliente1'],
-            ['proyecto2','descripcion 2','direccion 2', 'comentario 2', 1,2,3,4,5,6,7,8,9,'Cotizado','cliente2'],
-            ['proyecto3','descripcion 3','direccion 3', 'comentario 3', 1,2,3,4,5,6,7,8,9,'Aprobado','cliente3'],
-            ['proyecto4','descripcion 4','direccion 4', 'comentario 4', 1,2,3,4,5,6,7,8,9,'En Proceso (Carpeta)','cliente4'],
-            ['proyecto5','descripcion 5','direccion 5', 'comentario 5', 1,2,3,4,5,6,7,8,9,'En Proceso','cliente5'],
+            ['proyecto1','descripcion 1','direccion 1', 'comentario 1', 1,2,3,4,5,6,7,8,9,'Prospecto','cliente1',0,0],
+            ['proyecto2','descripcion 2','direccion 2', 'comentario 2', 1,2,3,4,5,6,7,8,9,'Cotizado','cliente2',1,0],
+            ['proyecto3','descripcion 3','direccion 3', 'comentario 3', 1,2,3,4,5,6,7,8,9,'Aprobado','cliente3',1,1],
+            ['proyecto4','descripcion 4','direccion 4', 'comentario 4', 1,2,3,4,5,6,7,8,9,'En Proceso (Carpeta)','cliente4',0,0],
+            ['proyecto5','descripcion 5','direccion 5', 'comentario 5', 1,2,3,4,5,6,7,8,9,'En Proceso','cliente5',0,0],
         ];
 
         $count = count($proyectos);
@@ -44,7 +44,9 @@ class ProyectosTableSeeder extends Seeder
                 'ganancia_MME' => $proyecto[11],
                 'ganancia_AME' => $proyecto[12],
                 'estatus' => $proyecto[13],
-                'cliente_id' =>  $cliente_id
+                'cliente_id' =>  $cliente_id,
+                'distribuido' => $proyecto[15],
+			    'adicionalesDistribuido'=> $proyecto[16]
 
             ]);
             $count--;

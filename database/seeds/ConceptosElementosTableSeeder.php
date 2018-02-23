@@ -30,6 +30,15 @@ class ConceptosElementosTableSeeder extends Seeder
 
     ];
 
+    $costosElementos =[
+                'elemento1' => 1,
+                'elemento2' => 2,
+                'elemento3' => 3,
+                'elemento4' => 4,
+                'elemento5' => 5,
+
+    ];
+
     # Now loop through the above array, creating a new pivot for each book to tag
     foreach ($conceptos as $concepto => $elementos) {
 
@@ -47,6 +56,7 @@ class ConceptosElementosTableSeeder extends Seeder
             'concepto_id' => $concepto->id,
             'elemento_id' => $elemento->id,
             'precio' => $preciosElementos[$nombreElemento],
+            'costo' => $costosElementos[$nombreElemento],
             ]);
             $count--;
         }

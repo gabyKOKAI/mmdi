@@ -5,7 +5,7 @@
 @endsection
 
 @push('head')
-    <!--link href="/css/concepto.css" type='text/css' rel='stylesheet'-->
+    <!--link href="/css/conceptoElemento.css" type='text/css' rel='stylesheet'-->
 @endpush
 
 @section('content')
@@ -29,24 +29,24 @@
                                 <div class="col-sm-4" align="left">
                                 </div>
                                 <div class="col-sm-4" align="left">
-                                    <div class="container center">
+                                    <div class="col-sm-12 container center">
 									    <div class="row">
-                                            <div class="col-sm-4 form-group required control-label" align="left">
+                                            <div class="col-sm-12 form-group required control-label" align="left">
                                                     <label for='nombreCon'>Nombre Concepto</label>
                                                     <a href="{{ URL::to('concepto/'.$concepto->id) }}" class="glyphicon glyphicon-edit"></a>
                                                     <input type='text' name='nombreCon' id='nombreCon' value='{{$concepto->nombre}}'  class="form-control" disabled>
                                             </div>
                                         </div>
                                         <div class="row">
-                                           <div class="col-sm-4 form-group required control-label" align="left">
+                                           <div class="col-sm-12 form-group required control-label" align="left">
                                                 <label for='elemento'>Elemento</label>
+
                                                 @if($elementoSelected!=-1)
                                                     <a href="{{ URL::to('elemento/'.$elemento->id)}}" class="glyphicon glyphicon-edit"></a>
-                                                    <a href="{{ URL::to('elemento/-1')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
-
                                                     <input type="hidden" name="elemento" value="{{$elementoSelected}}">
                                                     <select name="elemento"  class="form-control" disabled>
                                                 @else
+                                                    <a href="{{ URL::to('elemento/-1')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
                                                     <select name="elemento"  class="form-control">
                                                 @endif
                                                     @foreach($elementosForDropdown as $elemento)
@@ -56,7 +56,7 @@
                                             </div>
                                        </div>
                                        <div class="row">
-                                            <div class="col-sm-2 form-group required control-label" align="left">
+                                            <div class="col-sm-6 form-group required control-label" align="left">
                                                 <label for='precio'>Precio </label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">$</span>
