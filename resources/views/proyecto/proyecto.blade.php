@@ -499,7 +499,8 @@
                                                     <td>{{$concepto->estatus}}</td>
                                                     <td>{{$concepto->total}}</td>
                                                     <td>
-                                                        <input type="checkbox" class="form-check-input" id="adicional" {{ $concepto->adicional ? 'checked="checked"' : '' }}></td>
+                                                        <input type="checkbox" class="form-check-input" id="adicional" {{ $concepto->adicional ? 'checked="checked"' : '' }} disabled>
+                                                    </td>
                                                     <td>
                                                         <a href="{{ URL::to('concepto/' . $concepto->id)}}" class="glyphicon glyphicon-edit"></a>
                                                         <a href="{{ URL::to('concepto/eliminar/'.$concepto->id)}}" class="glyphicon glyphicon-trash"></a>

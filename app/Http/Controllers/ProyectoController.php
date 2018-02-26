@@ -17,7 +17,7 @@ class ProyectoController extends Controller
     { 
 		##return App::environment();
 
-		$proyectos = Proyecto::with('cliente','conceptos')->get();
+		#$proyectos = Proyecto::with('cliente','conceptos')->get();
 		$proyectos = Proyecto::paginate(15);
 
         if ($proyectos->isEmpty()) {

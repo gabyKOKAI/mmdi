@@ -20,6 +20,14 @@ class Proyecto extends Model
         return $this->hasMany('mmdi\Concepto');
     }
 
+    public function cotizaciones()
+    {
+        # Proyecto has many Cotizaciones
+        # Define a one-to-many relationship.
+        return $this->hasMany('mmdi\Cotizacione');
+    }
+
+
     public static function getEstatusDropDown()
     {
         $estatus = ['Prospecto', 'Cotizado', 'Aprobado', 'En Proceso (Carpeta)','En Proceso (Proyecto)','Por liquidar','Terminado'];

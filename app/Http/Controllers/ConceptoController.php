@@ -83,7 +83,7 @@ class ConceptoController extends Controller
         } else{
             $concepto->adicional = 0;
         }
-        $concepto->proyecto_id = $request->input('proyecto');
+        $concepto->proyecto_id = $request->input('proyecto_id');
 
         $concepto->save();
 

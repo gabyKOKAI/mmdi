@@ -12,4 +12,11 @@ class Proveedore extends Model
         # Define a one-to-many relationship.
         return $this->hasMany('mmdi\Elemento');
     }
+
+    public function cotizaciones()
+    {
+        # Proyecto has many Cotizaciones
+        # Define a one-to-many relationship.
+        return $this->hasMany('mmdi\Cotizacione');
+    }
 }
