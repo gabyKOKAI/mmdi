@@ -40,3 +40,8 @@ input[type=number]::-webkit-outer-spin-button {
 .divPunteado {
     border-style: dotted;
 }
+
+.divProveedores {
+    background-color: #b4a7d6;
+    border-style: dotted;
+}

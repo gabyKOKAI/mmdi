@@ -82,9 +82,13 @@ Route::get('/conceptoElemento/eliminar/{idCon}/{idEle?}', 'ConceptoElementoContr
 Route::get('/conceptoElemento/guardar/{idCon}/{idEle?}', 'ConceptoElementoController@guardar');
 Route::post('/conceptoElemento/guardar/{idCon}/{idEle?}', 'ConceptoElementoController@guardar');
 Route::get('/conceptoElemento/{idCon}/{idEle?}', 'ConceptoElementoController@conceptoElemento');
-//Route::post('/conceptoElemento/eliminar/{idCon}/{idEle?}', 'ConceptoElementoController@eliminar');
 
 Route::get('/elementos', 'ElementoController@lista');
 Route::get('/elemento/guardar/{id?}', 'ElementoController@guardar');
 Route::post('/elemento/guardar/{id?}', 'ElementoController@guardar');
 Route::get('/elemento/{id?}', 'ElementoController@elemento');
+
+Route::get('/cotizaciones', 'CotizacionController@lista');
+Route::get('/cotizacion/{id?}', 'CotizacionController@cotizacion');
+Route::get('/cotizacion/guardar/{id?}', 'CotizacionController@guardar');
+Route::post('/cotizacion/guardar/{id?}', 'CotizacionController@guardar');
