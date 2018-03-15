@@ -78,10 +78,10 @@ Route::get('/concepto/guardar/{id?}', 'ConceptoController@guardar');
 Route::post('/concepto/guardar/{id?}', 'ConceptoController@guardar');
 Route::get('/concepto/{id?}/{idproy?}', 'ConceptoController@concepto');
 
-Route::get('/conceptoElemento/eliminar/{idCon}/{idEle?}', 'ConceptoElementoController@eliminar');
-Route::get('/conceptoElemento/guardar/{idCon}/{idEle?}', 'ConceptoElementoController@guardar');
-Route::post('/conceptoElemento/guardar/{idCon}/{idEle?}', 'ConceptoElementoController@guardar');
-Route::get('/conceptoElemento/{idCon}/{idEle?}', 'ConceptoElementoController@conceptoElemento');
+Route::get('/conceptoElemento/eliminar/{idCon}/{idEle?}/{edit?}', 'ConceptoElementoController@eliminar');
+Route::get('/conceptoElemento/guardar/{idCon}/{idEle?}/{edit?}', 'ConceptoElementoController@guardar');
+Route::post('/conceptoElemento/guardar/{idCon}/{idEle?}/{edit?}', 'ConceptoElementoController@guardar');
+Route::get('/conceptoElemento/{idCon}/{idEle?}/{edit?}', 'ConceptoElementoController@conceptoElemento');
 
 Route::get('/elementos', 'ElementoController@lista');
 Route::get('/elemento/guardar/{id?}', 'ElementoController@guardar');
@@ -92,3 +92,34 @@ Route::get('/cotizaciones', 'CotizacionController@lista');
 Route::get('/cotizacion/{id?}', 'CotizacionController@cotizacion');
 Route::get('/cotizacion/guardar/{id?}', 'CotizacionController@guardar');
 Route::post('/cotizacion/guardar/{id?}', 'CotizacionController@guardar');
+
+Route::get('/cuentas', 'CuentaController@lista');
+
+Route::get('/recursos', 'RecursoController@lista');
+Route::get('/distribuir/{id}', 'MovimientoController@distribuir');
+Route::get('/distribuirAdicionales/{id}', 'MovimientoController@distribuirAdicionales');
+
+Route::get('/movimientos/{idRec?}/{idCue?}', 'MovimientoController@lista');
+Route::get('/movimiento/guardar/{id?}/{idRec?}/{idCue?}', 'MovimientoController@guardar');
+Route::post('/movimiento/guardar/{id?}/{idRec?/{idCue?}}', 'MovimientoController@guardar');
+Route::get('/movimiento/{id?}/{idRec?}/{idCue?}', 'MovimientoController@movimiento');
+
+Route::get('/clientes', 'ClienteController@lista');
+Route::get('/cliente/{id?}', 'ClienteController@cotizacion');
+Route::get('/cliente/guardar/{id?}', 'ClienteController@guardar');
+Route::post('/cliente/guardar/{id?}', 'ClienteController@guardar');
+
+Route::get('/pagosClientes', 'PagosClienteController@lista');
+Route::get('/pagoCliente/{id?}/{idCli?}', 'PagosClienteController@cotizacion');
+Route::get('/pagoCliente/guardar/{id?}/{idCli?}', 'PagosClienteController@guardar');
+Route::post('/pagoCliente/guardar/{id?}/{idCli?}', 'PagosClienteController@guardar');
+
+Route::get('/proveedores', 'ProveedoreController@lista');
+Route::get('/proveedor/{id?}', 'ProveedoreController@cotizacion');
+Route::get('/proveedor/guardar/{id?}', 'ProveedoreController@guardar');
+Route::post('/proveedor/guardar/{id?}', 'ProveedoreController@guardar');
+
+Route::get('/pagosProveedores', 'PagosProveedoreController@lista');
+Route::get('/pagoProveedor/{id?}/{idPro?}', 'PagosProveedoreController@cotizacion');
+Route::get('/pagoProveedor/guardar/{id?}/{idPro?}', 'PagosProveedoreController@guardar');
+Route::post('/pagoProveedor/guardar/{id?}/{idPro?}', 'PagosProveedoreController@guardar');

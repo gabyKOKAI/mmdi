@@ -14,7 +14,7 @@ class ConceptoElementoController extends Controller
 	* /proyecto/agrega
 	* Display the form to add a new proyecto
 	*/
-	public function conceptoElemento(Request $request,$idCon='-1',$idEle='-1') {
+	public function conceptoElemento(Request $request,$idCon='-1',$idEle='-1',$edit='1') {
 	    $concepto = Concepto::find($idCon);
 
 	    $elemento="";
@@ -23,13 +23,18 @@ class ConceptoElementoController extends Controller
 	        $elemento = $concepto->getElementos($concepto)->find($idEle);
 	        $precio = $elemento->precioCliente;
 	    }
+	    else{
+	       $elemento = new Elemento;
+           $elemento->id = -1;
+	    }
+
 
 	    # Get elementos
         $elementosForDropdown = Elemento::all();
         $elementoSelected = $idEle;
 
         return view('conceptoElemento.conceptoElemento')->
-        with(['concepto' => $concepto,'elemento' => $elemento,'precio' => $precio, 'elementosForDropdown' => $elementosForDropdown,'elementoSelected'=>$elementoSelected]);
+        with(['concepto' => $concepto,'elemento' => $elemento,'precio' => $precio, 'elementosForDropdown' => $elementosForDropdown,'elementoSelected'=>$elementoSelected,'edit'=>$edit]);
 	}
 
 
@@ -38,7 +43,7 @@ class ConceptoElementoController extends Controller
 	* /proyecto
 	* Process the form for adding a new book
 	*/
-	public function guardar(Request $request,$idCon='-1',$idEle='-1') {
+	public function guardar(Request $request,$idCon='-1',$idEle='-1',$edit='1') {
 		# Validate the request data
 		$this->validate($request, [
 			'precio' => 'required',

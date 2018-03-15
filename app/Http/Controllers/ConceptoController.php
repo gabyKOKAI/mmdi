@@ -16,6 +16,13 @@ class ConceptoController extends Controller
 	*/
 	public function concepto(Request $request,$id= '-1',$idProy='-1') {
 	    $concepto = Concepto::find($id);
+	    if($idProy == -1){
+	        $proyecto = Proyecto::find($concepto->proyecto_id);
+	    }
+	    else{
+	        $proyecto = Proyecto::find($idProy);
+	    }
+
 
 	    # Get proyectos
         $proyectosForDropdown = Proyecto::all();
@@ -39,10 +46,11 @@ class ConceptoController extends Controller
             $concepto = new Concepto;
             $concepto->id = -1;
             $proyectoSelected = $idProy;
+            $concepto->adicional = $proyecto->distribuido;
         }
 
         return view('concepto.concepto')->
-        with(['concepto' => $concepto,'elementos' => $elementos, 'proyectosForDropdown' => $proyectosForDropdown,'proyectoSelected'=>$proyectoSelected,'estatusForDropdown' => $estatusForDropdown,'estatusSelected'=>$estatusSelected]);
+        with(['concepto' => $concepto,'elementos' => $elementos, 'proyectosForDropdown' => $proyectosForDropdown,'proyectoSelected'=>$proyectoSelected,'estatusForDropdown' => $estatusForDropdown,'estatusSelected'=>$estatusSelected,'proyectoCon'=>$proyecto]);
 	}
 
 
@@ -88,7 +96,7 @@ class ConceptoController extends Controller
         $concepto->save();
 
 		# Redirect the user to the page to view the book
-		return redirect('/concepto/'.$concepto->id)->with('success', 'El concepto '.$concepto->nombre.' fue '.$res);
+		return redirect('/concepto/'.$concepto->id.'/'.$concepto->proyecto_id)->with('success', 'El concepto '.$concepto->nombre.' fue '.$res);
 	}
 
 

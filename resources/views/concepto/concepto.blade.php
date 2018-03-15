@@ -43,9 +43,10 @@
 									   <div class="row">
                                             <div class="col-sm-4 form-group required control-label" align="left">
                                                 <label for='proyecto_id'>Proyecto</label>
-                                                <input type="hidden" name="proyecto" value="{{$proyectoSelected}}" required>
+
                                                 @if($proyectoSelected != -1)
                                                     <a href="{{ URL::to('proyecto/'.$proyectoSelected) }}"  class="glyphicon glyphicon-edit"></a>
+                                                    <input type="hidden" name="proyecto_id" value="{{$proyectoSelected}}" required>
                                                     <select name="proyecto_id"  class="form-control" disabled>
                                                 @else
                                                     <select name="proyecto_id"  class="form-control">
@@ -59,8 +60,16 @@
                                        <div class="row">
                                             <div class="col-sm-1  form-group required control-label"" align="left">
                                                 <label for='cantidad'>Cantidad</label>
-                                                <br>
-                                                <input type='number' name='cantidad' id='cantidad' value='{{$concepto->cantidad}}' class='numero form-control' required>
+                                                @if($proyectoCon->distribuido == 0 and $concepto->adicional == 0)
+                                                    <input type='number' name='cantidad' id='cantidad' value='{{$concepto->cantidad}}' class='numero form-control' required>
+                                                @elseif($proyectoCon->adicionalesDistribuido == 0 and $concepto->adicional == 1)
+                                                    <input type='number' name='cantidad' id='cantidad' value='{{$concepto->cantidad}}' class='numero form-control' required>
+                                                @else
+                                                    <input type="hidden" name="cantidad" value="{{$concepto->cantidad}}">
+                                                    <input type='number' name='cantidad' id='cantidad' value='{{$concepto->cantidad}}' class='numero form-control' disabled>
+                                                @endif
+
+
                                             </div>
                                             <div class="col-sm-2 form-group required control-label" align="left">
                                                 <label for='unidades'>Unidades</label>
@@ -71,7 +80,6 @@
                                        <div class="row">
                                             <div class="col-sm-2 form-group required control-label" align="left">
                                                 <label for='estatus'>Estatus</label>
-                                                <br>
                                                 <select name="estatus"  class="form-control" required>
                                                     @foreach($estatusForDropdown as $estatus)
                                                     <option value="{{ $estatus }}" {{ $estatus == $estatusSelected ? 'selected="selected"' : '' }}> {{ $estatus }} </option>
@@ -79,8 +87,12 @@
                                                 </select>
                                             </div>
                                             <div class="col-sm-2 form-group control-label" align="left">
-                                                <br>
-                                                <input type="checkbox" class="form-check-input" id="adicional" name="adicional" value="1" {{ $concepto->adicional ? 'checked="checked"' : ''}}>Adicional</input>
+                                                @if($proyectoCon->distribuido == 0)
+                                                        <input type="checkbox" class="form-check-input" id="adicional" name="adicional" value="1" {{ $concepto->adicional ? 'checked="checked"' : ''}} required>Adicional</input>
+                                                @else
+                                                    <input type="hidden" name="adicional" value="{{$concepto->adicional}}">
+                                                    <input type="checkbox" class="form-check-input" id="adicional" name="adicional" value="1" {{ $concepto->adicional ? 'checked="checked"' : ''}} disabled>Adicional</input>
+                                                @endif
                                             </div>
                                        </div>
                                     </div>
@@ -95,7 +107,13 @@
                                        <div class="row">
                                              <div class="col-sm-12 form-group required control-label" align="left">
                                                 <label for='fecha'>Fecha</label>
-                                                <input type='date' name='fecha' id='fecha' value='{{$concepto->fecha}}' class="form-control"  placeholder="Type Your Email Address Here" required>
+                                                @if($concepto->id == -1)
+                                                    <input type='date' name='fecha' id='fecha' value='{{$concepto->fecha}}' class="form-control"  required>
+                                                @else
+                                                    <input type="hidden" name="fecha" value="{{$concepto->fecha}}">
+                                                    <input type='date' name='fecha' id='fecha' value='{{$concepto->fecha}}' class="form-control" disabled>
+                                                @endif
+
                                              </div>
                                        </div>
                                        <div class="row">
@@ -154,7 +172,11 @@
                                 <div class="col-sm-12 align-self-center">
                                     @if($concepto)
                                         <input type='submit' value='Guarda Concepto' class='btn btn-primary btn-small'>
-                                        <a href="{{ URL::to('concepto/eliminar/'.$concepto->id)}}" class="glyphicon glyphicon-trash"></a>
+                                        @if($proyectoCon->distribuido == 0 and $concepto->adicional == 0)
+                                            <a href="{{ URL::to('concepto/eliminar/'.$concepto->id)}}" class="glyphicon glyphicon-trash"></a>
+                                        @elseif($proyectoCon->adicionalesDistribuido == 0 and $concepto->adicional == 1)
+                                            <a href="{{ URL::to('concepto/eliminar/'.$concepto->id)}}" class="glyphicon glyphicon-trash"></a>
+                                        @endif
                                     @else
                                         <input type='submit' value='Crear Concepto' class='btn btn-primary btn-small'>
                                     @endif
@@ -202,7 +224,11 @@
                                                 <th class="center">Precio Cliente</th>
                                                 <th class="center">
                                                     @if($concepto->id != -1)
-                                                        <a href="{{URL::to('conceptoElemento/'.$concepto->id.'/-1')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
+                                                        @if($proyectoCon->distribuido == 0 and $concepto->adicional == 0)
+                                                            <a href="{{URL::to('conceptoElemento/'.$concepto->id.'/-1/1')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
+                                                        @elseif($proyectoCon->adicionalesDistribuido == 0 and $concepto->adicional == 1)
+                                                            <a href="{{URL::to('conceptoElemento/'.$concepto->id.'/-1/1')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
+                                                        @endif
                                                     @endif
                                                 </th>
                                             </tr>
@@ -220,8 +246,17 @@
                                                     <td>{{$elemento->precio}}</td>
                                                     <td>{{$elemento->precioCliente}}</td>
                                                     <td>
-                                                        <a href="{{ URL::to('conceptoElemento/' . $concepto->id.'/'.$elemento->id)}}" class="glyphicon glyphicon-edit"></a>
-                                                        <a href="{{ URL::to('conceptoElemento/eliminar/'.$concepto->id.'/'.$elemento->id)}}" class="glyphicon glyphicon-trash"></a>
+
+                                                        @if($proyectoCon->distribuido == 0 and $concepto->adicional == 0)
+                                                            <a href="{{ URL::to('conceptoElemento/' . $concepto->id.'/'.$elemento->id).'/1'}}" class="glyphicon glyphicon-edit"></a>
+                                                            <a href="{{ URL::to('conceptoElemento/eliminar/'.$concepto->id.'/'.$elemento->id)}}" class="glyphicon glyphicon-trash"></a>
+                                                        @elseif($proyectoCon->adicionalesDistribuido == 0 and $concepto->adicional == 1)
+                                                            <a href="{{ URL::to('conceptoElemento/' . $concepto->id.'/'.$elemento->id.'/1')}}" class="glyphicon glyphicon-edit"></a>
+                                                            <a href="{{ URL::to('conceptoElemento/eliminar/'.$concepto->id.'/'.$elemento->id)}}" class="glyphicon glyphicon-trash"></a>
+                                                        @else
+                                                            <a href="{{ URL::to('conceptoElemento/' . $concepto->id.'/'.$elemento->id.'/0')}}" class="glyphicon glyphicon-edit"></a>
+                                                        @endif
+
                                                     </td>
                                                 </tr>
                                             @endforeach

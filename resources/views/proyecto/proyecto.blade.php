@@ -51,7 +51,12 @@
                                                 @if($clienteSelected!=-1)
                                                     <a href="{{ URL::to('cliente/'.$clienteSelected)}}" class="glyphicon glyphicon-edit"></a>
                                                 @endif
-                                                <select name="cliente_id"  class="form-control" required>
+                                                @if($proyecto->id == -1)
+                                                    <select name="cliente_id"  class="form-control" required>
+                                                @else
+                                                    <input type="hidden" name="cliente_id" value="{{$clienteSelected}}">
+                                                    <select name="cliente_id"  class="form-control" disabled>
+                                                @endif
                                                     @foreach($clientesForDropdown as $cliente)
                                                         <option value="{{ $cliente->id }}" {{ $cliente->id == $clienteSelected ? 'selected="selected"' : '' }}> {{ $cliente->nombre }} </option>
                                                     @endforeach
@@ -61,8 +66,13 @@
                                        <div class="row">
                                             <div class="col-sm-4 form-group required control-label" align="left">
                                                 <label for='estatus'>Estatus</label>
-                                                <br>
-                                                <select name="estatus"  class="form-control" required>
+                                                @if($proyecto->adicionalesDistribuido == 0)
+                                                    <select name="estatus"  class="form-control" required>
+                                                @else
+                                                    <input type="hidden" name="estatus" value="{{$estatusSelected}}">
+                                                    <select name="estatus"  class="form-control" disabled>
+                                                @endif
+
                                                     @foreach($estatusForDropdown as $estatus)
                                                     <option value="{{ $estatus }}" {{ $estatus == $estatusSelected ? 'selected="selected"' : '' }}> {{ $estatus }} </option>
                                                     @endforeach
@@ -109,14 +119,26 @@
                                                 <label for='gasto_viaticos'>Viaticos</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">$</span>
-                                                    <input type='number' name='gasto_viaticos' id='gasto_viaticos' step='0.01' value='{{$proyecto->gasto_viaticos}}' class='float form-control' required>
+                                                    @if($proyecto->distribuido == 0)
+                                                        <input type='number' name='gasto_viaticos' id='gasto_viaticos' step='0.01' value='{{$proyecto->gasto_viaticos}}' class='float form-control' required>
+                                                    @else
+                                                        <input type="hidden" name="gasto_viaticos" value="{{$proyecto->gasto_viaticos}}">
+                                                        <input type='number' name='gasto_viaticos' id='gasto_viaticos' step='0.01' value='{{$proyecto->gasto_viaticos}}' class='float form-control' disabled>
+                                                    @endif
+
                                                 </div>
                                             </div>
                                              <div class="col-sm-6 form-group required control-label" align="left">
                                                 <label for='gasto_IMSS'>IMSS</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">$</span>
-                                                    <input type='number' name='gasto_IMSS' id='gasto_IMSS' step='0.01' value='{{$proyecto->gasto_IMSS}}' class='float form-control'required>
+                                                    @if($proyecto->distribuido == 0)
+                                                        <input type='number' name='gasto_IMSS' id='gasto_IMSS' step='0.01' value='{{$proyecto->gasto_IMSS}}' class='float form-control'required>
+                                                    @else
+                                                        <input type="hidden" name="gasto_IMSS" value="{{$proyecto->gasto_IMSS}}">
+                                                        <input type='number' name='gasto_IMSS' id='gasto_IMSS' step='0.01' value='{{$proyecto->gasto_IMSS}}' class='float form-control'disabled>
+                                                    @endif
+
                                                 </div>
                                              </div>
                                        </div>
@@ -126,7 +148,13 @@
                                             <div class="col-sm-6 form-group required control-label" align="left">
                                                 <label for='gasto_porc_errores'>Errores</label>
                                                 <div class="input-group">
-                                                    <input type='number' name='gasto_porc_errores' id='gasto_porc_errores' value='{{$proyecto->gasto_porc_errores}}' class='form-control' required>
+                                                    @if($proyecto->distribuido == 0)
+                                                        <input type='number' name='gasto_porc_errores' id='gasto_porc_errores' value='{{$proyecto->gasto_porc_errores}}' class='form-control' required>
+                                                    @else
+                                                        <input type="hidden" name="gasto_porc_errores" value="{{$proyecto->gasto_porc_errores}}">
+                                                        <input type='number' name='gasto_porc_errores' id='gasto_porc_errores' value='{{$proyecto->gasto_porc_errores}}' class='form-control' disabled>
+                                                    @endif
+
                                                     <span class="input-group-addon">%</span>
                                                 </div>
                                             </div>
@@ -135,7 +163,13 @@
                                             <div class="col-sm-6 form-group required control-label" align="left">
                                                 <label for='gasto_porc_ganancias_MMDI'>Gananacias MMDI</label>
                                                 <div class="input-group">
-                                                    <input type='number' name='gasto_porc_ganancias_MMDI' id='gasto_porc_ganancias_MMDI' value='{{$proyecto->gasto_porc_ganancias_MMDI}}' class='form-control' required>
+                                                    @if($proyecto->distribuido == 0)
+                                                        <input type='number' name='gasto_porc_ganancias_MMDI' id='gasto_porc_ganancias_MMDI' value='{{$proyecto->gasto_porc_ganancias_MMDI}}' class='form-control' required>
+                                                    @else
+                                                        <input type="hidden" name="gasto_porc_ganancias_MMDI" value="{{$proyecto->gasto_porc_ganancias_MMDI}}">
+                                                        <input type='number' name='gasto_porc_ganancias_MMDI' id='gasto_porc_ganancias_MMDI' value='{{$proyecto->gasto_porc_ganancias_MMDI}}' class='form-control' disabled>
+                                                    @endif
+
                                                     <span class="input-group-addon">%</span>
                                                 </div>
 
@@ -143,7 +177,13 @@
                                             <div class="col-sm-6 form-group required control-label" align="left">
                                                 <label for='gasto_porc_honorarios'>Honorarios</label>
                                                 <div class="input-group">
-                                                    <input type='number' name='gasto_porc_honorarios' id='gasto_porc_honorarios' value='{{$proyecto->gasto_porc_honorarios}}' class='form-control' required>
+                                                    @if($proyecto->distribuido == 0)
+                                                        <input type='number' name='gasto_porc_honorarios' id='gasto_porc_honorarios' value='{{$proyecto->gasto_porc_honorarios}}' class='form-control' required>
+                                                    @else
+                                                        <input type="hidden" name="gasto_porc_honorarios" value="{{$proyecto->gasto_porc_honorarios}}">
+                                                        <input type='number' name='gasto_porc_honorarios' id='gasto_porc_honorarios' value='{{$proyecto->gasto_porc_honorarios}}' class='form-control' disabled>
+                                                    @endif
+
                                                     <span class="input-group-addon">%</span>
                                                 </div>
 
@@ -165,7 +205,12 @@
                                             <div class="col-sm-6 form-group required control-label" align="left">
                                                 <label for='ganancia_MEG'>MEG</label>
                                                 <div class="input-group">
-                                                    <input type='number' name='ganancia_MEG' id='ganancia_MEG' value='{{$proyecto->ganancia_MEG}}'  class='form-control' required>
+                                                    @if($proyecto->distribuido == 0)
+                                                        <input type='number' name='ganancia_MEG' id='ganancia_MEG' value='{{$proyecto->ganancia_MEG}}'  class='form-control' required>
+                                                    @else
+                                                        <input type="hidden" name="ganancia_MEG" value="{{$proyecto->ganancia_MEG}}">
+                                                        <input type='number' name='ganancia_MEG' id='ganancia_MEG' value='{{$proyecto->ganancia_MEG}}'  class='form-control' disabled>
+                                                    @endif
                                                     <span class="input-group-addon">%</span>
                                                 </div>
 
@@ -173,7 +218,12 @@
                                             <div class="col-sm-6 form-group required control-label" align="left">
                                                 <label for='ganancia_AMM'>AMM</label>
                                                 <div class="input-group">
-                                                    <input type='number' name='ganancia_AMM' id='ganancia_AMM' value='{{$proyecto->ganancia_AMM}}' class='form-control' required>
+                                                    @if($proyecto->distribuido == 0)
+                                                        <input type='number' name='ganancia_AMM' id='ganancia_AMM' value='{{$proyecto->ganancia_AMM}}' class='form-control' required>
+                                                    @else
+                                                        <input type="hidden" name="ganancia_AMM" value="{{$proyecto->ganancia_AMM}}">
+                                                        <input type='number' name='ganancia_AMM' id='ganancia_AMM' value='{{$proyecto->ganancia_AMM}}' class='form-control' disabled>
+                                                    @endif
                                                     <span class="input-group-addon">%</span>
                                                 </div>
                                             </div>
@@ -182,7 +232,12 @@
                                             <div class="col-sm-6 form-group required control-label" align="left">
                                                 <label for='ganancia_MME'>MME</label>
                                                 <div class="input-group">
-                                                    <input type='number' name='ganancia_MME' id='ganancia_MME' value='{{$proyecto->ganancia_MME}}'  class='form-control' required>
+                                                    @if($proyecto->distribuido == 0)
+                                                        <input type='number' name='ganancia_MME' id='ganancia_MME' value='{{$proyecto->ganancia_MME}}'  class='form-control' required>
+                                                    @else
+                                                        <input type="hidden" name="ganancia_MME" value="{{$proyecto->ganancia_MME}}">
+                                                        <input type='number' name='ganancia_MME' id='ganancia_MME' value='{{$proyecto->ganancia_MME}}'  class='form-control' disabled>
+                                                    @endif
                                                     <span class="input-group-addon">%</span>
                                                 </div>
 
@@ -190,7 +245,13 @@
                                             <div class="col-sm-6 form-group required control-label" align="left">
                                                 <label for='ganancia_AME'>AME</label>
                                                 <div class="input-group">
-                                                    <input type='number' name='ganancia_AME' id='ganancia_AME' value='{{$proyecto->ganancia_AME}}'  class='form-control' required>
+                                                    @if($proyecto->distribuido == 0)
+                                                        <input type='number' name='ganancia_AME' id='ganancia_AME' value='{{$proyecto->ganancia_AME}}'  class='form-control' required>
+                                                    @else
+                                                        <input type="hidden" name="ganancia_AME" value="{{$proyecto->ganancia_AME}}">
+                                                        <input type='number' name='ganancia_AME' id='ganancia_AME' value='{{$proyecto->ganancia_AME}}'  class='form-control' disabled>
+                                                    @endif
+
                                                     <span class="input-group-addon">%</span>
                                                 </div>
 
@@ -212,41 +273,81 @@
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-sm-12 " align="left">
-                                                            <label>Inicial:</label> $ {{$proyecto->inicial}}
+                                                        <div class="col-sm-1 " align="right">
+                                                        </div>
+                                                        <div class="col-sm-5 " align="left">
+                                                            <label>Inicial:</label>
+                                                        </div>
+                                                        <div class="col-sm-5 " align="left">
+                                                            $ {{$proyecto->inicial}}
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-sm-12 " align="left">
-                                                            <label>Honorarios:</label> $ {{$proyecto->honorarios}}
+                                                        <div class="col-sm-1 " align="right">
+                                                        </div>
+                                                        <div class="col-sm-5 " align="left">
+                                                            <label>Honorarios:</label>
+                                                        </div>
+                                                        <div class="col-sm-5 " align="left">
+                                                            $ {{$proyecto->honorarios}}
                                                         </div>
                                                     </div>
 
                                                     <div class="row">
-                                                        <div class="col-sm-12 " align="right">
-                                                            <label>TOTAL:</label> $ {{$proyecto->costo}}
+                                                        <div class="col-sm-1 " align="right">
                                                         </div>
+                                                        <div class="col-sm-5 " align="left">
+                                                            <label>TOTAL:</label>
+                                                        </div>
+                                                        <div class="col-sm-5 " align="left">
+                                                            $ {{$proyecto->costo}}
+                                                        </div>
+
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-sm-6 " align="left">
-                                                            <label>Adicional:</label> $ {{$proyecto->adicional}}
+                                                        <div class="col-sm-1 " align="right">
                                                         </div>
+                                                        <div class="col-sm-10 " align="left">
+                                                          <hr>
+                                                        </div>
+                                                        <div class="col-sm-1 " align="left">
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-1 " align="right">
+                                                        </div>
+                                                        <div class="col-sm-5 " align="left">
+                                                            <label>Adicionales:</label>
+                                                        </div>
+                                                        <div class="col-sm-5 " align="left">
+                                                            $ {{$proyecto->adicional}}
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row">
                                                         <div class="col-sm-12" align="center">
                                                             @if($estatusSelected == "Terminado" and !$proyecto->adicionalesDistribuido)
-                                                                <a href="{{ URL::to('recurso/distribuirAdicionales')}}" class="glyphicon glyphicon glyphicon-list btn btn-primary"> Distribuir</a>
+                                                                <a href="{{ URL::to('distribuirAdicionales')}}/{{$proyecto->id}}" class="glyphicon glyphicon glyphicon-list btn btn-primary"> Distribuir</a>
                                                             @else
                                                                 @if($estatusSelected != "Terminado")
                                                                     <label class="alert-info form-control">El proyecto no ha terminado</label>
                                                                 @else
-                                                                    <label class="alert-info form-control">Ya se distribuyo</label>
+                                                                    <label class="alert-info form-control">Distribuido</label>
                                                                 @endif
                                                             @endif
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-sm-12 " align="right">
-                                                            <label>CON ADICIONALES:</label> $ {{$proyecto->totAdicionales}}
+                                                        <div class="col-sm-7 " align="right">
+                                                           <br>
                                                         </div>
+                                                        <!--div class="col-sm-7 " align="right">
+                                                            <label>CON ADICIONALES:</label>
+                                                        </div>
+                                                        <div class="col-sm-5 " align="left">
+                                                             $ {{$proyecto->totAdicionales}}
+                                                        </div-->
                                                     </div>
                                                 </div>
                                            </div>
@@ -270,24 +371,36 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-sm-12 " align="left">
-                                                        <label>Efectivo:</label> $ {{$proyecto->efectivo}}
+                                                    <div class="col-sm-6 " align="left">
+                                                        <label>Efectivo:</label>
                                                     </div>
+                                                    <div class="col-sm-6 " align="left">
+                                                        $ {{$proyecto->efectivo}}
+                                                   </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-sm-12 " align="left">
-                                                        <label>Transferencia:</label> $ {{$proyecto->transferencias}}
+                                                    <div class="col-sm-6 " align="left">
+                                                        <label>Transfer:</label>
                                                     </div>
+                                                    <div class="col-sm-6 " align="left">
+                                                        $ {{$proyecto->transferencias}}
+                                                   </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-sm-12 " align="left">
-                                                        <label>Cheques:</label> $ {{$proyecto->cheques}}
+                                                    <div class="col-sm-6 " align="left">
+                                                        <label>Cheque:</label>
                                                     </div>
+                                                    <div class="col-sm-6 " align="left">
+                                                        $ {{$proyecto->cheques}}
+                                                   </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-sm-12 " align="center">
-                                                        <label>SALDO:</label> $ {{$proyecto->saldo}}
+                                                    <div class="col-sm-6 " align="left">
+                                                        <label>SALDO:</label>
                                                     </div>
+                                                    <div class="col-sm-6 " align="left">
+                                                        $ {{$proyecto->saldo}}
+                                                   </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -416,13 +529,18 @@
                                                             <label class="alert-info form-control">No suma 100%</label>
                                                         @else
                                                             @if($proyecto->distribuido)
-                                                                <label class="alert-info form-control">Ya se distribuyo</label>
+                                                                <label class="alert-info form-control">Distribuido</label>
                                                             @else
-                                                                <a href="{{ URL::to('recurso/distribuir')}}" class="glyphicon glyphicon glyphicon-list btn btn-primary"> Distribuir</a>
+                                                                <a href="{{ URL::to('distribuir')}}/{{$proyecto->id}}" class="glyphicon glyphicon glyphicon-list btn btn-primary"> Distribuir</a>
                                                             @endif
                                                         @endif
                                                     </div>
                                                 </div>
+                                                <div class="row">
+                                                        <div class="col-sm-7 " align="right">
+                                                           <br>
+                                                        </div>
+                                                    </div>
                                             </div>
                                        </div>
                                    </div>
@@ -481,9 +599,10 @@
                                                 <th class="center">Total </th>
                                                 <th class="center">Adicinal </th>
                                                 <th class="center">
-                                                    @if($proyecto->id != -1)
+                                                    @if($proyecto->id != -1 and  $proyecto->adicionalesDistribuido == 0)
                                                         <a href="{{ URL::to('concepto/-1/'.$proyecto->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
                                                     @endif
+
                                                 </th>
                                             </tr>
                                         </thead>
@@ -502,8 +621,13 @@
                                                         <input type="checkbox" class="form-check-input" id="adicional" {{ $concepto->adicional ? 'checked="checked"' : '' }} disabled>
                                                     </td>
                                                     <td>
-                                                        <a href="{{ URL::to('concepto/' . $concepto->id)}}" class="glyphicon glyphicon-edit"></a>
-                                                        <a href="{{ URL::to('concepto/eliminar/'.$concepto->id)}}" class="glyphicon glyphicon-trash"></a>
+                                                        <a href="{{ URL::to('concepto/' . $concepto->id)}}/{{$proyecto->id}}" class="glyphicon glyphicon-edit"></a>
+                                                         @if($concepto->adicional == 0 and  $proyecto->distribuido == 0)
+                                                            <a href="{{ URL::to('concepto/eliminar/'.$concepto->id)}}" class="glyphicon glyphicon-trash"></a>
+                                                        @endif
+                                                        @if($concepto->adicional == 1 and  $proyecto->adicionalesDistribuido == 0)
+                                                            <a href="{{ URL::to('concepto/eliminar/'.$concepto->id)}}" class="glyphicon glyphicon-trash"></a>
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             @endforeach
