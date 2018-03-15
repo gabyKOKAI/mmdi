@@ -134,29 +134,10 @@ class ProyectoController extends Controller
         $clienteSelected = "";
         $estatusSelected = "";
         if($proyecto){
-            #$conceptos = $proyecto->conceptos();
             $clienteSelected = $proyecto->cliente_id;
             $estatusSelected = $proyecto->estatus;
 
-            $proyecto->inicial = $proyecto->getCostoIA($proyecto->id,0);
-            $proyecto->adicional = $proyecto->getCostoIA($proyecto->id,1);
-            $proyecto->honorarios = $proyecto->getHonorarios($proyecto->id,$proyecto->gasto_porc_honorarios);
-            $proyecto->costo =  $proyecto->getCosto($proyecto) - $proyecto->adicional;
-            $proyecto->totAdicionales =  $proyecto->getCosto($proyecto);
-            $proyecto->efectivo = $proyecto->getEfectivo($proyecto->id);
-            $proyecto->transferencias = $proyecto->getTransferencias($proyecto->id);
-            $proyecto->cheques = $proyecto->getCheques($proyecto->id);
-            $proyecto->saldo = $proyecto->getSaldo($proyecto);
-            $proyecto->indirectos = $proyecto->getIndirectos($proyecto->id);
-            $proyecto->utilidades = $proyecto->indirectos + $proyecto->honorarios;
-            $proyecto->mmdi = $proyecto->utilidades * $proyecto->gasto_porc_ganancias_MMDI / 100;
-            $proyecto->errores = $proyecto->utilidades * $proyecto->gasto_porc_errores / 100;
-            $proyecto->ddg = $proyecto->utilidades - $proyecto->mmdi -$proyecto->gasto_viaticos -$proyecto->gasto_IMSS -$proyecto->errores;
-            $proyecto->recMmdi = $proyecto->mmdi + $proyecto->errores + $proyecto->gasto_viaticos +$proyecto->gasto_IMSS + $proyecto->getCostoIndirectos($proyecto->id);
-            $proyecto->meg = $proyecto->ddg * $proyecto->ganancia_MEG / 100;
-            $proyecto->amm = $proyecto->ddg * $proyecto->ganancia_AMM / 100;
-            $proyecto->mme = $proyecto->ddg * $proyecto->ganancia_MME / 100;
-            $proyecto->ame = $proyecto->ddg * $proyecto->ganancia_AME / 100;
+            $proyecto->calculoVariables($proyecto);
             $conceptos = Proyecto::getConceptos($proyecto->id);
         }
         else{

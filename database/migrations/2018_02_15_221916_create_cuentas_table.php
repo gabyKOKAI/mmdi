@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRecursosTable extends Migration
+class CreateCuentasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateRecursosTable extends Migration
      */
     public function up()
     {
-        Schema::create('recursos', function (Blueprint $table) {
+        Schema::create('cuentas', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
 
             $table->string('nombre')->default("")->nullable(false);
             $table->string('descripcion')->nullable(true);
-            $table->float('distribuido')->default(0)->nullable(false);
-            $table->float('saldo_gasto')->default(0)->nullable(false);
+            $table->float('saldo')->default(0)->nullable(false);
         });
     }
 
@@ -31,6 +30,6 @@ class CreateRecursosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('recursos');
+        Schema::dropIfExists('cuentas');
     }
 }

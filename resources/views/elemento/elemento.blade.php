@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-sm-12 align-center">
 
-                @if($elemento)
+                @if($elemento->id != -1)
                     <h1 class="center">[{{$elemento->id}}] Elemento  '{{$elemento->nombre}}' </h1>
                      <form method='GET' action='/elemento/guardar/{{$elemento->id}}'>
                @else
