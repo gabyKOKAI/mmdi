@@ -88,7 +88,7 @@
                                             </div>
                                             <div class="col-sm-2 form-group control-label" align="left">
                                                 @if($proyectoCon->distribuido == 0)
-                                                        <input type="checkbox" class="form-check-input" id="adicional" name="adicional" value="1" {{ $concepto->adicional ? 'checked="checked"' : ''}} required>Adicional</input>
+                                                        <input type="checkbox" class="form-check-input" id="adicional" name="adicional" value="1" {{ $concepto->adicional ? 'checked="checked"' : ''}}>Adicional</input>
                                                 @else
                                                     <input type="hidden" name="adicional" value="{{$concepto->adicional}}">
                                                     <input type="checkbox" class="form-check-input" id="adicional" name="adicional" value="1" {{ $concepto->adicional ? 'checked="checked"' : ''}} disabled>Adicional</input>
@@ -193,14 +193,14 @@
                 @if($concepto)
                       <div class="container">
                             <div class="row">
-                                <hr>
-                                <div class="col-sm-1 align-left">
+                                <div class="col-sm-5 align-left">
+                                    <hr>
                                 </div>
-                                <div class="col-sm-10 align-center">
+                                <div class="col-sm-2 align-center">
                                      <h3 class="center">Elementos</h3>
                                 </div>
-                                <div class="col-sm-1 align-left">
-
+                                <div class="col-sm-5 align-left">
+                                    <hr>
                                 </div>
                             </div>
                         </div>

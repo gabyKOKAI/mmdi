@@ -13,7 +13,7 @@ class CreatePagosProveedoresTable extends Migration
      */
     public function up()
     {
-        Schema::create('pagos_proveedores', function (Blueprint $table) {
+        Schema::create('pago_proveedores', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
 
@@ -24,18 +24,20 @@ class CreatePagosProveedoresTable extends Migration
             $table->date('fecha_factura')->nullable(true);
             $table->string('entrega')->default("")->nullable(false);
             $table->string('recibe')->default("")->nullable(false);
-            $table->string('comentario')->nullable(true);
+            $table->string('descripcion')->nullable(false);
 
             $table->string('tipo')->default("")->nullable(false);
+            $table->string('estatus')->default("")->nullable(false);
 
-            $table->integer('recurso_sale_id')->unsigned();
-			$table->foreign('recurso_sale_id')->references('id')->on('recursos');
+            $table->integer('cuenta_id')->unsigned();
+			$table->foreign('cuenta_id')->references('id')->on('cuentas');
 
-			$table->integer('proveedor_id')->unsigned();
-			$table->foreign('proveedor_id')->references('id')->on('proveedores');
+			$table->integer('cli_prov_id')->unsigned();
+			$table->foreign('cli_prov_id')->references('id')->on('proveedores');
 
-			$table->integer('cotizacion_id')->nullable()->unsigned();
-			$table->foreign('cotizacion_id')->references('id')->on('cotizaciones');
+			$table->integer('proy_coti_id')->nullable()->unsigned();
+			$table->foreign('proy_coti_id')->references('id')->on('cotizaciones');
+
         });
     }
 

@@ -67,11 +67,11 @@ Route::get('/pruebaBD', function () {
 });
 
 
-Route::get('/proyectos', 'ProyectoController@lista');
+Route::get('/proyectos/{idCli?}', 'ProyectoController@lista');
 Route::get('/proyecto/busca', 'ProyectoController@busca');
-Route::get('/proyecto/{id?}', 'ProyectoController@proyecto');
-Route::get('/proyecto/guardar/{id?}', 'ProyectoController@guardar');
-Route::post('/proyecto/guardar/{id?}', 'ProyectoController@guardar');
+Route::get('/proyecto/{id?}/{idCli?}', 'ProyectoController@proyecto');
+Route::get('/proyecto/guardar/{id?}/{idCli?}', 'ProyectoController@guardar');
+Route::post('/proyecto/guardar/{id?}/{idCli?}', 'ProyectoController@guardar');
 
 Route::get('/concepto/eliminar/{id?}', 'ConceptoController@eliminar');
 Route::get('/concepto/guardar/{id?}', 'ConceptoController@guardar');
@@ -105,21 +105,22 @@ Route::post('/movimiento/guardar/{id?}/{idRec?/{idCue?}}', 'MovimientoController
 Route::get('/movimiento/{id?}/{idRec?}/{idCue?}', 'MovimientoController@movimiento');
 
 Route::get('/clientes', 'ClienteController@lista');
-Route::get('/cliente/{id?}', 'ClienteController@cotizacion');
+Route::get('/cliente/{id?}', 'ClienteController@cliente');
 Route::get('/cliente/guardar/{id?}', 'ClienteController@guardar');
 Route::post('/cliente/guardar/{id?}', 'ClienteController@guardar');
 
+Route::get('/clientepago/guardar/{id?}', 'PagosClienteController@guardar');
+Route::post('/clientepago/guardar/{id?}', 'PagosClienteController@guardar');
+Route::get('/proveedorpago/guardar/{id?}', 'PagosProveedoreController@guardar');
+Route::post('/proveedorpago/guardar/{id?}', 'PagosProveedoreController@guardar');
+
 Route::get('/pagosClientes', 'PagosClienteController@lista');
-Route::get('/pagoCliente/{id?}/{idCli?}', 'PagosClienteController@cotizacion');
-Route::get('/pagoCliente/guardar/{id?}/{idCli?}', 'PagosClienteController@guardar');
-Route::post('/pagoCliente/guardar/{id?}/{idCli?}', 'PagosClienteController@guardar');
+Route::get('/pagoCliente/{id?}/{idCli?}', 'PagosClienteController@pagoCliente');
 
 Route::get('/proveedores', 'ProveedoreController@lista');
-Route::get('/proveedor/{id?}', 'ProveedoreController@cotizacion');
+Route::get('/proveedor/{id?}', 'ProveedoreController@proveedore');
 Route::get('/proveedor/guardar/{id?}', 'ProveedoreController@guardar');
 Route::post('/proveedor/guardar/{id?}', 'ProveedoreController@guardar');
 
 Route::get('/pagosProveedores', 'PagosProveedoreController@lista');
-Route::get('/pagoProveedor/{id?}/{idPro?}', 'PagosProveedoreController@cotizacion');
-Route::get('/pagoProveedor/guardar/{id?}/{idPro?}', 'PagosProveedoreController@guardar');
-Route::post('/pagoProveedor/guardar/{id?}/{idPro?}', 'PagosProveedoreController@guardar');
+Route::get('/pagoProveedor/{id?}/{idPro?}', 'PagosProveedoreController@pagoProveedore');

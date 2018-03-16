@@ -21,6 +21,13 @@ class Cotizacione extends Model
         return $this->belongsTo('mmdi\Proveedore');
     }
 
+    public function pagosProveedores()
+    {
+        # Cliente has many Proyectos
+        # Define a one-to-many relationship.
+        return $this->hasMany('mmdi\PagoProveedore');
+    }
+
    public static function getEstatusDropDown()
     {
         $estatus = ['Pendiente Cotizar','Cotizado','En Proceso','Entregado','Entrega Pendiente','Cancelado','Rechazado'];

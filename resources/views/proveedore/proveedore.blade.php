@@ -89,7 +89,7 @@
                                                 <input type='date' name='fecha' id='fecha' value='{{$movimiento->fecha}}' class="form-control" required>
                                              </div>
                                              <div class="col-sm-3 form-group required control-label" align="left">
-                                                <label for='descripcion'>Descripción</label>
+                                                <label for='monto'>Descripcion</label>
                                                 <input type='text' name='descripcion' id='descripcion' value='{{$movimiento->descripcion}}'  class="form-control" required>
                                             </div>
 
