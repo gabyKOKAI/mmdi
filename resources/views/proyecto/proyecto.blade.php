@@ -89,14 +89,12 @@
                                         <div class="row">
                                              <div class="col-sm-4" align="left">
                                                 <label for='direccion'>Direccion</label>
-                                                <br>
                                                 <textarea name='direccion' id='direccion' maxlength="190" rows="4"  class="form-control" >{{$proyecto->direccion}}</textarea>
                                              </div>
                                        </div>
                                        <div class="row">
                                              <div class="col-sm-4" align="left">
                                                 <label for='comentario'>Comentario</label>
-                                                <br>
                                                 <textarea name='comentario' id='comentario' maxlength="250" rows="5"  class="form-control" >{{$proyecto->comentario}}</textarea>
                                              </div>
                                        </div>
@@ -569,14 +567,14 @@
                 @if($proyecto)
                       <div class="container">
                             <div class="row">
-                                <hr>
-                                <div class="col-sm-1 align-left">
+                               <div class="col-sm-5 align-left">
+                                    <hr>
                                 </div>
-                                <div class="col-sm-10 align-center">
+                                <div class="col-sm-2 align-center">
                                      <h3 class="center">Conceptos</h3>
                                 </div>
-                                <div class="col-sm-1 align-left">
-
+                                <div class="col-sm-5 align-left">
+                                    <hr>
                                 </div>
                             </div>
                         </div>
@@ -672,5 +670,5 @@
             </div>
         </div>
     </div>
-
+    @include('pago.tablaPagos')
 @endsection

@@ -1,5 +1,4 @@
 <div class="container center">
-    <div class="row">
         <div class="col-sm-12 align-self-center">
            <div class="navbar navbar-default center" role="navigation" id="navigation">
                 <div class="navbar-header">
@@ -36,7 +35,7 @@
                             <ul class="dropdown-menu">
                               <li><a href="/recursos">Lista de Recursos</a></li>
                               <li><a href="/cuentas">Lista de Cuentas</a></li>
-                              <li><a href="/movimientos">Lista Movimientos</a></li>
+                              <li><a href="/movimientos">Lista Movmientos</a></li>
                               <li><a href="/movimiento/-1">Nuevo Movimiento</a></li>
                             </ul>
                         </li>
@@ -55,9 +54,9 @@
                             <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                               <li><a href="/proveedores">Lista de Proveedores</a></li>
-                              <li><a href="/proveedore/-1">Nuevo Proveedor</a></li>
+                              <li><a href="/proveedor/-1">Nuevo Proveedor</a></li>
                               <li><a href="/pagosProveedores">Pagos Proveedores</a></li>
-                              <li><a href="/pagoProveedore/-1">Nuevo Pago Proveedor</a></li>
+                              <li><a href="/pagoProveedor/-1">Nuevo Pago Proveedore</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -65,4 +64,3 @@
             </div>
         </div>
     </div>
-</div>

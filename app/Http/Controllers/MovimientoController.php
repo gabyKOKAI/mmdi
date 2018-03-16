@@ -10,7 +10,7 @@ use mmdi\Proyecto;
 
 class MovimientoController extends Controller
 {
-      public function lista($idRec= '-1',$idCue= '-1')
+    public function lista($idRec= '-1',$idCue= '-1')
     {
         if($idRec != -1){
 		    $movimientos = Movimiento::where('recurso_id', 'LIKE', $idRec)->paginate(15);

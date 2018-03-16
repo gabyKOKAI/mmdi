@@ -19,4 +19,11 @@ class Proveedore extends Model
         # Define a one-to-many relationship.
         return $this->hasMany('mmdi\Cotizacione');
     }
+
+     public function pagosProveedores()
+    {
+        # Cliente has many Proyectos
+        # Define a one-to-many relationship.
+        return $this->hasMany('mmdi\PagoProveedore');
+    }
 }

@@ -20,6 +20,7 @@ class CreateProveedoresTable extends Migration
             $table->string('nombre')->default("")->nullable(false);
             $table->string('descripcion')->nullable(true);
             $table->string('rfc')->nullable(true);
+            $table->string('razon_social')->nullable(true);
             $table->string('calle')->nullable(true);
             $table->string('delegacion_municipio')->nullable(true);
             $table->string('colonia')->nullable(true);

@@ -6,23 +6,30 @@ use Illuminate\Http\Request;
 use App;
 use mmdi\Proyecto;
 use mmdi\Cliente;
+use mmdi\Proveedore;
 use mmdi\Concepto;
+use mmdi\PagoCliente;
 
 class ProyectoController extends Controller
 {
      /**
     * GET /proyectos
     */
-    public function lista()
+    public function lista($idCli= '-1')
     { 
 		##return App::environment();
 
 		#$proyectos = Proyecto::with('cliente','conceptos')->get();
-		$proyectos = Proyecto::paginate(15);
+		if($idCli == -1){
+		    $proyectos = Proyecto::paginate(15);
+		    $cliente = new Cliente;
+            $cliente->id = -1;
+		}else{
+		    $proyectos = Proyecto::where('cliente_id','=',$idCli)->paginate(15);
+		    $cliente = Cliente::find($idCli);
+		}
 
-        if ($proyectos->isEmpty()) {
-            dump('No matches found');
-        } else {
+        if (!$proyectos->isEmpty()) {
             foreach ($proyectos as $proyecto) {
                 ##dump($proyecto->nombre.$proyecto->cliente->nombre);
                 $proyecto->costo = Proyecto::getCosto($proyecto);
@@ -36,7 +43,7 @@ class ProyectoController extends Controller
             }
         }
 
-		return view('proyecto.proyectoLista')->with(['proyectos' => $proyectos]);
+		return view('proyecto.proyectoLista')->with(['proyectos' => $proyectos, 'cliente'=>$cliente]);
     }
 
      /**
@@ -120,7 +127,7 @@ class ProyectoController extends Controller
 	* /proyecto/agrega
 	* Display the form to add a new proyecto
 	*/
-	public function proyecto(Request $request,$id= '-1') {
+	public function proyecto(Request $request,$id= '-1',$idCli= '-1') {
 	    $proyecto = Proyecto::find($id);
 
 	    # Get clientes
@@ -131,7 +138,7 @@ class ProyectoController extends Controller
         $conceptos = [];
 
 
-        $clienteSelected = "";
+        $clienteSelected = $idCli;
         $estatusSelected = "";
         if($proyecto){
             $clienteSelected = $proyecto->cliente_id;
@@ -139,14 +146,34 @@ class ProyectoController extends Controller
 
             $proyecto->calculoVariables($proyecto);
             $conceptos = Proyecto::getConceptos($proyecto->id);
+            $cliente = Cliente::find($proyecto->cliente_id);
         }
         else{
             $proyecto = new Proyecto;
             $proyecto->id = -1;
+            $cliente = Cliente::find($idCli);
         }
 
+        if(!$cliente){
+            $cliente = new Cliente;
+            $cliente->id = $idCli;
+        }
+
+        $proveedore = new Proveedore;
+        $proveedore->id = -1;
+
+        $pagos = PagoCliente::where('proy_coti_id','=',$proyecto->id)->paginate(5);
+
         return view('proyecto.proyecto')->
-        with(['proyecto' => $proyecto,'conceptos' => $conceptos, 'clientesForDropdown' => $clientesForDropdown,'clienteSelected'=>$clienteSelected,'estatusForDropdown' => $estatusForDropdown,'estatusSelected'=>$estatusSelected]);
+        with([  'proyecto' => $proyecto,
+                'conceptos' => $conceptos,
+                'clientesForDropdown' => $clientesForDropdown,'clienteSelected'=>$clienteSelected,
+                'estatusForDropdown' => $estatusForDropdown,'estatusSelected'=>$estatusSelected,
+                'cliente' => $cliente,
+                'proveedore'=>$proveedore,
+                'pagos'=>$pagos,
+                'esCliente'=>1
+                ]);
 	}
 
 

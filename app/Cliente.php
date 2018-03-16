@@ -13,4 +13,11 @@ class Cliente extends Model
         return $this->hasMany('mmdi\Proyecto');
     }
 
+    public function pagosClientes()
+    {
+        # Cliente has many Proyectos
+        # Define a one-to-many relationship.
+        return $this->hasMany('mmdi\PagoCliente');
+    }
+
 }

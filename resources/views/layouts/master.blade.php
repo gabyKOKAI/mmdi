@@ -45,7 +45,13 @@
     </div>
 
     <section>
-        @yield('content')
+        <div class="container center">
+            <div class="row">
+                <div class="col-sm-12">
+                    @yield('content')
+                </div>
+            </div>
+        </div>
     </section>
 
     <!--footer>

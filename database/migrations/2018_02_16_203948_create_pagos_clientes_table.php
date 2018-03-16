@@ -13,29 +13,30 @@ class CreatePagosClientesTable extends Migration
      */
     public function up()
     {
-        Schema::create('pagos_clientes', function (Blueprint $table) {
+        Schema::create('pago_clientes', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
 
             $table->float('monto')->default(0)->nullable(false);
             $table->date('fecha_pago')->timestamps();
             $table->boolean('con_iva')->default(False)->nullable(false);
-            $table->string('numero_factura')->default("")->nullable(false);
+            $table->string('numero_factura')->default("")->nullable(true);
             $table->date('fecha_factura')->nullable(true);
             $table->string('entrega')->default("")->nullable(false);
             $table->string('recibe')->default("")->nullable(false);
-            $table->string('comentario')->nullable(true);
+            $table->string('descripcion')->nullable(false);
 
             $table->string('tipo')->default("")->nullable(false);
+            $table->string('estatus')->default("")->nullable(false);
 
-            $table->integer('recurso_entra_id')->unsigned();
-			$table->foreign('recurso_entra_id')->references('id')->on('recursos');
+            $table->integer('cuenta_id')->unsigned();
+			$table->foreign('cuenta_id')->references('id')->on('cuentas');
 
-			$table->integer('cliente_id')->unsigned();
-			$table->foreign('cliente_id')->references('id')->on('clientes');
+			$table->integer('cli_prov_id')->unsigned();
+			$table->foreign('cli_prov_id')->references('id')->on('clientes');
 
-			$table->integer('proyecto_id')->nullable()->unsigned();
-			$table->foreign('proyecto_id')->references('id')->on('proyectos');
+			$table->integer('proy_coti_id')->nullable(true)->unsigned();
+			$table->foreign('proy_coti_id')->references('id')->on('proyectos');
 
 
         });
