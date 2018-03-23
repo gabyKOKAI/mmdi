@@ -11,11 +11,11 @@
 |
 */
 
-#Route::get('/', function () {
+Route::get('/', function () {
 	#dump(config('mail.supportEmail'));
 	#dump(config('mail'));
-    #return view('welcome');
-#});
+    return view('welcome');
+});
 
 # New route returs string Hola Mundo
 Route::get('/prueba', function () {
@@ -66,62 +66,93 @@ Route::get('/pruebaBD', function () {
     dump($debug);
 });
 
-#Route::get('/', 'ProyectoController@lista');
 
-Route::get('/proyectos/{idCli?}', 'ProyectoController@lista');
-Route::get('/proyecto/busca', 'ProyectoController@busca');
-Route::get('/proyecto/{id?}/{idCli?}', 'ProyectoController@proyecto');
-Route::get('/proyecto/guardar/{id?}/{idCli?}', 'ProyectoController@guardar');
-Route::post('/proyecto/guardar/{id?}/{idCli?}', 'ProyectoController@guardar');
+Auth::routes();
 
-Route::get('/concepto/eliminar/{id?}', 'ConceptoController@eliminar');
-Route::get('/concepto/guardar/{id?}', 'ConceptoController@guardar');
-Route::post('/concepto/guardar/{id?}', 'ConceptoController@guardar');
-Route::get('/concepto/{id?}/{idproy?}', 'ConceptoController@concepto');
+Route::get('/register', function () {
+	#dump(config('mail.supportEmail'));
+	#dump(config('mail'));
+    return view('welcome');
+});
+Route::post('/register',  function () {
+	#dump(config('mail.supportEmail'));
+	#dump(config('mail'));
+    return view('welcome');
+});
 
-Route::get('/conceptoElemento/eliminar/{idCon}/{idEle?}/{edit?}', 'ConceptoElementoController@eliminar');
-Route::get('/conceptoElemento/guardar/{idCon}/{idEle?}/{edit?}', 'ConceptoElementoController@guardar');
-Route::post('/conceptoElemento/guardar/{idCon}/{idEle?}/{edit?}', 'ConceptoElementoController@guardar');
-Route::get('/conceptoElemento/{idCon}/{idEle?}/{edit?}', 'ConceptoElementoController@conceptoElemento');
+Route::get('/quienEstaConectado', function () {
+    $user = Auth::user();
 
-Route::get('/elementos', 'ElementoController@lista');
-Route::get('/elemento/guardar/{id?}', 'ElementoController@guardar');
-Route::post('/elemento/guardar/{id?}', 'ElementoController@guardar');
-Route::get('/elemento/{id?}', 'ElementoController@elemento');
+    if ($user) {
+        dump('Estas conectado como:', $user->toArray());
+    } else {
+        dump('No hay nadie conectado conectado');
+    }
 
-Route::get('/cotizaciones', 'CotizacionController@lista');
-Route::get('/cotizacion/{id?}', 'CotizacionController@cotizacion');
-Route::get('/cotizacion/guardar/{id?}', 'CotizacionController@guardar');
-Route::post('/cotizacion/guardar/{id?}', 'CotizacionController@guardar');
+    return;
+});
 
-Route::get('/cuentas', 'CuentaController@lista');
+Route::group(['middleware' => 'auth'], function () {
+    #Route::get('/', 'ProyectoController@lista');
 
-Route::get('/recursos', 'RecursoController@lista');
-Route::get('/distribuir/{id}', 'MovimientoController@distribuir');
-Route::get('/distribuirAdicionales/{id}', 'MovimientoController@distribuirAdicionales');
+    Route::get('/proyectos/{idCli?}',
+        ['middleware' => 'auth',
+        'uses' =>'ProyectoController@lista'
+        ]);
+    Route::get('/proyecto/busca', 'ProyectoController@busca');
+    Route::get('/proyecto/{id?}/{idCli?}', 'ProyectoController@proyecto');
+    Route::get('/proyecto/guardar/{id?}/{idCli?}', 'ProyectoController@guardar');
+    Route::post('/proyecto/guardar/{id?}/{idCli?}', 'ProyectoController@guardar');
 
-Route::get('/movimientos/{idRec?}/{idCue?}', 'MovimientoController@lista');
-Route::get('/movimiento/guardar/{id?}/{idRec?}/{idCue?}', 'MovimientoController@guardar');
-Route::post('/movimiento/guardar/{id?}/{idRec?/{idCue?}}', 'MovimientoController@guardar');
-Route::get('/movimiento/{id?}/{idRec?}/{idCue?}', 'MovimientoController@movimiento');
+    Route::get('/concepto/eliminar/{id?}', 'ConceptoController@eliminar');
+    Route::get('/concepto/guardar/{id?}', 'ConceptoController@guardar');
+    Route::post('/concepto/guardar/{id?}', 'ConceptoController@guardar');
+    Route::get('/concepto/{id?}/{idproy?}', 'ConceptoController@concepto');
 
-Route::get('/clientes', 'ClienteController@lista');
-Route::get('/cliente/{id?}', 'ClienteController@cliente');
-Route::get('/cliente/guardar/{id?}', 'ClienteController@guardar');
-Route::post('/cliente/guardar/{id?}', 'ClienteController@guardar');
+    Route::get('/conceptoElemento/eliminar/{idCon}/{idEle?}/{edit?}', 'ConceptoElementoController@eliminar');
+    Route::get('/conceptoElemento/guardar/{idCon}/{idEle?}/{edit?}', 'ConceptoElementoController@guardar');
+    Route::post('/conceptoElemento/guardar/{idCon}/{idEle?}/{edit?}', 'ConceptoElementoController@guardar');
+    Route::get('/conceptoElemento/{idCon}/{idEle?}/{edit?}', 'ConceptoElementoController@conceptoElemento');
 
-Route::get('/clientepago/guardar/{id?}/{idCli?}/{idProy?}', 'PagosClienteController@guardar');
-Route::post('/clientepago/guardar/{id?}/{idCli?}/{idProy?}', 'PagosClienteController@guardar');
-Route::get('/proveedorpago/guardar/{id?}/{idPro?}/{idCot?}', 'PagosProveedoreController@guardar');
-Route::post('/proveedorpago/guardar/{id?}/{idPro?}/{idCot?}', 'PagosProveedoreController@guardar');
+    Route::get('/elementos', 'ElementoController@lista');
+    Route::get('/elemento/guardar/{id?}', 'ElementoController@guardar');
+    Route::post('/elemento/guardar/{id?}', 'ElementoController@guardar');
+    Route::get('/elemento/{id?}', 'ElementoController@elemento');
 
-Route::get('/pagosClientes', 'PagosClienteController@lista');
-Route::get('/pagoCliente/{id?}/{idCli?}/{idProy?}', 'PagosClienteController@pagoCliente');
+    Route::get('/cotizaciones', 'CotizacionController@lista');
+    Route::get('/cotizacion/{id?}', 'CotizacionController@cotizacion');
+    Route::get('/cotizacion/guardar/{id?}', 'CotizacionController@guardar');
+    Route::post('/cotizacion/guardar/{id?}', 'CotizacionController@guardar');
 
-Route::get('/proveedores', 'ProveedoreController@lista');
-Route::get('/proveedor/{id?}', 'ProveedoreController@proveedore');
-Route::get('/proveedor/guardar/{id?}', 'ProveedoreController@guardar');
-Route::post('/proveedor/guardar/{id?}', 'ProveedoreController@guardar');
+    Route::get('/cuentas', 'CuentaController@lista');
 
-Route::get('/pagosProveedores', 'PagosProveedoreController@lista');
-Route::get('/pagoProveedor/{id?}/{idPro?}/{idCot?}', 'PagosProveedoreController@pagoProveedore');
+    Route::get('/recursos', 'RecursoController@lista');
+    Route::get('/distribuir/{id}', 'MovimientoController@distribuir');
+    Route::get('/distribuirAdicionales/{id}', 'MovimientoController@distribuirAdicionales');
+
+    Route::get('/movimientos/{idRec?}/{idCue?}', 'MovimientoController@lista');
+    Route::get('/movimiento/guardar/{id?}/{idRec?}/{idCue?}', 'MovimientoController@guardar');
+    Route::post('/movimiento/guardar/{id?}/{idRec?/{idCue?}}', 'MovimientoController@guardar');
+    Route::get('/movimiento/{id?}/{idRec?}/{idCue?}', 'MovimientoController@movimiento');
+
+    Route::get('/clientes', 'ClienteController@lista');
+    Route::get('/cliente/{id?}', 'ClienteController@cliente');
+    Route::get('/cliente/guardar/{id?}', 'ClienteController@guardar');
+    Route::post('/cliente/guardar/{id?}', 'ClienteController@guardar');
+
+    Route::get('/clientepago/guardar/{id?}/{idCli?}/{idProy?}', 'PagosClienteController@guardar');
+    Route::post('/clientepago/guardar/{id?}/{idCli?}/{idProy?}', 'PagosClienteController@guardar');
+    Route::get('/proveedorpago/guardar/{id?}/{idPro?}/{idCot?}', 'PagosProveedoreController@guardar');
+    Route::post('/proveedorpago/guardar/{id?}/{idPro?}/{idCot?}', 'PagosProveedoreController@guardar');
+
+    Route::get('/pagosClientes', 'PagosClienteController@lista');
+    Route::get('/pagoCliente/{id?}/{idCli?}/{idProy?}', 'PagosClienteController@pagoCliente');
+
+    Route::get('/proveedores', 'ProveedoreController@lista');
+    Route::get('/proveedor/{id?}', 'ProveedoreController@proveedore');
+    Route::get('/proveedor/guardar/{id?}', 'ProveedoreController@guardar');
+    Route::post('/proveedor/guardar/{id?}', 'ProveedoreController@guardar');
+
+    Route::get('/pagosProveedores', 'PagosProveedoreController@lista');
+    Route::get('/pagoProveedor/{id?}/{idPro?}/{idCot?}', 'PagosProveedoreController@pagoProveedore');
+});

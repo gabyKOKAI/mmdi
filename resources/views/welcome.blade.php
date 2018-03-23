@@ -1,14 +1,9 @@
 @extends('layouts.master')
 
 @section('title')
-    Movimientos
+    MMDI Bienvenido
 @endsection
-<html>
-<head>
-	<title></title>
-	<meta charset='utf-8'>
-</head>
-<body>
-    <h1>MMDI</h1>
-</body>
-</html>
+
+@section('content')
+    <h1>Bienvenid@ al Sistema de MMDI</h1>
+@endsection

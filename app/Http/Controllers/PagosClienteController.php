@@ -79,7 +79,7 @@ class PagosClienteController extends Controller
 
         return view('pago.pagoCliente')->
         with(['pago' => $pago,
-        'cli_prov'=>$cliente,
+        'cliProv'=>$cliente,
         'cliProvForDropdown' => $cliProvForDropdown,'cliProvSelected'=>$cliProvSelected,
         'proyCotiForDropdown' => $proyCotiForDropdown,'proyCotiSelected'=>$proyCotiSelected,
         'cuentasForDropdown' => $cuentasForDropdown,'cuentaSelected'=>$cuentaSelected,
@@ -102,7 +102,7 @@ class PagosClienteController extends Controller
         if (!$pago) {
             # Instantiate a new Concepto Model object
             $pago = new PagoCliente();
-            $pago->id = -1;
+            ##$pago->id = -1;
             $pago->con_iva = -1;
             $res = "Creado";
          } else {

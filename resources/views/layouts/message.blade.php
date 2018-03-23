@@ -49,7 +49,7 @@
 </div>
 <div class="container-center">
     <div class="row">
-        @if ($errors->any())
+        @if (isset($errors) and $errors->any())
         <div class="col-sm-12  alert">
             <span class="close" data-dismiss="alert">&times;</span>
             <div class="alert-danger">

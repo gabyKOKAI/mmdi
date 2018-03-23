@@ -108,7 +108,7 @@
                                             @endif
                                         @endif
 
-                                            @if($proyCotiSelected == -1)
+                                            @if($proyCotiSelected == -1 or $proyCotiSelected == -2)
                                                 <select name="proy_coti_id"  class="form-control" required>
                                             @else
                                                 <input type="hidden" name="proy_coti_id" value="<?php echo e($proyCotiSelected); ?>">
@@ -122,7 +122,6 @@
                                             @endif
                                             </option>
 
-                                             <!---->
                                             @foreach($proyCotiForDropdown as $proyCoti)
                                                 <option value="{{ $proyCoti->id }}" {{ $proyCoti->id == $proyCotiSelected ? 'selected="selected"' : '' }}> {{$proyCoti->nombre}}
                                                 (

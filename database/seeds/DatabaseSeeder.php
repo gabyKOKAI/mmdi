@@ -21,9 +21,7 @@ class DatabaseSeeder extends Seeder
         //$this->call(ConceptosElementosTableSeeder::class);
         $this->call(CuentasTableSeeder::class);
         $this->call(RecursosTableSeeder::class);
-
-        // Production
-        // $this->call(UsersTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
         //$this->call(ClientesTableSeeder::class);
 
     }
