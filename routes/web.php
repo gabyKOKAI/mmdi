@@ -11,11 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-	dump(config('mail.supportEmail'));
-	dump(config('mail'));
-    return view('welcome');
-});
+#Route::get('/', function () {
+	#dump(config('mail.supportEmail'));
+	#dump(config('mail'));
+    #return view('welcome');
+#});
 
 # New route returs string Hola Mundo
 Route::get('/prueba', function () {
@@ -66,6 +66,7 @@ Route::get('/pruebaBD', function () {
     dump($debug);
 });
 
+#Route::get('/', 'ProyectoController@lista');
 
 Route::get('/proyectos/{idCli?}', 'ProyectoController@lista');
 Route::get('/proyecto/busca', 'ProyectoController@busca');
