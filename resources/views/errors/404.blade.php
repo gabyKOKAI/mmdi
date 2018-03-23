@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>
-        @yield('title', 'Página no encontrada')
-    </title>
 
     <meta charset='utf-8'>
     <link href="/css/mmdi.css" type='text/css' rel='stylesheet'>

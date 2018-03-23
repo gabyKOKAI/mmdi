@@ -1,9 +1,5 @@
 @extends('layouts.master')
 
-@section('title')
-    Cliente
-@endsection
-
 @push('head')
     <!--link href="/css/cliente.css" type='text/css' rel='stylesheet'-->
 @endpush

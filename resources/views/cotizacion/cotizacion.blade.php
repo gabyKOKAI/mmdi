@@ -1,9 +1,5 @@
 @extends('layouts.master')
 
-@section('title')
-    Cotizacion
-@endsection
-
 @push('head')
     <!--link href="/css/cotizacion.css" type='text/css' rel='stylesheet'-->
 @endpush

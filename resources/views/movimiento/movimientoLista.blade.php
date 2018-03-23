@@ -1,9 +1,5 @@
 @extends('layouts.master')
 
-@section('title')
-    Movimientos
-@endsection
-
 @push('head')
     <!--link href="/css/movimiento.css" type='text/css' rel='stylesheet'-->
 @endpush

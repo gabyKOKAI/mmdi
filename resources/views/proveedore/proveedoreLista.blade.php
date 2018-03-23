@@ -1,9 +1,5 @@
 @extends('layouts.master')
 
-@section('title')
-    Proveedores
-@endsection
-
 @push('head')
     <!--link href="/css/proveedore.css" type='text/css' rel='stylesheet'-->
 @endpush

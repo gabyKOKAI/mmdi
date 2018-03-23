@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+@extends('layouts.master')
+
+@section('title')
+    Movimientos
+@endsection
 <html>
 <head>
 	<title></title>

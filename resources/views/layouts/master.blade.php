@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>
-        @yield('title', 'MMDI')
+        @yield('title', 'MMDI Desarrollo Kokai Web')
     </title>
 
     <meta charset='utf-8'>

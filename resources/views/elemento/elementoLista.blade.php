@@ -1,9 +1,5 @@
 @extends('layouts.master')
 
-@section('title')
-    Elementos
-@endsection
-
 @push('head')
     <!--link href="/css/elemento.css" type='text/css' rel='stylesheet'-->
 @endpush

@@ -1,9 +1,5 @@
 @extends('layouts.master')
 
-@section('title')
-    Recursos
-@endsection
-
 @push('head')
     <!--link href="/css/recurso.css" type='text/css' rel='stylesheet'-->
 @endpush

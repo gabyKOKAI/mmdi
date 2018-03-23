@@ -1,9 +1,5 @@
 @extends('layouts.master')
 
-@section('title')
-    Cuentas
-@endsection
-
 @push('head')
     <!--link href="/css/cuenta.css" type='text/css' rel='stylesheet'-->
 @endpush

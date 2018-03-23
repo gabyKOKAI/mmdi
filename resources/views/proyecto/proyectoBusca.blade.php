@@ -1,9 +1,5 @@
 @extends('layouts.master')
 
-@section('title')
-    Search
-@endsection
-
 @section('content')
     <h1>Search</h1>
 
