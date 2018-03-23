@@ -13,11 +13,12 @@ class RecursosTableSeeder extends Seeder
     public function run()
     {
          $recursos = [
-            ['MMDI','Empresa',100000,0],
-            ['AME','Andrea',15000,0],
-            ['MME','Marcela M',1500,0],
-            ['AMM','AMM',20000,0],
-            ['MEG','Marcela E',10000,0],
+            ['MMDI','Empresa',0,0],
+            ['AME','Andrea Mora E',0,0],
+            ['MME','Marcela Mora E',0,0],
+            ['AMM','Agustin Mora M',0,0],
+            ['MEG','Marcela E G',0,0],
+            ['Proyectos','para apoyarnos en el registro de los pagos',-1,-1],
         ];
 
         $count = count($recursos);
@@ -29,7 +30,7 @@ class RecursosTableSeeder extends Seeder
                 'updated_at' => Carbon\Carbon::now()->subDays($count)->toDateTimeString(),
                 'nombre' => $recurso[0],
                 'descripcion' => $recurso[1],
-                'distribuido' => $recurso[2],
+                'ingreso' => $recurso[2],
                 'saldo_gasto' => $recurso[3],
             ]);
             $count--;

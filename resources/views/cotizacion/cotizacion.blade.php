@@ -12,9 +12,9 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12 align-center">
-                @if($cotizacion->id != -1)
-                    <h1 class="center">[{{$cotizacion->id}}] Cotizacion {{$cotizacion->nombre}}</h1>
-                     <form method='GET' action='/cotizacion/guardar/{{$cotizacion->id}}'>
+                @if($cotizacione->id != -1)
+                    <h1 class="center">[{{$cotizacione->id}}] Cotizacion {{$cotizacione->nombre}}</h1>
+                     <form method='GET' action='/cotizacion/guardar/{{$cotizacione->id}}'>
                @else
                     <h1 class="center">Nueva Cotizacion</h1>
                     <form method='GET' action='/cotizacion/guardar/-1'>
@@ -30,10 +30,10 @@
                                 </div>
                                 <div class="col-sm-4" align="left">
                                     <div class="container center col-sm-12">
-                                       <div class="row">
+                                        <div class="row">
                                             <div class="col-sm-12 form-group required control-label" align="left">
-                                                    <label for='descripcion'>Descripcion</label>
-                                                    <input type='text' name='descripcion' id='descripcion' value='{{$cotizacion->descripcion}}'  class="form-control" required>
+                                                    <label for='nombre'>Nombre</label>
+                                                    <input type='text' name='nombre' id='nombre' value='{{$cotizacione->nombre}}'  class="form-control" required>
                                             </div>
                                        </div>
                                        <div class="row">
@@ -58,7 +58,7 @@
                                                     <a href="{{ URL::to('proyecto/'.$proyectoSelected)}}" class="glyphicon glyphicon-edit"></a>
                                                 @endif
                                                 <select name="proyecto_id"  class="form-control">
-                                                    <option value="---" {{ $cotizacion->id == -1 ? 'selected="selected"' : '' }}> {{ "---SIN PROYECTO---" }} </option>
+                                                    <option value="---" {{ $cotizacione->id == -1 ? 'selected="selected"' : '' }}> {{ "---SIN PROYECTO---" }} </option>
                                                     @foreach($proyectosForDropdown as $proyecto)
                                                         <option value="{{ $proyecto->id }}" {{ $proyecto->id == $proyectoSelected ? 'selected="selected"' : '' }}> {{ $proyecto->nombre }} </option>
                                                     @endforeach
@@ -69,6 +69,12 @@
                                 </div>
                                 <div class="col-sm-4" align="left">
                                     <div class="container center col-sm-12  ">
+                                        <div class="row">
+                                            <div class="col-sm-12 form-group required control-label" align="left">
+                                                    <label for='descripcion'>Descripcion</label>
+                                                    <input type='text' name='descripcion' id='descripcion' value='{{$cotizacione->descripcion}}'  class="form-control" required>
+                                            </div>
+                                       </div>
                                         <div class="row">
                                             <div class="col-sm-12 form-group required control-label" align="left">
                                                 <label for='estatus'>Estatus</label>
@@ -83,21 +89,21 @@
                                        <div class="row">
                                             <div class="col-sm-12 form-group required control-label" align="left">
                                                     <label for='monto'>Monto</label>
-                                                    <input type='number' name='monto' id='monto' value='{{$cotizacion->monto}}'  class="form-control" required>
+                                                    <input type='number' name='monto' id='monto' value='{{$cotizacione->monto}}'  class="form-control" required>
                                             </div>
 
                                        </div>
                                         <div class="row">
                                             <div class="col-sm-12 form-group control-label" align="left">
                                                 <br>
-                                                <input type="checkbox" class="form-check-input" id="con_iva" name="con_iva" value="1" {{ $cotizacion->con_iva ? 'checked="checked"' : ''}}>Con IVA</input>
+                                                <input type="checkbox" class="form-check-input" id="con_iva" name="con_iva" value="1" {{ $cotizacione->con_iva ? 'checked="checked"' : ''}}>Con IVA</input>
                                             </div>
                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4" align="left">
                                     <div class="col-sm-12 container center">
-                                        @if($cotizacion->id != -1)
+                                        @if($cotizacione->id != -1)
                                          <div class="row">
                                             <div class="col-sm-2" align="center">
                                             <br>
@@ -110,22 +116,22 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-sm-12 " align="left">
-                                                        <label>Efectivo:</label> $ {{$cotizacion->efectivo}}
+                                                        <label>Efectivo:</label> $ {{$cotizacione->efectivo}}
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-sm-12 " align="left">
-                                                        <label>Transferencia:</label> $ {{$cotizacion->transferencias}}
+                                                        <label>Transferencia:</label> $ {{$cotizacione->transferencias}}
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-sm-12 " align="left">
-                                                        <label>Cheques:</label> $ {{$cotizacion->cheques}}
+                                                        <label>Cheques:</label> $ {{$cotizacione->cheques}}
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-sm-12 " align="center">
-                                                        <label>SALDO:</label> $ {{$cotizacion->saldo}}
+                                                        <label>SALDO:</label> $ {{$cotizacione->saldo}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -139,7 +145,7 @@
                         <div class="container center">
                             <div class="row">
                                 <div class="col-sm-12 align-self-center">
-                                    @if($cotizacion)
+                                    @if($cotizacione)
                                         <input type='submit' value='Guarda Cotizacion' class='btn btn-primary btn-small'>
                                     @else
                                         <input type='submit' value='Crear Cotizacion' class='btn btn-primary btn-small'>
@@ -152,5 +158,5 @@
 			</div>
 		</div>
     </div>
-
+@include('pago.tablaPagos')
 @endsection

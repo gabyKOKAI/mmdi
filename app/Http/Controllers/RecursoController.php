@@ -9,7 +9,7 @@ class RecursoController extends Controller
 {
     public function lista()
     {
-		$recursos = Recurso::paginate(15);
+		$recursos = Recurso::where('saldo_gasto', '<>', -1)->where('ingreso', '<>', -1 )->paginate(15);
 
 		return view('recurso.recursoLista')->with(['recursos' => $recursos]);
     }

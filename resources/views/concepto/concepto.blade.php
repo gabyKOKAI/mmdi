@@ -61,12 +61,12 @@
                                             <div class="col-sm-1  form-group required control-label"" align="left">
                                                 <label for='cantidad'>Cantidad</label>
                                                 @if($proyectoCon->distribuido == 0 and $concepto->adicional == 0)
-                                                    <input type='number' name='cantidad' id='cantidad' value='{{$concepto->cantidad}}' class='numero form-control' required>
+                                                    <input type='number' name='cantidad' id='cantidad' min="0" value='{{$concepto->cantidad}}' class='numero form-control' required>
                                                 @elseif($proyectoCon->adicionalesDistribuido == 0 and $concepto->adicional == 1)
-                                                    <input type='number' name='cantidad' id='cantidad' value='{{$concepto->cantidad}}' class='numero form-control' required>
+                                                    <input type='number' name='cantidad' id='cantidad' min="0" value='{{$concepto->cantidad}}' class='numero form-control' required>
                                                 @else
                                                     <input type="hidden" name="cantidad" value="{{$concepto->cantidad}}">
-                                                    <input type='number' name='cantidad' id='cantidad' value='{{$concepto->cantidad}}' class='numero form-control' disabled>
+                                                    <input type='number' name='cantidad' id='cantidad' min="0" value='{{$concepto->cantidad}}' class='numero form-control' disabled>
                                                 @endif
 
 

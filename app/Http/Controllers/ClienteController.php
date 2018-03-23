@@ -8,6 +8,7 @@ use mmdi\Proyecto;
 use mmdi\Proveedore;
 use mmdi\Contacto;
 use mmdi\PagoCliente;
+use mmdi\Cotizacione;
 
 class ClienteController extends Controller
 {
@@ -21,21 +22,39 @@ class ClienteController extends Controller
     public function cliente(Request $request,$id= '-1') {
 	    $cliente = Cliente::find($id);
 
-	     if(!$cliente){
+	    if(!$cliente){
             $cliente = new Cliente;
             $cliente->id = -1;
         }
 
-         $proveedore = new Proveedore;
-         $proveedore->id = -1;
+        $proveedore = new Proveedore;
+        $proveedore->id = -1;
+
+        $proyecto = new Proyecto;
+        $proyecto->id = -1;
+
+        $cotizacione = new Cotizacione;
+        $cotizacione->id = -1;
 
         $contactos = Contacto::where('cliente_id','=',$cliente->id)->paginate(5);
+
         $proyectos = Proyecto::where('cliente_id','=',$cliente->id)->paginate(5);
-        $proyectos = Proyecto::where('cliente_id','=',$cliente->id)->paginate(5);
+
+        if (!$proyectos->isEmpty()) {
+            foreach ($proyectos as $proyecto1) {
+                $proyecto1->costo = Proyecto::getCosto($proyecto1);
+                $proyecto1->saldo = Proyecto::getSaldo($proyecto1);
+            }
+        }
+
         $pagos = PagoCliente::where('cli_prov_id','=',$cliente->id)->paginate(5);
 
         return view('cliente.cliente')->
-        with(['cliente' => $cliente, 'proveedore'=>$proveedore, 'contactos'=>$contactos, 'proyectos'=>$proyectos,'pagos'=>$pagos,'esCliente'=>1]);
+        with([  'cliente' => $cliente, 'proyecto' => $proyecto,
+                'proveedore'=>$proveedore, 'cotizacione' => $cotizacione,
+                'contactos'=>$contactos,
+                'proyectos'=>$proyectos,
+                'pagos'=>$pagos,'esCliente'=>1]);
 	}
 
 	public function guardar(Request $request,$id) {

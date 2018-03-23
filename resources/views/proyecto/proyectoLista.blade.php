@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Lista Proyectos
+    Proyectos
 @endsection
 
 @push('head')

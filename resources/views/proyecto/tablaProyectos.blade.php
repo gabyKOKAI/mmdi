@@ -7,7 +7,7 @@
                     </div>
                     <div class="col-sm-4 align-center">
                          <h3 class="center">Proyectos
-                         @if($cliente->id != -1)
+                         @if($cliente->id > 0)
                             de {{$cliente->nombre}} <!--a href="{{ URL::to('cliente/'.$cliente->id)}}" class="glyphicon glyphicon-edit"></a-->
                             @endif
                          </h3>
@@ -74,9 +74,7 @@
 
                 <div class="container center">
                     <div class="row">
-                        <div class="col-sm-1 align-self-center">
-                        </div>
-                        <div class="col-sm-10 align-self-center">
+                        <div class="col-sm-12 align-self-center">
 
                             <!-- { {$proyectos->lastPage()} } -->
                             <!-- { {$proyectos->hasMorePages()} } -->
@@ -88,9 +86,6 @@
                             <!-- { {$proyectos->perPage()} } -->
                             <!-- { {$proyectos->currentPage()} } -->
                             {{$proyectos->render()}}
-
-                        </div>
-                        <div class="col-sm-1 align-self-center">
                         </div>
                     </div>
                 </div>
@@ -100,7 +95,7 @@
                         <div class="col-sm-12 align-center">
                             <h4 class="center">
                                 Sin Proyectos
-                                @if($cliente->id != -1 or $proveedore->id != -1)
+                                @if($cliente->id != -1)
                                     <a href="{{ URL::to('proyecto/-1/'.$cliente->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
                                 @endif
                             </h4>

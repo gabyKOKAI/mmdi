@@ -20,7 +20,7 @@ class CreatePagosProveedoresTable extends Migration
             $table->float('monto')->default(0)->nullable(false);
             $table->date('fecha_pago')->timestamps();
             $table->boolean('con_iva')->default(False)->nullable(false);
-            $table->string('numero_factura')->default("")->nullable(false);
+            $table->string('numero_factura')->default("")->nullable(true);
             $table->date('fecha_factura')->nullable(true);
             $table->string('entrega')->default("")->nullable(false);
             $table->string('recibe')->default("")->nullable(false);

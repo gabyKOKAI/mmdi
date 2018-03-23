@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Elemento
+    Cliente
 @endsection
 
 @push('head')
@@ -90,7 +90,7 @@
                </form>
 			</div>
 		</div>
-		@include('contacto.tablaContactos')
+		<!--@include('contacto.tablaContactos')-->
 		@include('pago.tablaPagos')
 		@include('proyecto.tablaProyectos')
     </div>

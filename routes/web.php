@@ -109,13 +109,13 @@ Route::get('/cliente/{id?}', 'ClienteController@cliente');
 Route::get('/cliente/guardar/{id?}', 'ClienteController@guardar');
 Route::post('/cliente/guardar/{id?}', 'ClienteController@guardar');
 
-Route::get('/clientepago/guardar/{id?}', 'PagosClienteController@guardar');
-Route::post('/clientepago/guardar/{id?}', 'PagosClienteController@guardar');
-Route::get('/proveedorpago/guardar/{id?}', 'PagosProveedoreController@guardar');
-Route::post('/proveedorpago/guardar/{id?}', 'PagosProveedoreController@guardar');
+Route::get('/clientepago/guardar/{id?}/{idCli?}/{idProy?}', 'PagosClienteController@guardar');
+Route::post('/clientepago/guardar/{id?}/{idCli?}/{idProy?}', 'PagosClienteController@guardar');
+Route::get('/proveedorpago/guardar/{id?}/{idPro?}/{idCot?}', 'PagosProveedoreController@guardar');
+Route::post('/proveedorpago/guardar/{id?}/{idPro?}/{idCot?}', 'PagosProveedoreController@guardar');
 
 Route::get('/pagosClientes', 'PagosClienteController@lista');
-Route::get('/pagoCliente/{id?}/{idCli?}', 'PagosClienteController@pagoCliente');
+Route::get('/pagoCliente/{id?}/{idCli?}/{idProy?}', 'PagosClienteController@pagoCliente');
 
 Route::get('/proveedores', 'ProveedoreController@lista');
 Route::get('/proveedor/{id?}', 'ProveedoreController@proveedore');
@@ -123,4 +123,4 @@ Route::get('/proveedor/guardar/{id?}', 'ProveedoreController@guardar');
 Route::post('/proveedor/guardar/{id?}', 'ProveedoreController@guardar');
 
 Route::get('/pagosProveedores', 'PagosProveedoreController@lista');
-Route::get('/pagoProveedor/{id?}/{idPro?}', 'PagosProveedoreController@pagoProveedore');
+Route::get('/pagoProveedor/{id?}/{idPro?}/{idCot?}', 'PagosProveedoreController@pagoProveedore');

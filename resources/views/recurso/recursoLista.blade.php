@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Elemento
+    Recursos
 @endsection
 
 @push('head')
@@ -42,9 +42,9 @@
                                                     <!--td>{{$recurso->id}}</td-->
                                                     <td> {{$recurso->nombre}}</td>
                                                     <td>{{$recurso->descripcion}}</td>
-                                                    <td>{{$recurso->distribuido}}</td>
+                                                    <td>{{$recurso->ingreso}}</td>
                                                     <td>{{$recurso->saldo_gasto}}</td>
-                                                    <td>{{$recurso->distribuido - $recurso->saldo_gasto}}</td>
+                                                    <td>{{$recurso->ingreso - $recurso->saldo_gasto}}</td>
                                                     <td>
                                                         <a href="{{ URL::to('movimientos/'.$recurso->id)}}/-1" class="glyphicon glyphicon-list-alt"></a>
                                                     </td>

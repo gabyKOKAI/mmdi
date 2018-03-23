@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Elemento
+    Movimientos
 @endsection
 
 @push('head')
@@ -100,11 +100,11 @@
 
     @else
         @if($recurso->id != -1)
-           <h1> {{$recurso->nombre}} Sin Movimientos <a href="{{ URL::to('movimiento/-1/')}}/{{$recurso->id}}" class="glyphicon glyphicon glyphicon-plus-sign"></a></h1>
+           <h1> {{$recurso->nombre}} Sin Movimientos <a href="{{ URL::to('movimiento/-1/'.$recurso->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a></h1>
         @elseif($cuenta->id != -1)
-           <h1> {{$cuenta->nombre}} Sin Movimientos <a href="{{ URL::to('movimiento/-1/-1')}}/{{$cuenta->id}}" class="glyphicon glyphicon glyphicon-plus-sign"></a></h1>
+           <h1> {{$cuenta->nombre}} Sin Movimientos <a href="{{ URL::to('movimiento/-1/-1/'.$cuenta->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a></h1>
         @else
-           <h1> Sin Movimientos <a href="{{ URL::to('movimiento/-1/')}}/{{$recurso}}" class="glyphicon glyphicon glyphicon-plus-sign"></a></h1>
+           <h1> Sin Movimientos <a href="{{ URL::to('movimiento/-1/')}}/{{$recurso->id}}" class="glyphicon glyphicon glyphicon-plus-sign"></a></h1>
         @endif
 
     @endif

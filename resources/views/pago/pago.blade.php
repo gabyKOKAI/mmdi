@@ -6,22 +6,22 @@
                 @if($esCliente == 1)
                     Cliente
                     </h1>
-                    <form method='GET' action='/clientepago/guardar/{{$pago->id}}'>
+                    <form method='GET' action='/clientepago/guardar/{{$pago->id}}/{{$cliProvSelected}}/{{$proyCotiSelected}}'>
                  @else
                     Proveedor
                     </h1>
-                    <form method='GET' action='/proveedorpago/guardar/{{$pago->id}}'>
+                    <form method='GET' action='/proveedorpago/guardar/{{$pago->id}}/{{$cliProvSelected}}/{{$proyCotiSelected}}'>
                  @endif
            @else
                 <h1 class="center">Nuevo Pago
                  @if($esCliente == 1)
                     Cliente
                     </h1>
-                    <form method='GET' action='/clientepago/guardar/-1'>
+                    <form method='GET' action='/clientepago/guardar/-1/{{$cliProvSelected}}/{{$proyCotiSelected}}'>
                  @else
                     Proveedor
                     </h1>
-                    <form method='GET' action='/proveedorpago/guardar/-1'>
+                    <form method='GET' action='/proveedorpago/guardar/-1/{{$cliProvSelected}}/{{$proyCotiSelected}}'>
                  @endif
            @endif
                {{ csrf_field() }}
@@ -33,7 +33,7 @@
                         <div class="col-sm-6">
                             <div class="container center">
                                 <div class="row">
-                                    <div class="col-sm-1">
+                                    <div class="col-sm-0">
                                     </div>
                                     <div class="col-sm-2 form-group required control-label" align="left">
                                         <label for='tipo'>Tipo</label>
@@ -64,22 +64,25 @@
                                     <div class="col-sm-3 form-group required control-label" align="left">
                                         @if($esCliente == 1)
                                             <label for='cli_prov_id'>Cliente</label>
-                                            <a href="{{ URL::to('cliente/-1')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
+
                                             @if($cliProvSelected!=-1)
                                                 <a href="{{ URL::to('cliente/'.$cliProvSelected)}}" class="glyphicon glyphicon-edit"></a>
+                                            @else
+                                                <a href="{{ URL::to('cliente/-1')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
                                             @endif
                                         @else
                                             <label for='cli_prov_id'>Proveedor</label>
-                                            <a href="{{ URL::to('proveedor/-1')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
                                             @if($cliProvSelected!=-1)
                                                 <a href="{{ URL::to('proveedore/'.$cliProvSelected)}}" class="glyphicon glyphicon-edit"></a>
+                                            @else
+                                                 <a href="{{ URL::to('proveedor/-1')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
                                             @endif
                                         @endif
 
-                                        @if($pago->id == -1)
+                                        @if($pago->id == -1 and $cliProvSelected == -1)
                                             <select name="cli_prov_id"  class="form-control" required>
                                         @else
-                                            <input type="hidden" name="cli_prov_id" value="<?php echo e($cliProvSelected); ?>">
+                                            <input type="hidden" name="cli_prov_id" value="{{$cliProvSelected}}">
                                             <select name="cli_prov_id"  class="form-control" disabled>
                                         @endif
                                             @foreach($cliProvForDropdown as $cliProv)
@@ -87,23 +90,31 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-sm-3 form-group control-label" align="left">
+                                    <div class="col-sm-4 form-group control-label" align="left">
                                         @if($esCliente == 1)
                                             <label for='proy_coti_id'>Proyecto</label>
-                                            <a href="{{ URL::to('proyecto/-1')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
+
                                             @if($cliProvSelected!=-1)
                                                 <a href="{{ URL::to('proyecto/'.$proyCotiSelected)}}" class="glyphicon glyphicon-edit"></a>
+                                            @else
+                                                <a href="{{ URL::to('proyecto/-1')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
                                             @endif
                                         @else
                                             <label for='proy_coti_id'>Cotizacion</label>
-                                            <a href="{{ URL::to('cotizacion/-1')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
                                             @if($cliProvSelected!=-1)
                                                 <a href="{{ URL::to('cotizacion/'.$proyCotiSelected)}}" class="glyphicon glyphicon-edit"></a>
+                                            @else
+                                                <a href="{{ URL::to('cotizacion/-1')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
                                             @endif
                                         @endif
 
-                                            <select name="proy_coti_id"  class="form-control">
-                                            <option value="---" {{ $cli_prov->id == -1 ? 'selected="selected"' : '' }}>
+                                            @if($proyCotiSelected == -1)
+                                                <select name="proy_coti_id"  class="form-control" required>
+                                            @else
+                                                <input type="hidden" name="proy_coti_id" value="<?php echo e($proyCotiSelected); ?>">
+                                                <select name="proy_coti_id"  class="form-control" disabled>
+                                            @endif
+                                            <option value="---" {{ $cliProv->id == -1 ? 'selected="selected"' : '' }}>
                                             @if($esCliente == 1)
                                                 {{"--- SIN PROYECTO ---"}}
                                             @else
@@ -111,15 +122,23 @@
                                             @endif
                                             </option>
 
+                                             <!---->
                                             @foreach($proyCotiForDropdown as $proyCoti)
-                                                <option value="{{ $proyCoti->id }}" {{ $proyCoti->id == $proyCotiSelected ? 'selected="selected"' : '' }}> {{$proyCoti->nombre}} ({{  $proyCoti->cliente->nombre }}) </option>
+                                                <option value="{{ $proyCoti->id }}" {{ $proyCoti->id == $proyCotiSelected ? 'selected="selected"' : '' }}> {{$proyCoti->nombre}}
+                                                (
+                                                @if($esCliente == 1)
+                                                    {{$proyCoti->cliente->nombre}}
+                                                @else
+                                                    {{$proyCoti->proveedor->nombre}}
+                                                @endif
+                                                ) </option>
                                             @endforeach
                                         </select>
                                     </div>
 
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-1">
+                                    <div class="col-sm-0">
                                     </div>
                                     <div class="col-sm-2 form-group required control-label" align="left">
                                         <label for='monto'>Monto</label>
@@ -128,6 +147,7 @@
                                             @if($pago->id == -1)
                                                 <input type='number' name='monto' id='monto' step='0.01' min="0" value='{{$pago->monto}}' class='float form-control' required>
                                             @else
+                                                <input type="hidden" name="monto" value="<?php echo e($pago->monto); ?>">
                                                 <input type='number' name='monto' id='monto' step='0.01' min="0" value='{{$pago->monto}}' class='float form-control' disabled>
                                             @endif
                                         </div>
@@ -138,16 +158,18 @@
                                         @if($pago->id == -1)
                                             <input type="checkbox" class="form-check-input" id="conIva" name="conIva" value="1" {{ $pago->con_iva ? 'checked="checked"' : ''}}>Con IVA</input>
                                         @else
+                                            <input type="hidden" name="conIva" value="<?php echo e($pago->con_iva); ?>">
                                             <input type="checkbox" class="form-check-input" id="conIva" name="conIva" value="1" {{ $pago->con_iva ? 'checked="checked"' : ''}} disabled>Con IVA</input>
                                         @endif
                                         </div>
                                      </div>
-                                     <div class="col-sm-2 form-group required control-label" align="left">
+                                     <div class="col-sm-3 form-group required control-label" align="left">
                                         <label for='fecha'>Fecha</label>
 
                                         @if($pago->id == -1)
                                             <input type='date' name='fecha' id='fecha' value='{{$pago->fecha_pago}}' class="form-control" required>
                                         @else
+                                            <input type="hidden" name="fecha" value="<?php echo e($pago->fecha_pago); ?>">
                                             <input type='date' name='fecha' id='fecha' value='{{$pago->fecha_pago}}' class="form-control" disabled>
                                         @endif
                                      </div>
@@ -157,13 +179,14 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-1">
+                                    <div class="col-sm-0">
                                     </div>
                                     <div class="col-sm-2 form-group required control-label" align="left">
                                         <label for='entrega'>Entrega</label>
                                         @if($pago->id == -1)
                                             <input type='text' name='entrega' id='entrega' value='{{$pago->entrega}}'  class="form-control" required>
                                         @else
+                                            <input type="hidden" name="entrega" value="<?php echo e($pago->entrega); ?>">
                                            <input type='text' name='entrega' id='entrega' value='{{$pago->entrega}}'  class="form-control" disabled>
                                         @endif
                                     </div>
@@ -172,6 +195,7 @@
                                          @if($pago->id == -1)
                                             <input type='text' name='recibe' id='recibe' value='{{$pago->recibe}}'  class="form-control" required>
                                         @else
+                                            <input type="hidden" name="recibe" value="<?php echo e($pago->recibe    ); ?>">
                                             <input type='text' name='recibe' id='recibe' value='{{$pago->recibe}}'  class="form-control" disabled>
                                         @endif
 
@@ -188,7 +212,7 @@
                                         <label for='factura'>Factura</label>
                                         <input type='text' name='factura' id='factura' value='{{$pago->numero_factura}}'  class="form-control">
                                     </div>
-                                     <div class="col-sm-2 form-group control-label" align="left">
+                                     <div class="col-sm-3 form-group control-label" align="left">
                                         <label for='fechaFact'>Fecha Factura</label>
                                         <input type='date' name='fechaFact' id='fechaFact' value='{{$pago->fecha_factura}}' class="form-control">
                                      </div>

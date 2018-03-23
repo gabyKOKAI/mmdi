@@ -14,11 +14,11 @@ class ElementosTableSeeder extends Seeder
     public function run()
     {
         $elementos = [
-            ['elemento1','comentario 1',1,2,'pza','Material','%','proveedor1'],
-            ['elemento2','comentario 2',1,2,'pza','Mano de Obra','$','proveedor2'],
-            ['elemento3','comentario 3',1,2,'pza','Mueble','%','proveedor3'],
-            ['elemento4','comentario 4',1,2,'pza','Viaticos','$','proveedor4'],
-            ['elemento5','comentario 5',1,2,'pza','Otro','%','proveedor5'],
+            ['elemento1','comentario 1',100,10,'pza','Material','%','proveedor1'],
+            ['elemento2','comentario 2',200,20,'pza','Mano de Obra','$','proveedor2'],
+            ['elemento3','comentario 3',300,30,'pza','Mueble','%','proveedor3'],
+            ['elemento4','comentario 4',400,40,'pza','Viaticos','$','proveedor4'],
+            ['elemento5','comentario 5',500,50,'pza','Otro','%','proveedor5'],
         ];
 
         $count = count($elementos);

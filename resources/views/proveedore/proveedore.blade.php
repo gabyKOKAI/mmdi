@@ -1,11 +1,11 @@
 @extends('layouts.master')
 
 @section('title')
-    Elemento
+    Proveedor
 @endsection
 
 @push('head')
-    <!--link href="/css/movimiento.css" type='text/css' rel='stylesheet'-->
+    <!--link href="/css/proveedore.css" type='text/css' rel='stylesheet'-->
 @endpush
 
 @section('content')
@@ -13,12 +13,15 @@
         <div class="row">
             <div class="col-sm-12 align-center">
 
-               @if($movimiento->id != -1)
-                    <h1 class="center">[{{$movimiento->id}}] Movimiento </h1>
-                     <form method='GET' action='/movimiento/guardar/{{$movimiento->id}}'>
+               @if($proveedore->id != -1)
+                    <h1 class="center">[{{$proveedore->id}}] Proveedor {{$proveedore->nombre}}
+                    <!--a href="{{ URL::to('cotizaciones/'.$proveedore->id)}}" class="glyphicon glyphicon-list-alt" title="Lista de Cotizaciones"></a>
+                    <a href="{{ URL::to('cotizacion/-1/'.$proveedore->id)}}" class="glyphicon glyphicon glyphicon-plus-sign" title="Nueva Cotizacion"></a-->
+                    </h1>
+                     <form method='GET' action='/proveedor/guardar/{{$proveedore->id}}'>
                @else
-                    <h1 class="center">Nuevo Movimiento</h1>
-                    <form method='GET' action='/movimiento/guardar/-1'>
+                    <h1 class="center">Nuevo Proveedor</h1>
+                    <form method='GET' action='/proveedor/guardar/-1'>
                @endif
                        {{ csrf_field() }}
                        <input type="hidden" name="_method" value="PUT">
@@ -26,84 +29,80 @@
 
                         <div class="container center">
                             <div class="row">
-                                <div class="col-sm-1 container center">
-                                </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-6" align="left">
                                     <div class="container center">
                                         <div class="row">
-                                            <div class="col-sm-2 form-group required control-label" align="left">
-                                                <label for='tipo'>Tipo</label>
-                                                <select name="tipo"  class="form-control" required>
-                                                    @foreach($tiposForDropdown as $tipo)
-                                                        <option value="{{ $tipo }}" {{ $tipo == $tipoSelected ? 'selected="selected"' : '' }}> {{ $tipo }} </option>
-                                                    @endforeach
-                                                </select>
+                                            <div class="col-sm-1">
                                             </div>
-                                            <div class="col-sm-2 form-group required control-label" align="left">
-                                                <label for='cuenta'>Cuenta</label>
-                                                     @if($cuentaSelected == -1)
-                                                        <select name="cuenta"  class="form-control" required>
-                                                    @else
-                                                        <input type="hidden" name="cuenta" value="<?php echo e($cuentaSelected); ?>">
-                                                        <select name="cuenta"  class="form-control" disabled>
-                                                    @endif
-                                                    @foreach($cuentasForDropdown as $cuenta)
-                                                        <option value="{{ $cuenta->id }}" {{ $cuenta->id == $cuentaSelected ? 'selected="selected"' : '' }}> {{ $cuenta->nombre }} </option>
-                                                    @endforeach
-                                                </select>
+                                            <div class="col-sm-5 form-group required control-label" align="left">
+                                                <label for='nombre'>Nombre</label>
+                                                <input type='text' name='nombre' id='nombre' value='{{$proveedore->nombre}}'  class="form-control" required>
                                             </div>
-                                            <div class="col-sm-2 form-group required control-label" align="left">
-                                                <label for='recurso'>Recurso</label>
-                                                @if($recursoSelected == -1)
-                                                    <select name="recurso"  class="form-control" required>
-                                                @else
-                                                    <input type="hidden" name="recurso" value="<?php echo e($recursoSelected); ?>">
-                                                    <select name="recurso"  class="form-control" disabled>
-                                                @endif
-                                                    @foreach($recursosForDropdown as $recurso)
-                                                        <option value="{{ $recurso->id }}" {{ $recurso->id == $recursoSelected ? 'selected="selected"' : '' }}> {{ $recurso->nombre }} </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-sm-2 form-group required control-label" align="left">
-                                                <label for='monto'>Monto</label>
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">$</span>
-                                                    @if($movimiento->id == -1)
-                                                        <input type='number' name='monto' id='monto' step='0.01' min="0" value='{{$movimiento->monto}}' class='float form-control' required>
-                                                    @else
-                                                        <input type='number' name='monto' id='monto' step='0.01' min="0" value='{{$movimiento->monto}}' class='float form-control' disabled>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                             <div class="col-sm-3" align="left">
-                                            </div>
-
-
                                         </div>
                                         <div class="row">
-                                            <div class="col-sm-0" align="left">
+                                            <div class="col-sm-1">
                                             </div>
-                                             <div class="col-sm-3 form-group required control-label" align="left">
-                                                <label for='fecha'>Fecha</label>
-                                                <input type='date' name='fecha' id='fecha' value='{{$movimiento->fecha}}' class="form-control" required>
-                                             </div>
-                                             <div class="col-sm-3 form-group required control-label" align="left">
-                                                <label for='monto'>Descripcion</label>
-                                                <input type='text' name='descripcion' id='descripcion' value='{{$movimiento->descripcion}}'  class="form-control" required>
+                                            <div class="col-sm-5 form-group control-label" align="left">
+                                                <label for='descripcion'>Descripción</label>
+                                                <input type='text' name='descripcion' id='descripcion' value='{{$proveedore->descripcion}}'  class="form-control">
                                             </div>
-
-
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6" align="left">
+                                    <div class="container center">
+                                        <div class="row">
+                                            <div class="col-sm-4 control-label" align="left">
+                                                <label for='comentario'>Comentario</label>
+                                                <textarea name='comentario' id='comentario' maxlength="250" rows="5"  class="form-control" >{{$proveedore->comentario}}</textarea>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-sm-1" align="left">
+                                </div>
+                                <div class="col-sm-2 form-group control-label" align="left">
+                                    <label for='rfc'>RFC</label>
+                                    <input type='text' name='rfc' id='rfc' value='{{$proveedore->rfc}}'  class="form-control">
+                                </div>
+                                <div class="col-sm-4 form-group control-label" align="left">
+                                    <label for='razonSocial'>Razón Social</label>
+                                    <input type='text' name='razonSocial' id='razonSocial' value='{{$proveedore->razon_social}}'  class="form-control">
+                                </div>
+                                 <div class="col-sm-3 form-group control-label" align="left">
+                                    <label for='calle'>Calle</label>
+                                    <input type='text' name='calle' id='calle' value='{{$proveedore->calle}}'  class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-1" align="left">
+                                </div>
+                                <div class="col-sm-2 form-group control-label" align="left">
+                                    <label for='delMun'>Delegación/Municipio</label>
+                                    <input type='text' name='delMun' id='delMun' value='{{$proveedore->delegacion_municipio}}'  class="form-control">
+                                </div>
+                                <div class="col-sm-3 form-group control-label" align="left">
+                                    <label for='colonia'>Colonia</label>
+                                    <input type='text' name='colonia' id='colonia' value='{{$proveedore->colonia}}'  class="form-control">
+                                </div>
+                                 <div class="col-sm-3 form-group control-label" align="left">
+                                    <label for='ciudad'>Ciudad</label>
+                                    <input type='text' name='ciudad' id='ciudad' value='{{$proveedore->ciudad}}'  class="form-control">
+                                </div>
+                                <div class="col-sm-1 form-group control-label" align="left">
+                                    <label for='cp'>C.P.</label>
+                                    <input type='text' name='cp' id='cp' value='{{$proveedore->cp}}'  class="form-control">
+                                </div>
+                            </div>
                         </div>
+
 						<div class="container center">
                             <div class="row">
                                 <div class="col-sm-12 align-self-center">
                                     <br>
-                                    <input type='submit' value='Guarda Movimiento' class='btn btn-primary btn-small'>
+                                    <input type='submit' value='Guarda Proveedor' class='btn btn-primary btn-small'>
                                 </div>
                             </div>
                         </div>
@@ -111,6 +110,9 @@
                </form>
 			</div>
 		</div>
+		<!--@include('contacto.tablaContactos')-->
+		@include('pago.tablaPagos')
+		@include('cotizacion.tablaCotizaciones')
     </div>
 
 @endsection

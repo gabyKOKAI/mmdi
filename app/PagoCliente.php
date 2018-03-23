@@ -20,6 +20,13 @@ class PagoCliente extends Model
         return $this->belongsTo('mmdi\Proyecto');
     }
 
+    public function cuenta()
+    {
+        # Proyecto belongs to Cliente
+        # Define an inverse one-to-many relationship.
+        return $this->belongsTo('mmdi\Cuenta');
+    }
+
     public static function getEstatusDropDown()
     {
         $estatus = ['Facturado', 'Factura Pendiente', 'Sin Factura', 'Cancelado'];

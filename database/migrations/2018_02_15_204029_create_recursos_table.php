@@ -19,7 +19,7 @@ class CreateRecursosTable extends Migration
 
             $table->string('nombre')->default("")->nullable(false);
             $table->string('descripcion')->nullable(true);
-            $table->float('distribuido')->default(0)->nullable(false);
+            $table->float('ingreso')->default(0)->nullable(false);
             $table->float('saldo_gasto')->default(0)->nullable(false);
         });
     }

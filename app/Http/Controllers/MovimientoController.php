@@ -76,27 +76,26 @@ class MovimientoController extends Controller
              } else {
                 $res = "actualizado";
             }
-
         $recurso = Recurso::find($request->input('recurso'));
         $cuenta = Cuenta::find($request->input('cuenta'));
 
+        $mensaje = "";
         if($request->input('tipo')== "Salida"){
-            $saldoRecurso = $recurso->distribuido - $recurso->saldo_gasto - $request->input('monto');
             $saldoCuenta = $cuenta->saldo - $request->input('monto');
+            $saldoRecurso = $recurso->ingreso - $recurso->saldo_gasto - $request->input('monto');
+            if($saldoRecurso<0){
+                $tipoMensaje = "error";
+                $mensaje =  $mensaje.'El movimiento no puede hacerse porque el recurso '.$recurso->nombre."  no tiene saldo suficiente.";
+            }
+            if($saldoCuenta<0){
+                $tipoMensaje = "error";
+                $mensaje = $mensaje.'El movimiento no puede hacerse porque la cuenta '.$cuenta->nombre.' no tiene fondos suficiente.';
+            }
         } else{
-            $saldoRecurso = $recurso->distribuido - $recurso->saldo_gasto + $request->input('monto');
             $saldoCuenta = $cuenta->saldo + $request->input('monto');
+            $saldoRecurso = $recurso->ingreso - $recurso->saldo_gasto + $request->input('monto');
         }
 
-        $mensaje = "";
-        if($saldoRecurso<0){
-		    $tipoMensaje = "error";
-		    $mensaje = $mensaje + 'El movimiento no puede hacerse porque el recurso '.$recurso->nombre.' no tiene saldo suficiente.';
-        }
-        if($saldoCuenta<0){
-		    $tipoMensaje = "error";
-		    $mensaje = $mensaje + 'El movimiento no puede hacerse porque la cuenta '.$cuenta->nombre.' no tiene fondos suficiente.';
-		    }
         if($mensaje == ""){
             Movimiento::registraMovimiento($request->input('fecha'), $request->input('monto'), $request->input('descripcion'), $request->input('tipo'), $request->input('recurso'),$request->input('cuenta'));
 
@@ -104,7 +103,7 @@ class MovimientoController extends Controller
                 $recurso->saldo_gasto = $recurso->saldo_gasto + $request->input('monto');
                 $cuenta->saldo = $cuenta->saldo - $request->input('monto');
             }else{
-                $recurso->saldo_gasto = $recurso->saldo_gasto - $request->input('monto');
+                $recurso->ingreso = $recurso->ingreso + $request->input('monto');
                 $cuenta->saldo = $cuenta->saldo + $request->input('monto');
             }
 
@@ -135,46 +134,46 @@ class MovimientoController extends Controller
 
         if($proyecto->meg >= 0){
             $recurso1 = Recurso::where('nombre', 'LIKE', "MEG")->first();
-            $recurso1->distribuido = $recurso1->distribuido + $proyecto->meg;
+            $recurso1->ingreso = $recurso1->ingreso + $proyecto->meg;
         }else{
             $distribuido = 0;
         }
 
         if($proyecto->ame >= 0){
             $recurso2 = Recurso::where('nombre', 'LIKE', "AME")->first();
-            $recurso2->distribuido = $recurso2->distribuido + $proyecto->ame;
+            $recurso2->ingreso = $recurso2->ingreso + $proyecto->ame;
         }else{
             $distribuido = 0;
         }
 
         if($proyecto->mme >= 0){
             $recurso3 = Recurso::where('nombre', 'LIKE', "MME")->first();
-            $recurso3->distribuido = $recurso3->distribuido + $proyecto->mme;
+            $recurso3->ingreso = $recurso3->ingreso + $proyecto->mme;
         }else{
             $distribuido = 0;
         }
 
         if($proyecto->amm >= 0){
             $recurso4 = Recurso::where('nombre', 'LIKE', "AMM")->first();
-            $recurso4->distribuido = $recurso4->distribuido + $proyecto->amm;
+            $recurso4->ingreso = $recurso4->ingreso + $proyecto->amm;
         }else{
             $distribuido = 0;
         }
 
         $recurso5 = Recurso::where('nombre', 'LIKE', "MMDI")->first();
-        $recurso5->distribuido = $recurso5->distribuido + $proyecto->recMmdi;
+        $recurso5->ingreso = $recurso5->ingreso + $proyecto->recMmdi;
 
         if($distribuido == 1){
             $recurso1->save();
-            Movimiento::registraMovimiento($fecha, $proyecto->meg, 'distribución de proyecto '.$proyecto->id.'-'.$proyecto->nombre, "Entrada",$recurso1->id,$cuenta->id);
+            Movimiento::registraMovimiento($fecha, $proyecto->meg, 'Distribución de proyecto '.$proyecto->id.'-'.$proyecto->nombre, "Entrada",$recurso1->id,$cuenta->id);
             $recurso2->save();
-            Movimiento::registraMovimiento($fecha, $proyecto->ame, 'distribución de proyecto '.$proyecto->id.'-'.$proyecto->nombre, "Entrada",$recurso2->id,$cuenta->id);
+            Movimiento::registraMovimiento($fecha, $proyecto->ame, 'Distribución de proyecto '.$proyecto->id.'-'.$proyecto->nombre, "Entrada",$recurso2->id,$cuenta->id);
             $recurso3->save();
-            Movimiento::registraMovimiento($fecha, $proyecto->mme, 'distribución de proyecto '.$proyecto->id.'-'.$proyecto->nombre, "Entrada",$recurso3->id,$cuenta->id);
+            Movimiento::registraMovimiento($fecha, $proyecto->mme, 'Distribución de proyecto '.$proyecto->id.'-'.$proyecto->nombre, "Entrada",$recurso3->id,$cuenta->id);
             $recurso4->save();
-            Movimiento::registraMovimiento($fecha, $proyecto->amm, 'distribución de proyecto '.$proyecto->id.'-'.$proyecto->nombre, "Entrada",$recurso4->id,$cuenta->id);
+            Movimiento::registraMovimiento($fecha, $proyecto->amm, 'Distribución de proyecto '.$proyecto->id.'-'.$proyecto->nombre, "Entrada",$recurso4->id,$cuenta->id);
             $recurso5->save();
-            Movimiento::registraMovimiento($fecha, $proyecto->recMmdi, 'distribución de proyecto '.$proyecto->id.'-'.$proyecto->nombre, "Entrada",$recurso5->id,$cuenta->id);
+            Movimiento::registraMovimiento($fecha, $proyecto->recMmdi, 'Distribución de proyecto '.$proyecto->id.'-'.$proyecto->nombre, "Entrada",$recurso5->id,$cuenta->id);
             $tipoMensaje = 'success';
             $mensaje = 'Se actualizaron todos los recursos y se marco el proyecto como distribuido';
             $this->actualizaDistribuido($id, $distribuido);
@@ -196,8 +195,11 @@ class MovimientoController extends Controller
         $proyecto->calculoVariables($proyecto);
 
         $recurso = Recurso::where('nombre', 'LIKE', "MMDI")->first();
-        $recurso->distribuido = $recurso->distribuido +  $proyecto->adicional;
+        $recurso->ingreso = $recurso->ingreso +  $proyecto->adicional +  $proyecto->honorariosAdicional;
         $recurso->save();
+        $fecha = "2018-10-10";
+        $cuenta = Cuenta::where('nombre', 'LIKE', "Proyectos")->first();
+        Movimiento::registraMovimiento($fecha, $proyecto->adicional +  $proyecto->honorariosAdicional, 'Distribución adicionales de proyecto '.$proyecto->id.' - '.$proyecto->nombre, "Entrada",$recurso->id,$cuenta->id);
 
         $tipoMensaje = 'success';
         $mensaje = 'Se actualizaron todos los recursos y se marco el proyecto como distribuido';
