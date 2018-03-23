@@ -47,32 +47,37 @@ class Proyecto extends Model
         foreach ($proyecto->conceptos as $concepto) {
             $costo = $costo + ($concepto->elementos->sum('pivot.precio')*$concepto->cantidad);
         }
-        $costo =$costo + Proyecto::getHonorarios($proyecto->id,$proyecto->gasto_porc_honorarios);
+
+        $costo = $costo + Proyecto::getHonorarios($proyecto->id,$proyecto->gasto_porc_honorarios,0);
+        $costo = $costo + Proyecto::getHonorarios($proyecto->id,$proyecto->gasto_porc_honorarios,1);
         return $costo;
     }
 
     public static function getSaldo($proyecto)
     {
-        $saldo = Proyecto::getCosto($proyecto) + Proyecto::getCostoIA($proyecto->id,1) - Proyecto::getEfectivo($proyecto->id) -Proyecto::getTransferencias($proyecto->id) -Proyecto::getCheques($proyecto->id);
+        $saldo = Proyecto::getCosto($proyecto) - Proyecto::getEfectivo($proyecto->id) -Proyecto::getTransferencias($proyecto->id) -Proyecto::getCheques($proyecto->id);
         return $saldo;
     }
 
     public static function getEfectivo($proyecto_id)
     {
-        $efectivo = 100;
-        return $efectivo;
+        $efectivo = PagoCliente::where('proy_coti_id','=',$proyecto_id)->where('tipo','=','Efectivo')->where('con_iva','=',0)->sum('monto');
+        $efectivoIVA = PagoCliente::where('proy_coti_id','=',$proyecto_id)->where('tipo','=','Efectivo')->where('con_iva','=',1)->sum('monto')/1.16;
+        return $efectivo + $efectivoIVA;
     }
 
     public static function getTransferencias($proyecto_id)
     {
-        $transferencias = 150;
-        return $transferencias;
+        $transferencias = PagoCliente::where('proy_coti_id','=',$proyecto_id)->where('tipo','=','Transferencia')->where('con_iva','=',0)->sum('monto');
+        $transferenciasIVA = PagoCliente::where('proy_coti_id','=',$proyecto_id)->where('tipo','=','Transferencia')->where('con_iva','=',1)->sum('monto')/1.16;
+        return $transferencias + $transferenciasIVA;
     }
 
     public static function getCheques($proyecto_id)
     {
-        $cheques = 200;
-        return $cheques;
+        $cheques = PagoCliente::where('proy_coti_id','=',$proyecto_id)->where('tipo','=','Cheque')->where('con_iva','=',0)->sum('monto');
+        $chequesIVA = PagoCliente::where('proy_coti_id','=',$proyecto_id)->where('tipo','=','Cheque')->where('con_iva','=',1)->sum('monto')/1.16;
+        return $cheques + $chequesIVA;
     }
 
     public static function getIndirectos($proyecto_id)
@@ -99,11 +104,12 @@ class Proyecto extends Model
         return $costo;
     }
 
-    public static function getHonorarios($proyecto_id,$gasto_porc_honorarios)
+    public static function getHonorarios($proyecto_id,$gasto_porc_honorarios,$tipo)
     {
-        $honorarios = Proyecto::getCostoIA($proyecto_id,0)*$gasto_porc_honorarios/100;
+        $honorarios = Proyecto::getCostoIA($proyecto_id,$tipo)*$gasto_porc_honorarios/100;
         return $honorarios;
     }
+
 
     public static function getConceptos($proyecto_id)
     {
@@ -132,8 +138,9 @@ class Proyecto extends Model
     {
         $proyecto->inicial = $proyecto->getCostoIA($proyecto->id,0);
         $proyecto->adicional = $proyecto->getCostoIA($proyecto->id,1);
-        $proyecto->honorarios = $proyecto->getHonorarios($proyecto->id,$proyecto->gasto_porc_honorarios);
-        $proyecto->costo =  $proyecto->getCosto($proyecto) - $proyecto->adicional;
+        $proyecto->honorarios = $proyecto->getHonorarios($proyecto->id,$proyecto->gasto_porc_honorarios,0);
+        $proyecto->honorariosAdicional = $proyecto->getHonorarios($proyecto->id,$proyecto->gasto_porc_honorarios,1);
+        $proyecto->costo =  $proyecto->inicial + $proyecto->honorarios;
         $proyecto->totAdicionales =  $proyecto->getCosto($proyecto);
         $proyecto->efectivo = $proyecto->getEfectivo($proyecto->id);
         $proyecto->transferencias = $proyecto->getTransferencias($proyecto->id);

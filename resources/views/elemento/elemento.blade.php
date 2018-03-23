@@ -48,7 +48,7 @@
                                         <div class="row">
                                             <div class="col-sm-4 form-group required control-label" align="left">
                                                 <label for='proveedor_id'>Proveedor</label>
-                                                <input type="hidden" name="proveedor" value="{{$proveedorSelected}}" required>
+                                                <input type="hidden" name="proveedor_id" value="{{$proveedorSelected}}" required>
                                                 @if($proveedorSelected!=-1)
                                                     <a href="{{ URL::to('proveedor/'.$proveedorSelected)}}" class="glyphicon glyphicon-edit"></a>
                                                     <select name="proveedor_id"  class="form-control" disabled>

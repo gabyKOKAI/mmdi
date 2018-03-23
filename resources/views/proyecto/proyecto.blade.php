@@ -14,10 +14,10 @@
             <div class="col-sm-12 align-center">
                 @if($proyecto->id != -1)
                     <h1 class="center">[{{$proyecto->id}}] Proyecto {{$proyecto->nombre}}</h1>
-                     <form method='GET' action='/proyecto/guardar/{{$proyecto->id}}'>
+                     <form method='GET' action='/proyecto/guardar/{{$proyecto->id}}/-1'>
                @else
                     <h1 class="center">Nuevo Proyecto</h1>
-                    <form method='GET' action='/proyecto/guardar/-1'>
+                    <form method='GET' action='/proyecto/guardar/-1/-1'>
                @endif
                        {{ csrf_field() }}
                        <input type="hidden" name="_method" value="PUT">
@@ -57,8 +57,8 @@
                                                     <input type="hidden" name="cliente_id" value="{{$clienteSelected}}">
                                                     <select name="cliente_id"  class="form-control" disabled>
                                                 @endif
-                                                    @foreach($clientesForDropdown as $cliente)
-                                                        <option value="{{ $cliente->id }}" {{ $cliente->id == $clienteSelected ? 'selected="selected"' : '' }}> {{ $cliente->nombre }} </option>
+                                                    @foreach($clientesForDropdown as $cliente1)
+                                                        <option value="{{ $cliente1->id }}" {{ $cliente1->id == $clienteSelected ? 'selected="selected"' : '' }}> {{ $cliente1->nombre }} </option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -300,7 +300,6 @@
                                                         <div class="col-sm-5 " align="left">
                                                             $ {{$proyecto->costo}}
                                                         </div>
-
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-sm-1 " align="right">
@@ -321,7 +320,26 @@
                                                         <div class="col-sm-5 " align="left">
                                                             $ {{$proyecto->adicional}}
                                                         </div>
-
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-1 " align="right">
+                                                        </div>
+                                                        <div class="col-sm-5 " align="left">
+                                                            <label>Honorarios:</label>
+                                                        </div>
+                                                        <div class="col-sm-5 " align="left">
+                                                            $ {{$proyecto->honorariosAdicional}}
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-1 " align="right">
+                                                        </div>
+                                                        <div class="col-sm-5 " align="left">
+                                                            <label>TOTAL:</label>
+                                                        </div>
+                                                        <div class="col-sm-5 " align="left">
+                                                            $ {{$proyecto->adicional + $proyecto->honorariosAdicional}}
+                                                        </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-sm-12" align="center">
@@ -671,4 +689,5 @@
         </div>
     </div>
     @include('pago.tablaPagos')
+    @include('cotizacion.tablaCotizaciones')
 @endsection

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Pagos de Proveedores
+    Pagos Proveedores
 @endsection
 
 @push('head')

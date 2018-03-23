@@ -50,7 +50,11 @@
                                                     <select name="elemento"  class="form-control">
                                                 @endif
                                                     @foreach($elementosForDropdown as $elemento)
-                                                    <option value="{{ $elemento->id }}" {{ $elemento->id == $elementoSelected ? 'selected="selected"' : '' }}> {{ $elemento->nombre.' [C:'.$elemento->costo.' --- G:'.$elemento->ganancia.' --- '.$elemento->tipo_ganancia.']' }} </option>
+                                                    <option value="{{ $elemento->id }}" {{ $elemento->id == $elementoSelected ? 'selected="selected"' : '' }}>
+                                                        ({{$elemento->getPrecio($elemento)}})
+                                                        {{ $elemento->nombre}} >
+                                                        {{$elemento->tipo}}
+                                                        {{'[CGT:'.$elemento->costo.'-'.$elemento->ganancia.' '.$elemento->tipo_ganancia.']' }} </option>
                                                     @endforeach
                                                 </select>
                                             </div>

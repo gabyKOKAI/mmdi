@@ -22,20 +22,20 @@ class ConceptosElementosTableSeeder extends Seeder
     ];
 
      $preciosElementos =[
-                'elemento1' => 1.1,
-                'elemento2' => 2.2,
-                'elemento3' => 3.3,
-                'elemento4' => 4.4,
-                'elemento5' => 5.5,
+                'elemento1' => 110,
+                'elemento2' => 220,
+                'elemento3' => 330,
+                'elemento4' => 440,
+                'elemento5' => 550,
 
     ];
 
     $costosElementos =[
-                'elemento1' => 1,
-                'elemento2' => 2,
-                'elemento3' => 3,
-                'elemento4' => 4,
-                'elemento5' => 5,
+                'elemento1' => 10,
+                'elemento2' => 20,
+                'elemento3' => 30,
+                'elemento4' => 40,
+                'elemento5' => 50,
 
     ];
 

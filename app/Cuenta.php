@@ -12,4 +12,18 @@ class Cuenta extends Model
         # Define a one-to-many relationship.
         return $this->hasMany('mmdi\movimientos');
     }
+
+     public function pagosClientes()
+    {
+        # Cliente has many Proyectos
+        # Define a one-to-many relationship.
+        return $this->hasMany('mmdi\PagoCliente');
+    }
+
+     public function pagosProveedores()
+    {
+        # Cliente has many Proyectos
+        # Define a one-to-many relationship.
+        return $this->hasMany('mmdi\PagoProveedore');
+    }
 }

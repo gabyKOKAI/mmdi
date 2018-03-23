@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Elemento
+    Cuentas
 @endsection
 
 @push('head')

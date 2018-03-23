@@ -13,9 +13,9 @@ class CuentasTableSeeder extends Seeder
     public function run()
     {
          $cuentas = [
-            ['Bancomer','La que usamos para ...',53667],
-            ['Efectivo','El efectivo',15000],
-            ['Banamex','La que usamos para...',33333],
+            ['Bancomer','La que usamos para ...',0],
+            ['Efectivo','El efectivo',0],
+            ['Banamex','La que usamos para...',0],
             ['Proyectos','para apoyarnos en el registro de la distribución',-1],
         ];
 
