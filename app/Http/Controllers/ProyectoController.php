@@ -9,6 +9,7 @@ use mmdi\Cliente;
 use mmdi\Proveedore;
 use mmdi\Concepto;
 use mmdi\PagoCliente;
+use mmdi\Cotizacione;
 
 class ProyectoController extends Controller
 {
@@ -16,14 +17,11 @@ class ProyectoController extends Controller
     * GET /proyectos
     */
     public function lista($idCli= '-1')
-    { 
-		##return App::environment();
-
-		#$proyectos = Proyecto::with('cliente','conceptos')->get();
+    {
 		if($idCli == -1){
 		    $proyectos = Proyecto::paginate(15);
 		    $cliente = new Cliente;
-            $cliente->id = -1;
+            $cliente->id = -2;
 		}else{
 		    $proyectos = Proyecto::where('cliente_id','=',$idCli)->paginate(15);
 		    $cliente = Cliente::find($idCli);
@@ -31,19 +29,16 @@ class ProyectoController extends Controller
 
         if (!$proyectos->isEmpty()) {
             foreach ($proyectos as $proyecto) {
-                ##dump($proyecto->nombre.$proyecto->cliente->nombre);
                 $proyecto->costo = Proyecto::getCosto($proyecto);
                 $proyecto->saldo = Proyecto::getSaldo($proyecto);
-                #foreach ($proyecto->conceptos as $concepto) {
-                    #dump($concepto->elementos->sum('pivot.precio'));
-                    #foreach ($concepto->elementos as $elemento) {
-                    #    dump($elemento->pivot);
-                    #}
-                #}
             }
         }
 
-		return view('proyecto.proyectoLista')->with(['proyectos' => $proyectos, 'cliente'=>$cliente]);
+         $cotizacione = new Cotizacione;
+         $cotizacione->id = -2;
+
+
+		return view('proyecto.proyectoLista')->with(['proyectos' => $proyectos, 'cliente'=>$cliente, 'cotizacione'=>$cotizacione]);
     }
 
      /**
@@ -163,6 +158,13 @@ class ProyectoController extends Controller
         $proveedore->id = -1;
 
         $pagos = PagoCliente::where('proy_coti_id','=',$proyecto->id)->paginate(5);
+        $cotizaciones = Cotizacione::where('proyecto_id','=',$proyecto->id)->paginate(5);
+
+        if (!$cotizaciones->isEmpty()) {
+            foreach ($cotizaciones as $cotizacione) {
+                $cotizacione->saldo = Cotizacione::getSaldo($cotizacione);
+            }
+        }
 
         return view('proyecto.proyecto')->
         with([  'proyecto' => $proyecto,
@@ -172,7 +174,8 @@ class ProyectoController extends Controller
                 'cliente' => $cliente,
                 'proveedore'=>$proveedore,
                 'pagos'=>$pagos,
-                'esCliente'=>1
+                'esCliente'=>1,
+                'cotizaciones'=>$cotizaciones
                 ]);
 	}
 

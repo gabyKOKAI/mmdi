@@ -8,6 +8,9 @@ use mmdi\Cliente;
 use mmdi\Proveedore;
 use mmdi\Cuenta;
 use mmdi\Proyecto;
+use mmdi\Cotizacione;
+use mmdi\Movimiento;
+use mmdi\Recurso;
 
 class PagosClienteController extends Controller
 {
@@ -21,10 +24,20 @@ class PagosClienteController extends Controller
          $proveedore = new Proveedore;
          $proveedore->id = -1;
 
-		return view('pago.pagosClienteLista')->with(['pagos' => $pagosClientes,'proveedore'=>$proveedore,'cliente'=>$cliente, 'esCliente'=>1]);
+         $proyecto = new Proyecto;
+         $proyecto->id = -2;
+
+         $cotizacione = new Cotizacione;
+         $cotizacione->id = -2;
+
+		return view('pago.pagosClienteLista')
+		            ->with(['pagos' => $pagosClientes,
+		                    'proveedore'=>$proveedore, 'cotizacione' => $cotizacione,
+		                    'cliente'=>$cliente, 'proyecto' => $proyecto,
+		                    'esCliente'=>1]);
     }
 
-    public function pagoCliente(Request $request,$id= '-1',$idCli='-1',$idCue= '-1') {
+    public function pagoCliente(Request $request,$id= '-1',$idCli='-1',$idProy= '-1') {
 	    $pago = PagoCliente::find($id);
 
 	    $cliente = Cliente::find($idCli);
@@ -58,7 +71,7 @@ class PagosClienteController extends Controller
             $pago = new PagoCliente;
             $pago->id = -1;
             $cliProvSelected = $idCli;
-            $cuentaSelected = $idCue;
+            $proyCotiSelected = $idProy;
             if($idCli != -1){
                 $proyCotiForDropdown = Proyecto::where('cliente_id','=',$idCli)->get();
             }
@@ -75,7 +88,7 @@ class PagosClienteController extends Controller
         'esCliente'=>1]);
 	}
 
-	public function guardar(Request $request,$id= '-1',$idCli='-1') {
+	public function guardar(Request $request,$id= '-1',$idCli='-1',$idProy='-1') {
 
 		# Validate the request data
 		$this->validate($request, [
@@ -83,40 +96,77 @@ class PagosClienteController extends Controller
 		]);
 
         $pago = PagoCliente::find($id);
+        $cuenta = Cuenta::find($request->input('cuenta'));
+        $proyecto = Proyecto::find($request->input('proy_coti_id'));
 
         if (!$pago) {
             # Instantiate a new Concepto Model object
             $pago = new PagoCliente();
+            $pago->id = -1;
+            $pago->con_iva = -1;
             $res = "Creado";
          } else {
             $res = "Actualizado";
         }
 
-        # Set the parameters
-        $pago->monto = $request->input('monto');
-        $pago->fecha_pago = $request->input('fecha');
-        if ($request->input('conIva')) {
-            $pago->con_iva = 1;
-        } else{
-            $pago->con_iva = 0;
+        $saldo = 0;
+        if( $pago->con_iva == 1)
+        {
+            $saldo = $proyecto->getSaldo($proyecto)-($request->input('monto'))/1.16;
         }
-        $pago->numero_factura =  $request->input('factura');
-        $pago->fecha_factura = $request->input('fechaFact');
-        $pago->entrega =  $request->input('entrega');
-        $pago->recibe = $request->input('recibe');
-        $pago->descripcion = $request->input('descripcion');
-        $pago->tipo =  $request->input('tipo');
-        $pago->estatus =  $request->input('estatus');
-        $pago->cuenta_id = $request->input('cuenta');
-        $pago->cli_prov_id =  $request->input('cli_prov_id');
-        if ( $request->input('proy_coti_id') != "---"){
-            $pago->proy_coti_id = $request->input('proy_coti_id');
+        elseif( $pago->con_iva == 0)
+        {
+            $saldo =$proyecto->getSaldo($proyecto)-$request->input('monto');
         }
 
-        $pago->save();
+        $mensaje = "";
+        if($saldo<0){
+		    $tipoMensaje = "error";
+		    $mensaje = 'El pago no puede hacerse porque el cliente está pagando de más al proyecto. El Saldo Actual es de:'.$proyecto->getSaldo($proyecto);
+		}else{
+            # Set the parameters
+            $pago->monto = $request->input('monto');
+            $pago->fecha_pago = $request->input('fecha');
+            if ($request->input('conIva')) {
+                $pago->con_iva = 1;
+            } else{
+                $pago->con_iva = 0;
+            }
+            $pago->numero_factura =  $request->input('factura');
+            $pago->fecha_factura = $request->input('fechaFact');
+            $pago->entrega =  $request->input('entrega');
+            $pago->recibe = $request->input('recibe');
+            $pago->descripcion = $request->input('descripcion');
+            $pago->tipo =  $request->input('tipo');
+            $pago->estatus =  $request->input('estatus');
+            $pago->cuenta_id = $request->input('cuenta');
+            $pago->cli_prov_id =  $request->input('cli_prov_id');
+            if ( $request->input('proy_coti_id') != "---"){
+                $pago->proy_coti_id = $request->input('proy_coti_id');
+            }
 
+            $recurso1 = Recurso::where('nombre', '=', "Proyectos")->first();
+
+            if($mensaje== ""){
+                $cuenta->saldo = $cuenta->saldo + $pago->monto;
+                $pago->save();
+                $cuenta->save();
+                Movimiento::registraMovimiento(
+                $pago->fecha_pago,
+                $pago->monto,
+                $pago->tipo.' de cliente '. $pago->cli_prov_id.' para el proyecto '.$pago->proy_coti_id,
+                "Entrada",
+                $recurso1->id,
+                $pago->cuenta_id);
+            }
+
+            $tipoMensaje = "success";
+		    $mensaje = $mensaje.'El pago cliente por '.$pago->monto.' fue '.$res;
+
+        }
 		# Redirect the user to the page to view the book
-		return redirect('/pagoCliente/'.$pago->id)->with('success', 'El pago cliente por '.$pago->monto.' fue '.$res);
+		#return redirect('/pagoCliente/'.$pago->id)->with('success', 'El pago cliente por '.$pago->monto.' fue '.$res);
+		return redirect('/pagoCliente/'.$pago->id.'/'.$idCli.'/'.$idProy)->with($tipoMensaje, $mensaje);
 		#return view('layouts.prueba');
 	}
 }

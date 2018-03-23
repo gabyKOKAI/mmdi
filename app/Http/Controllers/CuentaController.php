@@ -9,7 +9,7 @@ class CuentaController extends Controller
 {
     public function lista()
     {
-		$cuentas = Cuenta::where('saldo', '<>', -1)->paginate(15);
+		$cuentas = Cuenta::where('nombre', '<>', "Proyectos")->paginate(15);
 
 		return view('cuenta.cuentaLista')->with(['cuentas' => $cuentas]);
     }

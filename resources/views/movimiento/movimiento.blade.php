@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Elemento
+    Movimiento
 @endsection
 
 @push('head')

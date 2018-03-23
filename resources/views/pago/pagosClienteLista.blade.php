@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Pagos de Clientes
+    Pagos Clientes
 @endsection
 
 @push('head')

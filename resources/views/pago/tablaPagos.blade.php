@@ -9,14 +9,14 @@
                          <h3 class="center">Pagos
                              @if($esCliente == 1)
                                 Clientes
-                                @if($cliente->id != -1)
+                                <!--@if($cliente->id != -1)
                                     de {{$cliente->nombre}}
-                                @endif
+                                @endif-->
                              @else
                                 Proveedores
-                                @if($proveedore->id != -1)
+                                <!--@if($proveedore->id != -1)
                                     de {{$proveedore->nombre}}
-                                @endif
+                                @endif-->
                              @endif
                          </h3>
                     </div>
@@ -33,9 +33,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-1">
-                        </div>
-                        <div class="col-sm-10 align-self-center">
+                        <div class="col-sm-12 align-self-center">
                             <table class="table table-hover table-striped .table-striped table-responsive">
                                 <thead>
                                     <tr>
@@ -57,9 +55,13 @@
                                         <th class="center">Estatus</th>
                                         <th class="center">
                                             @if($esCliente == 1)
-                                                <a href="{{URL::to('pagoCliente/-1/'.$cliente->id)}}" class="glyphicon glyphicon-plus-sign"></a>
+                                                @if($cliente->id != -1)
+                                                    <a href="{{URL::to('pagoCliente/-1/'.$cliente->id.'/'.$proyecto->id)}}" class="glyphicon glyphicon-plus-sign"></a>
+                                                @endif
                                             @else
-                                                <a href="{{URL::to('pagoProveedor/-1/'.$proveedore->id)}}" class="glyphicon glyphicon-plus-sign"></a>
+                                                @if($proveedore->id != -1)
+                                                    <a href="{{URL::to('pagoProveedor/-1/'.$proveedore->id.'/'.$cotizacione->id)}}" class="glyphicon glyphicon-plus-sign"></a>
+                                                @endif
                                             @endif
                                         </th>
                                     </tr>
@@ -76,7 +78,7 @@
                                             </td>
 
                                             <td>{{$pago->tipo}}</td>
-                                            <td>{{$pago->cuenta_id}}</td>
+                                            <td>{{$pago->cuenta->nombre}}</td>
                                             <td>{{$pago->fecha_pago}}</td>
                                             <td>{{$pago->monto}}</td>
                                             <td>
@@ -87,9 +89,9 @@
                                             <td>{{$pago->estatus}}</td>
                                             <td>
                                                 @if($esCliente == 1)
-                                                    <a href="{{URL::to('pagoCliente/'.$pago->id.'/'.$cliente->id)}}" class="glyphicon glyphicon-edit"></a>
+                                                    <a href="{{URL::to('pagoCliente/'.$pago->id.'/'.$cliente->id.'/'.$proyecto->id)}}" class="glyphicon glyphicon-edit"></a>
                                                 @else
-                                                    <a href="{{URL::to('pagoProveedor/'.$pago->id.'/'.$proveedore->id)}}" class="glyphicon glyphicon-edit"></a>
+                                                    <a href="{{URL::to('pagoProveedor/'.$pago->id.'/'.$proveedore->id.'/'.$cotizacione->id)}}" class="glyphicon glyphicon-edit"></a>
                                                 @endif
                                             </td>
                                         </tr>
@@ -103,9 +105,7 @@
 
                 <div class="container center">
                     <div class="row">
-                        <div class="col-sm-1 align-self-center">
-                        </div>
-                        <div class="col-sm-10 align-self-center">
+                        <div class="col-sm-12 align-self-center">
 
                             <!-- { {$proyectos->lastPage()} } -->
                             <!-- { {$proyectos->hasMorePages()} } -->
@@ -119,8 +119,6 @@
                             {{$pagos->render()}}
 
                         </div>
-                        <div class="col-sm-1 align-self-center">
-                        </div>
                     </div>
                 </div>
             @else
@@ -131,10 +129,14 @@
                                 Sin Pagos
                                 @if($esCliente == 1)
                                     de Clientes
-                                    <a href="{{ URL::to('pagoCliente/-1/'.$cliente->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
+                                    @if($proyecto->id != -1 or $cliente->id != -1)
+                                        <a href="{{ URL::to('pagoCliente/-1/'.$cliente->id.'/'.$proyecto->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
+                                    @endif
                                 @else
                                     de Proveedores
-                                    <a href="{{ URL::to('pagoProveedor/-1/'.$proveedore->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
+                                    @if($cotizacione->id != -1 or $proveedore->id != -1)
+                                        <a href="{{ URL::to('pagoProveedor/-1/'.$proveedore->id.'/'.$cotizacione->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
+                                    @endif
                                 @endif
                             </h4>
                         </div>

@@ -78,7 +78,7 @@ class ElementoController extends Controller
         # Set the parameters
         $elemento->nombre = $request->input('nombre');
         $elemento->unidades = $request->input('unidades');
-        $elemento->proveedor_id =  $request->input('proveedor');
+        $elemento->proveedor_id =  $request->input('proveedor_id');
         $elemento->tipo = $request->input('tipo');
         $elemento->comentario =  $request->input('comentario');
         $elemento->costo =  $request->input('costo');
