@@ -53,9 +53,9 @@
 
     <div class="container center">
         <div class="row">
-            <div class="col-sm-1 align-self-center">
+            <div class="col-sm-2 align-self-center">
             </div>
-            <div class="col-sm-10 align-self-center">
+            <div class="col-sm-8 align-self-center">
 
                 <!-- { {$proyectos->lastPage()} } -->
                 <!-- { {$proyectos->hasMorePages()} } -->
@@ -69,7 +69,7 @@
                 {{$cuentas->render()}}
 
             </div>
-            <div class="col-sm-1 align-self-center">
+            <div class="col-sm-2 align-self-center">
             </div>
         </div>
     </div>

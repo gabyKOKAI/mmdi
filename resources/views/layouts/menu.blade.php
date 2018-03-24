@@ -91,6 +91,7 @@
                                         </form>
                                     </li>
                                     <li><a href="/registraUsuario">Registrar Usuario</a></li>
+                                    <li><a href="/usuarios">Usuarios</a></li>
                                 </ul>
                             </li>
                         @endguest

@@ -85,6 +85,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
     Route::post('register', 'Auth\RegisterController@register');
 
+    Route::get('/usuarios', 'UsuarioController@lista');
+
     Route::get('/registraUsuario',function () {
         return view('auth.register');
     });
