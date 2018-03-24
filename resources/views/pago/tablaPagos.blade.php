@@ -53,6 +53,7 @@
                                         <th class="center">Factura</th>
                                         <th class="center">Fecha Factura</th>
                                         <th class="center">Estatus</th>
+                                        <th class="center">Registro</th>
                                         <th class="center">
                                             @if($esCliente == 1)
                                                 @if($cliente->id != -1)
@@ -74,6 +75,8 @@
                                             <td>
                                             @if($pago->proyCoti)
                                                 {{$pago->proyCoti->nombre}}
+                                            @else
+                                                ---
                                             @endif
                                             </td>
 
@@ -87,6 +90,7 @@
                                             <td>{{$pago->numero_factura}}</td>
                                             <td>{{$pago->fecha_factura}}</td>
                                             <td>{{$pago->estatus}}</td>
+                                            <td>{{$pago->user->name}}</td>
                                             <td>
                                                 @if($esCliente == 1)
                                                     <a href="{{URL::to('pagoCliente/'.$pago->id.'/'.$cliente->id.'/'.$proyecto->id)}}" class="glyphicon glyphicon-edit"></a>

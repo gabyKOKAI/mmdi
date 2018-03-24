@@ -21,6 +21,13 @@ class PagoProveedore extends Model
         return $this->belongsTo('mmdi\Cotizacione');
     }
 
+    public function user()
+    {
+        # Proyecto belongs to Cliente
+        # Define an inverse one-to-many relationship.
+        return $this->belongsTo('mmdi\User');
+    }
+
     public function cuenta()
     {
         # Proyecto belongs to Cliente

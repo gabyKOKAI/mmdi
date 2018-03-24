@@ -2,13 +2,13 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="container center">
+        <!--div class="container center">
             <div class="row center">
                 <div class="col-md-12">
                     ¿Ya tienes una cuenta? <a href='/login'>Entra aquí...</a>
                 </div>
             </div>
-        </div>
+        </div-->
 
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">

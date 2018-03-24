@@ -136,6 +136,7 @@ class PagosClienteController extends Controller
             $pago->fecha_factura = $request->input('fechaFact');
             $pago->entrega =  $request->input('entrega');
             $pago->recibe = $request->input('recibe');
+            $pago->user_id = $request->user()->id;
             $pago->descripcion = $request->input('descripcion');
             $pago->tipo =  $request->input('tipo');
             $pago->estatus =  $request->input('estatus');

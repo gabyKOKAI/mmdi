@@ -69,17 +69,6 @@ Route::get('/pruebaBD', function () {
 
 Auth::routes();
 
-Route::get('/register', function () {
-	#dump(config('mail.supportEmail'));
-	#dump(config('mail'));
-    return view('welcome');
-});
-Route::post('/register',  function () {
-	#dump(config('mail.supportEmail'));
-	#dump(config('mail'));
-    return view('welcome');
-});
-
 Route::get('/quienEstaConectado', function () {
     $user = Auth::user();
 
@@ -93,6 +82,13 @@ Route::get('/quienEstaConectado', function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
+    Route::post('register', 'Auth\RegisterController@register');
+
+    Route::get('/registraUsuario',function () {
+        return view('auth.register');
+    });
+
     #Route::get('/', 'ProyectoController@lista');
 
     Route::get('/proyectos/{idCli?}',

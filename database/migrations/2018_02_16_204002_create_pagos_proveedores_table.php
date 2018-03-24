@@ -35,6 +35,9 @@ class CreatePagosProveedoresTable extends Migration
 			$table->integer('cli_prov_id')->unsigned();
 			$table->foreign('cli_prov_id')->references('id')->on('proveedores');
 
+			$table->integer('user_id')->unsigned();
+			$table->foreign('user_id')->references('id')->on('users');
+
 			$table->integer('proy_coti_id')->nullable()->unsigned();
 			$table->foreign('proy_coti_id')->references('id')->on('cotizaciones');
 
@@ -49,5 +52,7 @@ class CreatePagosProveedoresTable extends Migration
     public function down()
     {
         Schema::dropIfExists('pagos_proveedores');
+
+        $table->dropColumn('user_id');
     }
 }

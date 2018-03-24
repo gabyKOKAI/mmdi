@@ -35,6 +35,9 @@ class CreatePagosClientesTable extends Migration
 			$table->integer('cli_prov_id')->unsigned();
 			$table->foreign('cli_prov_id')->references('id')->on('clientes');
 
+			$table->integer('user_id')->unsigned();
+			$table->foreign('user_id')->references('id')->on('users');
+
 			$table->integer('proy_coti_id')->nullable(true)->unsigned();
 			$table->foreign('proy_coti_id')->references('id')->on('proyectos');
 
@@ -50,5 +53,7 @@ class CreatePagosClientesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('pagos_clientes');
+
+        $table->dropColumn('user_id');
     }
 }

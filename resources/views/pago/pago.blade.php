@@ -223,7 +223,17 @@
                 <div class="container center">
                     <div class="row">
                         <div class="col-sm-12 align-self-center">
-                            <br>
+                            <p for='user'>Pago registrado por:
+                                 @if($pago->id == -1)
+                                    {{ Auth::user()->name }}
+                                 @else
+                                    {{$pago->user->name}}
+                                 @endif
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 align-self-center">
                             <input type='submit' value='Guarda Pago' class='btn btn-primary btn-small'>
                         </div>
                     </div>

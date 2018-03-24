@@ -79,7 +79,7 @@ class PagosProveedoreController extends Controller
 
         return view('pago.pagoProveedore')->
         with(['pago' => $pago,
-        'cli_prov'=>$proveedore,
+        'cliProv'=>$proveedore,
         'cliProvForDropdown' => $cliProvForDropdown,'cliProvSelected'=>$cliProvSelected,
         'proyCotiForDropdown' => $proyCotiForDropdown,'proyCotiSelected'=>$proyCotiSelected,
         'cuentasForDropdown' => $cuentasForDropdown,'cuentaSelected'=>$cuentaSelected,
@@ -102,7 +102,7 @@ class PagosProveedoreController extends Controller
         if (!$pago) {
             # Instantiate a new Concepto Model object
             $pago = new PagoProveedore();
-            $pago->id = -1;
+            ##$pago->id = -1;
             $pago->con_iva = -1;
             $res = "Creado";
          } else {
@@ -136,6 +136,7 @@ class PagosProveedoreController extends Controller
             $pago->fecha_factura = $request->input('fechaFact');
             $pago->entrega =  $request->input('entrega');
             $pago->recibe = $request->input('recibe');
+            $pago->user_id = $request->user()->id;
             $pago->descripcion = $request->input('descripcion');
             $pago->tipo =  $request->input('tipo');
             $pago->estatus =  $request->input('estatus');
