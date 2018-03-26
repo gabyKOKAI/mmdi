@@ -1,0 +1,47 @@
+body {
+    background-color: white;
+    color:black;
+    font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+	font-size: 14px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 400;
+	line-height: 20px;
+    }
+
+.center {
+    text-align:center;
+}
+
+.right {
+    text-align:right;
+}
+
+.left {
+    text-align:left;
+}
+
+
+.divPagosCliente {
+    background-color: #98fe98;
+    border-style: dotted;
+    margin: 4;
+}
+
+.divPagos {
+    background-color: #df8358;
+    border-style: dotted;
+}
+
+.divPunteado {
+    border-style: dotted;
+}
+
+.divProveedores {
+    background-color: #b4a7d6;
+    border-style: dotted;
+}
+
+.table{
+    width:100%;
+}

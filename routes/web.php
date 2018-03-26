@@ -101,6 +101,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/proyecto/{id?}/{idCli?}', 'ProyectoController@proyecto');
     Route::get('/proyecto/guardar/{id?}/{idCli?}', 'ProyectoController@guardar');
     Route::post('/proyecto/guardar/{id?}/{idCli?}', 'ProyectoController@guardar');
+    Route::get('/proyectoPDF/bajaPDF/{id}','ProyectoController@bajaPDF');
 
     Route::get('/concepto/eliminar/{id?}', 'ConceptoController@eliminar');
     Route::get('/concepto/guardar/{id?}', 'ConceptoController@guardar');

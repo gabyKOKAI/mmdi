@@ -560,12 +560,13 @@
                             </div>
                         </div>
 
-
+                        <br>
                         <div class="container center">
                             <div class="row">
                                 <div class="col-sm-12 align-self-center">
                                     @if($proyecto)
                                         <input type='submit' value='Guarda Proyecto' class='btn btn-primary btn-small'>
+                                        <a class='btn btn-primary btn-small' href="{{action('ProyectoController@bajaPDF', $proyecto->id)}}">PDF</a>
                                     @else
                                         <input type='submit' value='Crear Proyecto' class='btn btn-primary btn-small'>
                                     @endif

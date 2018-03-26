@@ -11,6 +11,8 @@ use mmdi\Concepto;
 use mmdi\PagoCliente;
 use mmdi\Cotizacione;
 
+use PDF;
+
 class ProyectoController extends Controller
 {
      /**
@@ -233,5 +235,29 @@ class ProyectoController extends Controller
 		# Redirect the user to the page to view the book
 		return redirect('/proyecto/'.$proyecto->id)->with('success', 'El proyecto '.$proyecto->nombre.' fue '.$res);
 	}
+
+	public function bajaPDF(Request $request,$id) {
+
+	    $proyecto = Proyecto::find($id);
+
+        $proyecto->calculoVariables($proyecto);
+        $cliente = Cliente::find($proyecto->cliente_id);
+        $conceptos = Proyecto::getConceptos($proyecto->id);
+        $pagos = PagoCliente::where('proy_coti_id','=',$proyecto->id)->paginate(5);
+        $cotizaciones = Cotizacione::where('proyecto_id','=',$proyecto->id)->paginate(5);
+
+        if (!$cotizaciones->isEmpty()) {
+            foreach ($cotizaciones as $cotizacione) {
+                $cotizacione->saldo = Cotizacione::getSaldo($cotizacione);
+            }
+        }
+
+        $esCliente = 1;
+
+        $pdf = PDF::loadView('proyecto.proyectoPDF', compact('proyecto','conceptos','pagos','cotizaciones','cliente','esCliente'));
+        return $pdf->download('cotizacion.pdf');
+
+	}
+
 
 }
