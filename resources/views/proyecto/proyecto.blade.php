@@ -514,7 +514,7 @@
                                                                 <a href="{{ URL::to('distribuirAdicionales')}}/{{$proyecto->id}}" class="glyphicon glyphicon glyphicon-list btn btn-primary"> Distribuir Adicionales</a>
                                                             @else
                                                                 @if($estatusSelected != "Terminado")
-                                                                    <label class="alert-info form-control">El proyecto no ha terminado</label>
+                                                                    <label class="alert-info form-control">Proyecto no terminado</label>
                                                                 @else
                                                                     <label class="alert-info form-control">Distribuido</label>
                                                                 @endif
