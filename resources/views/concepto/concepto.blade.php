@@ -31,7 +31,7 @@
 									    </div>
                                        <div class="row">
                                             <div class="col-sm-4 form-group required control-label" align="left">
-                                                    <label for='nombre'>Nombre</label>
+                                                    <label for='nombre'>Concepto</label>
                                                     <br>
                                                     <input type='text' name='nombre' id='nombre' value='{{$concepto->nombre}}'  class="form-control" required>
                                             </div>
@@ -103,10 +103,10 @@
                                        <div class="row">
                                              <div class="col-sm-12 form-group required control-label" align="left">
                                                 <label for='fecha'>Fecha</label>
+                                                <input type="hidden" name="fecha" value="{{$concepto->fecha}}">
                                                 @if($concepto->id == -1)
-                                                    <input type='date' name='fecha' id='fecha' value='{{$concepto->fecha}}' class="form-control"  required>
+                                                    <input type='date' name='fecha' id='fecha' value='{{$concepto->fecha}}' class="form-control"  disabled>
                                                 @else
-                                                    <input type="hidden" name="fecha" value="{{$concepto->fecha}}">
                                                     <input type='date' name='fecha' id='fecha' value='{{$concepto->fecha}}' class="form-control" disabled>
                                                 @endif
 
@@ -132,27 +132,51 @@
                                             <div class="col-sm-10 divPagos" align="center">
                                                 <div class="row">
                                                     <div class="col-sm-12" align="center">
-                                                        <h4 class="glyphicon glyphicon-bookmark">Resumen Precios y Ganancias</h4>
+                                                        <h4 class="glyphicon glyphicon-bookmark">Resumen Total Cliente</h4>
+                                                    </div>
+                                                </div>
+                                                 <div class="row">
+                                                    <div class="col-sm-5 " align="right">
+
+                                                    </div>
+                                                    <div class="col-sm-3 " align="center">
+                                                       <label>P/U</label>
+                                                    </div>
+                                                    <div class="col-sm-3 " align="center">
+                                                        <label>Total</label>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-sm-12 " align="left">
-                                                        <label>Precio Cliente:</label> $ {{$concepto->precioCliente}}
+                                                    <div class="col-sm-5 " align="right">
+                                                        <label>Costo:</label>
+                                                    </div>
+                                                    <div class="col-sm-3 " align="left">
+                                                        $ {{$concepto->costo}}
+                                                    </div>
+                                                    <div class="col-sm-3 " align="left">
+                                                        $ {{$concepto->costoTotal}}
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-sm-12 " align="left">
-                                                        <label>Ganancia:</label> $ {{$concepto->ganancia}}
+                                                    <div class="col-sm-5 " align="right">
+                                                        <label>Ganancia:</label>
+                                                    </div>
+                                                    <div class="col-sm-3 " align="left">
+                                                        $ {{$concepto->ganancia}}
+                                                    </div>
+                                                    <div class="col-sm-3 " align="left">
+                                                        $ {{$concepto->gananciaTotal}}
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-sm-12 " align="left">
-                                                        <label>Precio Total Conepto:</label> $ {{$concepto->precioTotal}}
+                                                    <div class="col-sm-5 " align="right">
+                                                        <label>Precio</label>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12 " align="center">
-                                                        <label>GANANCIA TOTAL:</label> $ {{$concepto->gananciaTotal}}
+                                                    <div class="col-sm-3 " align="left">
+                                                        $ {{$concepto->precioCliente}}
+                                                    </div>
+                                                    <div class="col-sm-3 fontBold" align="left">
+                                                        $ {{$concepto->precioTotal}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -189,13 +213,13 @@
                 @if($concepto)
                       <div class="container">
                             <div class="row">
-                                <div class="col-sm-5 align-left">
+                                <div class="col-sm-4 align-left">
                                     <hr>
                                 </div>
-                                <div class="col-sm-2 align-center">
-                                     <h3 class="center">Elementos</h3>
+                                <div class="col-sm-4 align-center">
+                                     <h3 class="center">Elementos (Precios Unitarios)   </h3>
                                 </div>
-                                <div class="col-sm-5 align-left">
+                                <div class="col-sm-4 align-left">
                                     <hr>
                                 </div>
                             </div>
@@ -210,13 +234,13 @@
                                         <thead>
                                             <tr>
                                                 <!--th class="center">#</th-->
-                                                <th class="center">Nombre</th>
+                                                <th class="center">Elemento (PU)</th>
                                                 <th class="center">Tipo </th>
                                                 <th class="center">Proveedor</th>
                                                 <th class="center">Unidades</th>
                                                 <th class="center">Costo</th>
                                                 <th class="center">Ganancia</th>
-                                                <th class="center">Precio</th>
+                                                <!--th class="center">Precio</th-->
                                                 <th class="center">Precio Cliente</th>
                                                 <th class="center">
                                                     @if($concepto->id != -1)
@@ -233,14 +257,14 @@
                                              @foreach($elementos as $elemento)
                                                 <tr>
                                                     <!--td> <a href="{{ URL::to('conceptoElemento/' . $concepto->id.'/'.$elemento->id) }}">{{$elemento->id}}</a></td-->
-                                                    <td> {{$elemento->nombre}}</a></td>
+                                                    <td> {{$elemento->nombre.'(CGT:'.$elemento->costo.'-'.$elemento->ganancia.'-'.$elemento->tipo_ganancia.')'}}</a></td>
                                                     <td>{{$elemento->tipo}}</td>
                                                     <td>{{$elemento->proveedor->nombre}}</td>
                                                     <td>{{$elemento->unidades}}</td>
-                                                    <td>{{$elemento->costoCliente}}</td>
-                                                    <td>{{$elemento->ganancia}}</td>
-                                                    <td>{{$elemento->precio}}</td>
-                                                    <td>{{$elemento->precioCliente}}</td>
+                                                    <td>$ {{$elemento->costoCliente}}</td>
+                                                    <td>$ {{$elemento->precioCliente - $elemento->costoCliente}}</td>
+                                                    <!--td>{{$elemento->precio}}</td-->
+                                                    <td>$ {{$elemento->precioCliente}}</td>
                                                     <td>
 
                                                         @if($proyectoCon->distribuido == 0 and $concepto->adicional == 0)
@@ -287,7 +311,7 @@
 							</div>
 
                     @else
-                         <h4>Sin Elementos
+                         <h4>Sin Elementos (Precios Unitarios)
                             @if($concepto->id != -1)
                                 <a href="{{URL::to('conceptoElemento/'.$concepto->id.'/-1')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
                             @endif

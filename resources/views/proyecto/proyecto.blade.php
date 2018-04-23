@@ -603,13 +603,18 @@
                                         <thead>
                                             <tr>
                                                 <!--th class="center">#</th-->
-                                                <th class="center">Nombre </th>
+                                                <th class="center">#</th>
+                                                <th class="center">Concepto </th>
+                                                <th class="center">C/U </th>
+                                                <th class="center">G/U </th>
+                                                <th class="center">P/U </th>
                                                 <th class="center">Cantidad </th>
                                                 <th class="center">Unidades </th>
-                                                <th class="center">Precio </th>
-                                                <th class="center">Fecha</th>
-                                                <th class="center">Estatus </th>
-                                                <th class="center">Total </th>
+                                                <th class="center">Costo Total </th>
+                                                <th class="center">Ganancia Total </th>
+                                                <th class="center">Precio Total</th>
+                                                <!--th class="center">Fecha</th>
+                                                <th class="center">Estatus </th-->
                                                 <th class="center">Adicinal </th>
                                                 <th class="center">
                                                     @if($proyecto->id != -1 and  $proyecto->adicionalesDistribuido == 0)
@@ -623,13 +628,19 @@
                                              @foreach($conceptos as $concepto)
                                                 <tr>
                                                     <!--td> <a href="{{ URL::to('concepto/' . $concepto->id) }}">{{$concepto->id}}</a></td-->
+                                                     <td> {{$concepto->num}}</td>
                                                     <td> {{$concepto->nombre}}</td>
+                                                    <td>$ {{$concepto->costo}}</td>
+                                                    <td>$ {{$concepto->ganancia}}</td>
+                                                    <td>$ {{$concepto->precio}}</td>
                                                     <td>{{$concepto->cantidad}}</td>
                                                     <td>{{$concepto->unidades}}</td>
-                                                    <td>{{$concepto->precio}}</td>
-                                                    <td>{{$concepto->fecha}}</td>
-                                                    <td>{{$concepto->estatus}}</td>
-                                                    <td>{{$concepto->total}}</td>
+                                                    <td>$ {{$concepto->costoTotal}}</td>
+                                                    <td>$ {{$concepto->gananciaTotal}}</td>
+                                                    <td>$ {{$concepto->precioTotal}}</td>
+                                                    <!--td>{{$concepto->fecha}}</td>
+                                                    <td>{{$concepto->estatus}}</td-->
+
                                                     <td>
                                                         <input type="checkbox" class="form-check-input" id="adicional" {{ $concepto->adicional ? 'checked="checked"' : '' }} disabled>
                                                     </td>

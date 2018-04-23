@@ -9,7 +9,7 @@
         <div class="container center">
             <div class="row">
                 <div class="col-sm-12 align-center">
-                    <h1 class="center">Elementos</h1>
+                    <h1 class="center">Elementos (Precios Unitarios)</h1>
                 </div>
             </div>
             <div class="row">
@@ -21,7 +21,7 @@
                                         <thead>
                                             <tr>
                                                 <!--th class="center">#</th-->
-                                                <th class="center">Nombre</th>
+                                                <th class="center">Elemento</th>
                                                 <th class="center">Tipo </th>
                                                 <th class="center">Proveedor</th>
                                                 <th class="center">Unidades</th>
@@ -42,10 +42,10 @@
                                                     <td>{{$elemento->tipo}}</td>
                                                     <td>{{$elemento->proveedor->nombre}}</td>
                                                     <td>{{$elemento->unidades}}</td>
-                                                    <td>{{$elemento->costo}}</td>
-                                                    <td>{{$elemento->ganancia}}</td>
+                                                    <td>$ {{$elemento->costo}}</td>
+                                                    <td>$ {{$elemento->ganancia}}</td>
                                                     <td>{{$elemento->tipo_ganancia}}</td>
-                                                    <td>{{$elemento->precio}}</td>
+                                                    <td>$ {{$elemento->precio}}</td>
                                                     <td>
                                                         <a href="{{ URL::to('elemento/'.$elemento->id)}}" class="glyphicon glyphicon-edit"></a>
                                                     </td>
@@ -84,6 +84,6 @@
     </div>
 
     @else
-        <h1>Sin Elementos <a href="{{ URL::to('elemento/-1/')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a></h1>
+        <h1>Sin Elementos (Precios Unitarios) <a href="{{ URL::to('elemento/-1/')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a></h1>
     @endif
 @endsection

@@ -72,6 +72,7 @@ class PagosClienteController extends Controller
             $pago->id = -1;
             $cliProvSelected = $idCli;
             $proyCotiSelected = $idProy;
+            $pago->fecha_pago = date("Y-m-d");
             if($idCli != -1){
                 $proyCotiForDropdown = Proyecto::where('cliente_id','=',$idCli)->get();
             }
@@ -134,8 +135,8 @@ class PagosClienteController extends Controller
             }
             $pago->numero_factura =  $request->input('factura');
             $pago->fecha_factura = $request->input('fechaFact');
-            $pago->entrega =  $request->input('entrega');
-            $pago->recibe = $request->input('recibe');
+            $pago->entrega =  "-";// $request->input('entrega');
+            $pago->recibe = "-";// $request->input('recibe');
             $pago->user_id = $request->user()->id;
             $pago->descripcion = $request->input('descripcion');
             $pago->tipo =  $request->input('tipo');

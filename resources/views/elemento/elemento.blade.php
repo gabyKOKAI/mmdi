@@ -10,10 +10,10 @@
             <div class="col-sm-12 align-center">
 
                 @if($elemento->id != -1)
-                    <h1 class="center">[{{$elemento->id}}] Elemento  '{{$elemento->nombre}}' </h1>
+                    <h1 class="center">[{{$elemento->id}}] Elemento (PU) '{{$elemento->nombre}}' </h1>
                      <form method='GET' action='/elemento/guardar/{{$elemento->id}}'>
                @else
-                    <h1 class="center">Nuevo Elemento</h1>
+                    <h1 class="center">Nuevo Elemento (PU)</h1>
                     <form method='GET' action='/elemento/guardar/-1'>
                @endif
                        {{ csrf_field() }}
@@ -28,7 +28,7 @@
                                     <div class="container center">
                                         <div class="row">
                                             <div class="col-sm-4 form-group required control-label" align="left">
-                                                <label for='nombre'>Nombre</label>
+                                                <label for='nombre'>Nombre Elemento (PU)</label>
                                                 <input type='text' name='nombre' id='nombre' value='{{$elemento->nombre}}'  class="form-control" required>
                                             </div>
                                             <div class="col-sm-2 form-group required control-label" align="left">
@@ -85,7 +85,8 @@
                                     <div class="col-sm-6 container center divPunteado">
                                         <div class="row">
                                             <div class="col-sm-12" align="center">
-                                                <h4>Precio</h4>
+                                                <!--h4>Precio</h4-->
+                                                <br>
                                             </div>
                                        </div>
                                        <div class="row">
@@ -117,7 +118,7 @@
                                             </div>
                                        </div>
                                         <div class="row">
-                                            <div class="col-sm-12" align="center">
+                                            <div class="col-sm-12 font200 bold" align="center">
                                                 <label>Precio:</label> $ {{$elemento->precio}}
                                             </div>
                                        </div>

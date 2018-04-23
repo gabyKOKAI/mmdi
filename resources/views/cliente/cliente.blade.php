@@ -49,7 +49,7 @@
                                     <div class="container center">
                                         <div class="row">
                                             <div class="col-sm-4 control-label" align="left">
-                                                <label for='comentario'>Comentario</label>
+                                                <label for='comentario'>Comentario & Dirección</label>
                                                 <textarea name='comentario' id='comentario' maxlength="250" rows="5"  class="form-control" >{{$cliente->comentario}}</textarea>
                                             </div>
                                         </div>

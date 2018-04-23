@@ -8,12 +8,12 @@
                     <div class="col-sm-4 align-center">
                          <h3 class="center">Pagos
                              @if($esCliente == 1)
-                                Clientes
+                                Cliente(s)
                                 <!--@if($cliente->id != -1)
                                     de {{$cliente->nombre}}
                                 @endif-->
                              @else
-                                Proveedores
+                                Proveedore(s)
                                 <!--@if($proveedore->id != -1)
                                     de {{$proveedore->nombre}}
                                 @endif-->
@@ -51,9 +51,9 @@
                                         <th class="center">Monto</th>
                                         <th class="center">Con IVA</th>
                                         <th class="center">Factura</th>
-                                        <th class="center">Fecha Factura</th>
-                                        <th class="center">Estatus</th>
-                                        <th class="center">Registro</th>
+                                        <!--th class="center">Fecha Factura</th>
+                                        <th class="center">Estatus</th-->
+                                        <!--th class="center">Registro</th-->
                                         <th class="center">
                                             @if($esCliente == 1)
                                                 @if($cliente->id != -1)
@@ -83,14 +83,14 @@
                                             <td>{{$pago->tipo}}</td>
                                             <td>{{$pago->cuenta->nombre}}</td>
                                             <td>{{$pago->fecha_pago}}</td>
-                                            <td>{{$pago->monto}}</td>
+                                            <td>$ {{$pago->monto}}</td>
                                             <td>
                                                 <input type="checkbox" class="form-check-input" id="conIva" {{ $pago->con_iva ? 'checked="checked"' : '' }} disabled>
                                             </td>
                                             <td>{{$pago->numero_factura}}</td>
-                                            <td>{{$pago->fecha_factura}}</td>
-                                            <td>{{$pago->estatus}}</td>
-                                            <td>{{$pago->user->name}}</td>
+                                            <!--td>{{$pago->fecha_factura}}</td>
+                                            <td>{{$pago->estatus}}</td-->
+                                            <!--td>{{$pago->user->name}}</td-->
                                             <td>
                                                 @if($esCliente == 1)
                                                     <a href="{{URL::to('pagoCliente/'.$pago->id.'/'.$cliente->id.'/'.$proyecto->id)}}" class="glyphicon glyphicon-edit"></a>
@@ -132,12 +132,12 @@
                             <h4 class="center">
                                 Sin Pagos
                                 @if($esCliente == 1)
-                                    de Clientes
+                                    de Cliente(s)
                                     @if($proyecto->id != -1 or $cliente->id != -1)
                                         <a href="{{ URL::to('pagoCliente/-1/'.$cliente->id.'/'.$proyecto->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
                                     @endif
                                 @else
-                                    de Proveedores
+                                    de Proveedore(s)
                                     @if($cotizacione->id != -1 or $proveedore->id != -1)
                                         <a href="{{ URL::to('pagoProveedor/-1/'.$proveedore->id.'/'.$cotizacione->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
                                     @endif

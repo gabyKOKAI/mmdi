@@ -115,9 +115,17 @@ class Proyecto extends Model
     {
         $conceptos = Concepto::where('proyecto_id', 'LIKE', $proyecto_id)->paginate(5);
 
+        $num = 1;
+
         foreach ($conceptos as $concepto) {
+            $concepto->costo = Concepto::getCosto($concepto);
+            $concepto->ganancia = Concepto::getGananciaReal($concepto);
             $concepto->precio = Concepto::getPrecio($concepto);
-            $concepto->total = $concepto->precio*$concepto->cantidad;
+            $concepto->costoTotal = $concepto->costo * $concepto->cantidad ;
+            $concepto->gananciaTotal = $concepto->ganancia * $concepto->cantidad ;
+            $concepto->precioTotal = $concepto->precio * $concepto->cantidad;
+            $concepto->num = $num;
+            $num = $num + 1;
         }
         return $conceptos;
     }

@@ -72,6 +72,7 @@ class PagosProveedoreController extends Controller
             $pago->id = -1;
             $cliProvSelected = $idPro;
             $proyCotiSelected = $idCoti;
+            $pago->fecha_pago = date("Y-m-d");
 			if($idPro != -1){
                 $proyCotiForDropdown = Cotizacione::where('proveedor_id','=',$idPro)->get();
             }
@@ -134,8 +135,8 @@ class PagosProveedoreController extends Controller
             }
             $pago->numero_factura =  $request->input('factura');
             $pago->fecha_factura = $request->input('fechaFact');
-            $pago->entrega =  $request->input('entrega');
-            $pago->recibe = $request->input('recibe');
+            $pago->entrega =  "-";// $request->input('entrega');
+            $pago->recibe = "-";// $request->input('recibe');
             $pago->user_id = $request->user()->id;
             $pago->descripcion = $request->input('descripcion');
             $pago->tipo =  $request->input('tipo');

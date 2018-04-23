@@ -33,7 +33,7 @@
                         <div class="col-sm-6">
                             <div class="container center">
                                 <div class="row">
-                                    <div class="col-sm-0">
+                                    <div class="col-sm-1">
                                     </div>
                                     <div class="col-sm-2 form-group required control-label" align="left">
                                         <label for='tipo'>Tipo</label>
@@ -137,7 +137,7 @@
 
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-0">
+                                    <div class="col-sm-1">
                                     </div>
                                     <div class="col-sm-2 form-group required control-label" align="left">
                                         <label for='monto'>Monto</label>
@@ -178,9 +178,9 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-0">
+                                    <div class="col-sm-3">
                                     </div>
-                                    <div class="col-sm-2 form-group required control-label" align="left">
+                                    <!--div class="col-sm-2 form-group required control-label" align="left">
                                         <label for='entrega'>Entrega</label>
                                         @if($pago->id == -1)
                                             <input type='text' name='entrega' id='entrega' value='{{$pago->entrega}}'  class="form-control" required>
@@ -198,7 +198,7 @@
                                             <input type='text' name='recibe' id='recibe' value='{{$pago->recibe}}'  class="form-control" disabled>
                                         @endif
 
-                                    </div>
+                                    </div-->
                                      <div class="col-sm-2 form-group required control-label" align="left">
                                         <label for='estatus'>Estatus</label>
                                             <select name="estatus"  class="form-control" required>

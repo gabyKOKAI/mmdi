@@ -37,14 +37,17 @@ class ConceptoController extends Controller
             $estatusSelected = $concepto->estatus;
             # Get elementos
             $elementos = Concepto::getElementos($concepto);
+            $concepto->costo = Concepto::getCosto($concepto);
             $concepto->precioCliente = $concepto->getprecio($concepto);
             $concepto->ganancia = Concepto::getGananciaReal($concepto);
             $concepto->precioTotal = $concepto->precioCliente * $concepto->cantidad;
             $concepto->gananciaTotal = $concepto->ganancia * $concepto->cantidad ;
+            $concepto->costoTotal = $concepto->costo * $concepto->cantidad ;
         }
         else{
             $concepto = new Concepto;
             $concepto->id = -1;
+            $concepto->fecha = date("Y-m-d");
             $proyectoSelected = $idProy;
             $concepto->adicional = $proyecto->distribuido;
         }

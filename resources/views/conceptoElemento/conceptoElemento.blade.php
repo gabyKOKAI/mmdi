@@ -28,7 +28,7 @@
                                     <div class="col-sm-12 container center">
 									    <div class="row">
                                             <div class="col-sm-12 form-group required control-label" align="left">
-                                                    <label for='nombreCon'>Nombre Concepto</label>
+                                                    <label for='nombreCon'>Concepto</label>
                                                     <a href="{{ URL::to('concepto/'.$concepto->id) }}" class="glyphicon glyphicon-edit"></a>
                                                     <input type='text' name='nombreCon' id='nombreCon' value='{{$concepto->nombre}}'  class="form-control" disabled>
                                             </div>
