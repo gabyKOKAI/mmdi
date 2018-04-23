@@ -116,7 +116,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/elemento/{id?}', 'ElementoController@elemento');
 
     Route::get('/cotizaciones', 'CotizacionController@lista');
-    Route::get('/cotizacion/{id?}', 'CotizacionController@cotizacion');
+    Route::get('/cotizacion/{id?}/{idProy?}', 'CotizacionController@cotizacion');
     Route::get('/cotizacion/guardar/{id?}', 'CotizacionController@guardar');
     Route::post('/cotizacion/guardar/{id?}', 'CotizacionController@guardar');
 

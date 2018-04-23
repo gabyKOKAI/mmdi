@@ -21,13 +21,13 @@
 
                         <div class="container center">
                             <div class="row">
+                                <div class="col-sm-12" align="left">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-4" align="left">
                                     <div class="container center">
-                                       <div class="row">
-                                            <div class="col-sm-12" align="left">
-                                                <hr>
-                                            </div>
-                                       </div>
                                        <div class="row">
                                             <div class="col-sm-4" align="center">
                                                 <h4>Informacion General</h4>
@@ -98,11 +98,6 @@
                                 </div>
                                 <div class="col-sm-4" align="left">
                                     <div class="col-sm-12 container center">
-                                       <div class="row">
-                                            <div class="col-sm-12" align="left">
-                                                <hr>
-                                            </div>
-                                       </div>
                                        <div class="row">
                                             <div class="col-sm-12" align="center">
                                                 <h4>Gastos & Ganancias MMDI</h4>
@@ -251,96 +246,272 @@
 
                                             </div>
                                          </div>
-                                         <div class="row">
+                                       <div class="row">
+                                            <div class="col-sm-1" align="center">
+                                            <br>
+                                            </div>
+                                            <div class="col-sm-10 divPunteado" align="center">
+                                                <div class="row">
+                                                    <div class="col-sm-12" align="center">
+                                                        <h4 class="glyphicon glyphicon-bookmark">Presupuesto Cliente</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-1 " align="right">
+                                                    </div>
+                                                    <div class="col-sm-5 " align="left">
+                                                        <label>Inicial:</label>
+                                                    </div>
+                                                    <div class="col-sm-5 " align="right">
+                                                        $ {{number_format($proyecto->inicial,2)}}
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-1 " align="right">
+                                                    </div>
+                                                    <div class="col-sm-5 " align="left">
+                                                        <label>Honorarios:</label>
+                                                    </div>
+                                                    <div class="col-sm-5 " align="right">
+                                                        $ {{number_format($proyecto->honorarios,2)}}
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-1 " align="right">
+                                                    </div>
+                                                    <div class="col-sm-5 " align="left">
+                                                        <label>TOTAL:</label>
+                                                    </div>
+                                                    <div class="col-sm-5 " align="right">
+                                                        $ {{number_format($proyecto->costo,2)}}
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-1 " align="right">
+                                                    </div>
+                                                    <div class="col-sm-10 " align="left">
+                                                      <hr>
+                                                    </div>
+                                                    <div class="col-sm-1 " align="left">
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-1 " align="right">
+                                                    </div>
+                                                    <div class="col-sm-5 " align="left">
+                                                        <label>Adicionales:</label>
+                                                    </div>
+                                                    <div class="col-sm-5 " align="right">
+                                                        $ {{number_format($proyecto->adicional,2)}}
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-1 " align="right">
+                                                    </div>
+                                                    <div class="col-sm-5 " align="left">
+                                                        <label>Honorarios:</label>
+                                                    </div>
+                                                    <div class="col-sm-5 " align="right">
+                                                        $ {{number_format($proyecto->honorariosAdicional,2)}}
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-1 " align="right">
+                                                    </div>
+                                                    <div class="col-sm-5 " align="left">
+                                                        <label>TOTAL:</label>
+                                                    </div>
+                                                    <div class="col-sm-5 " align="right">
+                                                        $ {{number_format($proyecto->adicional + $proyecto->honorariosAdicional, 2)}}
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12" align="center">
+                                                        <label>TOTAL PROYECTO</label>
+                                                    </div>
+                                                    <div class="col-sm-12 " align="center">
+                                                         $ {{number_format($proyecto->totAdicionales, 2)}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                       </div>
+                                        </div>
+                                    </div>
+								<div class="col-sm-4" align="left">
+								    <div class="col-sm-12 container center">
+                                        <div class="row">
+                                            <div class="col-sm-2" align="center">
+                                            <br>
+                                            </div>
+                                            <div class="col-sm-8 divPagos" align="center">
+                                                <div class="row">
+                                                    <div class="col-sm-12" align="center">
+                                                        <h4 class="glyphicon glyphicon-bookmark">Utilidades</h4>
+                                                    </div>
+                                                </div>
+                                                 <div class="row">
+                                                    <div class="col-sm-6 " align="left">
+                                                        <label>Indirectos:</label>
+                                                    </div>
+                                                    <div class="col-sm-6 " align="right">
+                                                        $ {{number_format($proyecto->indirectos,2)}}
+                                                   </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6 " align="left">
+                                                        <label>Honorarios:</label>
+                                                    </div>
+                                                    <div class="col-sm-6 " align="right">
+                                                        $ {{number_format($proyecto->honorarios,2)}}
+                                                   </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6 " align="left">
+                                                        <label>TOTAL:</label>
+                                                    </div>
+                                                    <div class="col-sm-6 " align="right">
+                                                        $ {{number_format($proyecto->utilidades,2)}}
+                                                   </div>
+                                                </div>
+                                            </div>
+                                       </div>
+                                       <div class="row">
+                                            <div class="col-sm-12" align="left">
+                                                <br>
+                                            </div>
+										</div>
+                                       <div class="row">
+                                            <div class="col-sm-2" align="center">
+                                            <br>
+                                            </div>
+                                            <div class="col-sm-8 divPagos" align="center">
+                                                <div class="row">
+                                                    <div class="col-sm-12" align="center">
+                                                        <h4 class="glyphicon glyphicon-bookmark">Gastos</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6 " align="left">
+                                                        <label>MMDI:</label>
+                                                    </div>
+                                                    <div class="col-sm-6 " align="right">
+                                                        $ {{number_format($proyecto->mmdi,2)}}
+                                                   </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6 " align="left">
+                                                        <label>Viaticos:</label>
+                                                    </div>
+                                                    <div class="col-sm-6 " align="right">
+                                                        $ {{number_format($proyecto->gasto_viaticos,2)}}
+                                                   </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6 " align="left">
+                                                        <label>IMSS:</label>
+                                                    </div>
+                                                    <div class="col-sm-6 " align="right">
+                                                        $ {{number_format($proyecto->gasto_IMSS,2)}}
+                                                   </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6 " align="left">
+                                                        <label>Errores:</label>
+                                                    </div>
+                                                    <div class="col-sm-6 " align="right">
+                                                        $ {{number_format($proyecto->errores,2)}}
+                                                   </div>
+                                                </div>
+                                            </div>
+                                       </div>
+                                       <div class="row">
                                             <div class="col-sm-12" align="center">
-                                            <hr>
+                                            <br>
                                             </div>
                                         </div>
-                                           <div class="row">
-                                                <div class="col-sm-2" align="center">
+                                        <div class="row">
+                                            <div class="col-sm-2" align="center">
                                                 <br>
+                                            </div>
+                                            <div class="col-sm-8 divPagos" align="center">
+                                                <div class="row">
+                                                    <div class="col-sm-12" align="center">
+                                                        <!--($ { {number_format($proyecto->ddg,2)}})-->
+                                                        <h4 class="glyphicon glyphicon-bookmark">Distribución </h4>
+                                                    </div>
                                                 </div>
-                                                <div class="col-sm-10 divPunteado" align="center">
-                                                    <div class="row">
-                                                        <div class="col-sm-12" align="center">
-                                                            <h4 class="glyphicon glyphicon-bookmark">Presupuesto Cliente</h4>
-                                                        </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6 " align="left">
+                                                        <label>MMDI:</label>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-1 " align="right">
-                                                        </div>
-                                                        <div class="col-sm-5 " align="left">
-                                                            <label>Inicial:</label>
-                                                        </div>
-                                                        <div class="col-sm-5 " align="left">
-                                                            $ {{$proyecto->inicial}}
-                                                        </div>
+                                                    <div class="col-sm-6 " align="right">
+                                                        $ {{number_format($proyecto->recMmdi,2)}}
+                                                   </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6 " align="left">
+                                                        <label>MEG:</label>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-1 " align="right">
-                                                        </div>
-                                                        <div class="col-sm-5 " align="left">
-                                                            <label>Honorarios:</label>
-                                                        </div>
-                                                        <div class="col-sm-5 " align="left">
-                                                            $ {{$proyecto->honorarios}}
-                                                        </div>
+                                                    <div class="col-sm-6 " align="right">
+                                                        $ {{number_format($proyecto->meg,2)}}
+                                                   </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6 " align="left">
+                                                        <label>AMM:</label>
                                                     </div>
-
-                                                    <div class="row">
-                                                        <div class="col-sm-1 " align="right">
-                                                        </div>
-                                                        <div class="col-sm-5 " align="left">
-                                                            <label>TOTAL:</label>
-                                                        </div>
-                                                        <div class="col-sm-5 " align="left">
-                                                            $ {{$proyecto->costo}}
-                                                        </div>
+                                                    <div class="col-sm-6 " align="right">
+                                                        $ {{number_format($proyecto->amm,2)}}
+                                                   </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6 " align="left">
+                                                        <label>MME:</abel>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-1 " align="right">
-                                                        </div>
-                                                        <div class="col-sm-10 " align="left">
-                                                          <hr>
-                                                        </div>
-                                                        <div class="col-sm-1 " align="left">
-                                                        </div>
-
+                                                    <div class="col-sm-6 " align="right">
+                                                        $ {{number_format($proyecto->mme,2)}}
+                                                   </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6 " align="left">
+                                                        <label>AME:</label>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-1 " align="right">
-                                                        </div>
-                                                        <div class="col-sm-5 " align="left">
-                                                            <label>Adicionales:</label>
-                                                        </div>
-                                                        <div class="col-sm-5 " align="left">
-                                                            $ {{$proyecto->adicional}}
-                                                        </div>
+                                                    <div class="col-sm-6 " align="right">
+                                                        $ {{number_format($proyecto->ame,2)}}
+                                                   </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12" align="center">
+                                                        @if($proyecto->ganancia_AME+$proyecto->ganancia_MME+$proyecto->ganancia_AMM+$proyecto->ganancia_MEG != 100)
+                                                            <label class="alert-info form-control">No suma 100%</label>
+                                                        @else
+                                                            @if($proyecto->distribuido)
+                                                                <label class="alert-info form-control">Distribuido</label>
+                                                            @else
+                                                                <a href="{{ URL::to('distribuir')}}/{{$proyecto->id}}" class="glyphicon glyphicon glyphicon-list btn btn-primary"> Distribuir Ganancias</a>
+                                                            @endif
+                                                        @endif
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-1 " align="right">
-                                                        </div>
-                                                        <div class="col-sm-5 " align="left">
-                                                            <label>Honorarios:</label>
-                                                        </div>
-                                                        <div class="col-sm-5 " align="left">
-                                                            $ {{$proyecto->honorariosAdicional}}
-                                                        </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-7 font30" align="right">
+                                                       <br>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-1 " align="right">
-                                                        </div>
-                                                        <div class="col-sm-5 " align="left">
-                                                            <label>TOTAL:</label>
-                                                        </div>
-                                                        <div class="col-sm-5 " align="left">
-                                                            $ {{$proyecto->adicional + $proyecto->honorariosAdicional}}
-                                                        </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-6 " align="left">
+                                                        <label>MMDI:</label>
                                                     </div>
-                                                    <div class="row">
+                                                    <div class="col-sm-6 " align="right">
+                                                        $ {{number_format($proyecto->adicional + $proyecto->honorariosAdicional,2)}}
+                                                   </div>
+                                                </div>
+                                                <div class="row">
                                                         <div class="col-sm-12" align="center">
                                                             @if($estatusSelected == "Terminado" and !$proyecto->adicionalesDistribuido)
-                                                                <a href="{{ URL::to('distribuirAdicionales')}}/{{$proyecto->id}}" class="glyphicon glyphicon glyphicon-list btn btn-primary"> Distribuir</a>
+                                                                <a href="{{ URL::to('distribuirAdicionales')}}/{{$proyecto->id}}" class="glyphicon glyphicon glyphicon-list btn btn-primary"> Distribuir Adicionales</a>
                                                             @else
                                                                 @if($estatusSelected != "Terminado")
                                                                     <label class="alert-info form-control">El proyecto no ha terminado</label>
@@ -350,29 +521,19 @@
                                                             @endif
                                                         </div>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-7 " align="right">
-                                                           <br>
-                                                        </div>
-                                                        <!--div class="col-sm-7 " align="right">
-                                                            <label>CON ADICIONALES:</label>
-                                                        </div>
-                                                        <div class="col-sm-5 " align="left">
-                                                             $ {{$proyecto->totAdicionales}}
-                                                        </div-->
+                                                <div class="row">
+                                                    <div class="col-sm-7 font30" align="right">
+                                                       <br>
                                                     </div>
                                                 </div>
-                                           </div>
-                                        </div>
-                                    </div>
-								<div class="col-sm-4" align="left">
-								    <div class="col-sm-12 container center">
-								        <div class="row">
-                                            <div class="col-sm-12" align="left">
-                                                <hr>
                                             </div>
-										</div>
+                                       </div>
                                        <div class="row">
+                                            <div class="col-sm-12" align="center">
+                                            <hr>
+                                            </div>
+                                        </div>
+                                        <div class="row">
                                             <div class="col-sm-2" align="center">
                                             <br>
                                             </div>
@@ -386,175 +547,37 @@
                                                     <div class="col-sm-6 " align="left">
                                                         <label>Efectivo:</label>
                                                     </div>
-                                                    <div class="col-sm-6 " align="left">
-                                                        $ {{$proyecto->efectivo}}
+                                                    <div class="col-sm-6 " align="right">
+                                                        $ {{number_format($proyecto->efectivo,2)}}
                                                    </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-sm-6 " align="left">
                                                         <label>Transfer:</label>
                                                     </div>
-                                                    <div class="col-sm-6 " align="left">
-                                                        $ {{$proyecto->transferencias}}
+                                                    <div class="col-sm-6 " align="right">
+                                                        $ {{number_format($proyecto->transferencias,2)}}
                                                    </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-sm-6 " align="left">
                                                         <label>Cheque:</label>
                                                     </div>
-                                                    <div class="col-sm-6 " align="left">
-                                                        $ {{$proyecto->cheques}}
+                                                    <div class="col-sm-6 " align="right">
+                                                        $ {{number_format($proyecto->cheques,2)}}
                                                    </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-sm-6 " align="left">
                                                         <label>SALDO:</label>
                                                     </div>
-                                                    <div class="col-sm-6 " align="left">
-                                                        $ {{$proyecto->saldo}}
+                                                    <div class="col-sm-6 " align="right">
+                                                        $ {{number_format($proyecto->saldo,2)}}
                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-sm-12" align="center">
-                                            <hr>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-2" align="center">
-                                            <br>
-                                            </div>
-                                            <div class="col-sm-8 divPagos" align="center">
-                                                <div class="row">
-                                                    <div class="col-sm-12" align="center">
-                                                        <h4 class="glyphicon glyphicon-bookmark">Utilidades</h4>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12 " align="left">
-                                                        <label>Indirectos:</label> $ {{$proyecto->indirectos}}
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12 " align="left">
-                                                        <label>Honorarios:</label> $ {{$proyecto->honorarios}}
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12 " align="center">
-                                                        <label>TOTAL:</label> $ {{$proyecto->utilidades}}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                       </div>
-                                        <div class="row">
-                                            <div class="col-sm-12" align="center">
 
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-12" align="center">
-                                            <hr>
-                                            </div>
-                                        </div>
-                                       <div class="row">
-                                            <div class="col-sm-2" align="center">
-                                            <br>
-                                            </div>
-                                            <div class="col-sm-8 divPagos" align="center">
-                                                <div class="row">
-                                                    <div class="col-sm-12" align="center">
-                                                        <h4 class="glyphicon glyphicon-bookmark">Gastos</h4>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12 " align="left">
-                                                        <label>MMDI:</label> $ {{$proyecto->mmdi}}
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12 " align="left">
-                                                        <label>Viaticos:</label> $ {{$proyecto->gasto_viaticos}}
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12 " align="left">
-                                                        <label>IMSS:</label> $ {{$proyecto->gasto_IMSS}}
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12 " align="left">
-                                                        <label>Errores:</label> $ {{$proyecto->errores}}
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12 " align="center">
-                                                        <label>DESPUES DE GASTOS:</label> $ {{$proyecto->ddg}}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                       </div>
-                                       <div class="row">
-                                            <div class="col-sm-12" align="center">
-                                            <hr>
-                                            </div>
-                                        </div>
-                                       <div class="row">
-                                            <div class="col-sm-2" align="center">
-                                            <br>
-                                            </div>
-                                            <div class="col-sm-8 divPagos" align="center">
-                                                <div class="row">
-                                                    <div class="col-sm-12" align="center">
-                                                        <h4 class="glyphicon glyphicon-bookmark">Division de Ganancias</h4>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12 " align="left">
-                                                        <label>MMDI:</label> $ {{$proyecto->recMmdi}}
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12 " align="left">
-                                                        <label>MEG:</label> $ {{$proyecto->meg}}
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12 " align="left">
-                                                        <label>AMM:</label> $ {{$proyecto->amm}}
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12 " align="left">
-                                                        <label>MME:</label> $ {{$proyecto->mme}}
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12 " align="left">
-                                                        <label>AME:</label> $ {{$proyecto->ame}}
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12" align="center">
-                                                        @if($proyecto->ganancia_AME+$proyecto->ganancia_MME+$proyecto->ganancia_AMM+$proyecto->ganancia_MEG != 100)
-                                                            <label class="alert-info form-control">No suma 100%</label>
-                                                        @else
-                                                            @if($proyecto->distribuido)
-                                                                <label class="alert-info form-control">Distribuido</label>
-                                                            @else
-                                                                <a href="{{ URL::to('distribuir')}}/{{$proyecto->id}}" class="glyphicon glyphicon glyphicon-list btn btn-primary"> Distribuir</a>
-                                                            @endif
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                        <div class="col-sm-7 " align="right">
-                                                           <br>
-                                                        </div>
-                                                    </div>
-                                            </div>
-                                       </div>
                                    </div>
 								</div>
                             </div>
@@ -580,7 +603,7 @@
 		<div class="row">
 			<div class="col-sm-12 align-right">
                 @if($proyecto)
-                      <div class="container">
+                      <div class="center">
                             <div class="row">
                                <div class="col-sm-5 align-left">
                                     <hr>
@@ -594,75 +617,75 @@
                             </div>
                         </div>
 
-                        @if(count($conceptos)>0)
-                            <div class="container center">
-                                <div class="row">
-                                    <div class="col-sm-12 align-self-center">
+                      @if(count($conceptos)>0)
+                        <div class="center">
+                            <div class="row">
+                                <div class="col-sm-12 align-self-center">
 
-                                    <table class="table table-hover table-striped .table-striped table-responsive">
-                                        <thead>
+                                <table class="table table-hover table-striped .table-striped table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <!--th class="center">#</th-->
+                                            <th class="center">#</th>
+                                            <th class="center">Concepto </th>
+                                            <th class="center">C/U </th>
+                                            <th class="center">G/U </th>
+                                            <th class="center">P/U </th>
+                                            <th class="center">Cantidad </th>
+                                            <th class="center">Unidades </th>
+                                            <th class="center">Costo Total </th>
+                                            <th class="center">Ganancia Total </th>
+                                            <th class="center">Precio Total</th>
+                                            <!--th class="center">Fecha</th>
+                                            <th class="center">Estatus </th-->
+                                            <th class="center">Adicinal </th>
+                                            <th class="center">
+                                                @if($proyecto->id != -1 and  $proyecto->adicionalesDistribuido == 0)
+                                                    <a href="{{ URL::to('concepto/-1/'.$proyecto->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
+                                                @endif
+
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                         @foreach($conceptos as $concepto)
                                             <tr>
-                                                <!--th class="center">#</th-->
-                                                <th class="center">#</th>
-                                                <th class="center">Concepto </th>
-                                                <th class="center">C/U </th>
-                                                <th class="center">G/U </th>
-                                                <th class="center">P/U </th>
-                                                <th class="center">Cantidad </th>
-                                                <th class="center">Unidades </th>
-                                                <th class="center">Costo Total </th>
-                                                <th class="center">Ganancia Total </th>
-                                                <th class="center">Precio Total</th>
-                                                <!--th class="center">Fecha</th>
-                                                <th class="center">Estatus </th-->
-                                                <th class="center">Adicinal </th>
-                                                <th class="center">
-                                                    @if($proyecto->id != -1 and  $proyecto->adicionalesDistribuido == 0)
-                                                        <a href="{{ URL::to('concepto/-1/'.$proyecto->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
+                                                <!--td> <a href="{{ URL::to('concepto/' . $concepto->id) }}">{{$concepto->id}}</a></td-->
+                                                 <td> {{$concepto->num}}</td>
+                                                <td> {{$concepto->nombre}}</td>
+                                                <td>$ {{$concepto->costo}}</td>
+                                                <td>$ {{$concepto->ganancia}}</td>
+                                                <td>$ {{$concepto->precio}}</td>
+                                                <td>{{$concepto->cantidad}}</td>
+                                                <td>{{$concepto->unidades}}</td>
+                                                <td>$ {{$concepto->costoTotal}}</td>
+                                                <td>$ {{$concepto->gananciaTotal}}</td>
+                                                <td>$ {{$concepto->precioTotal}}</td>
+                                                <!--td>{{$concepto->fecha}}</td>
+                                                <td>{{$concepto->estatus}}</td-->
+
+                                                <td>
+                                                    <input type="checkbox" class="form-check-input" id="adicional" {{ $concepto->adicional ? 'checked="checked"' : '' }} disabled>
+                                                </td>
+                                                <td>
+                                                    <a href="{{ URL::to('concepto/' . $concepto->id)}}/{{$proyecto->id}}" class="glyphicon glyphicon-edit"></a>
+                                                     @if($concepto->adicional == 0 and  $proyecto->distribuido == 0)
+                                                        <a href="{{ URL::to('concepto/eliminar/'.$concepto->id)}}" class="glyphicon glyphicon-trash"></a>
                                                     @endif
-
-                                                </th>
+                                                    @if($concepto->adicional == 1 and  $proyecto->adicionalesDistribuido == 0)
+                                                        <a href="{{ URL::to('concepto/eliminar/'.$concepto->id)}}" class="glyphicon glyphicon-trash"></a>
+                                                    @endif
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                             @foreach($conceptos as $concepto)
-                                                <tr>
-                                                    <!--td> <a href="{{ URL::to('concepto/' . $concepto->id) }}">{{$concepto->id}}</a></td-->
-                                                     <td> {{$concepto->num}}</td>
-                                                    <td> {{$concepto->nombre}}</td>
-                                                    <td>$ {{$concepto->costo}}</td>
-                                                    <td>$ {{$concepto->ganancia}}</td>
-                                                    <td>$ {{$concepto->precio}}</td>
-                                                    <td>{{$concepto->cantidad}}</td>
-                                                    <td>{{$concepto->unidades}}</td>
-                                                    <td>$ {{$concepto->costoTotal}}</td>
-                                                    <td>$ {{$concepto->gananciaTotal}}</td>
-                                                    <td>$ {{$concepto->precioTotal}}</td>
-                                                    <!--td>{{$concepto->fecha}}</td>
-                                                    <td>{{$concepto->estatus}}</td-->
+                                        @endforeach
+                                    </tbody>
+                                </table>
 
-                                                    <td>
-                                                        <input type="checkbox" class="form-check-input" id="adicional" {{ $concepto->adicional ? 'checked="checked"' : '' }} disabled>
-                                                    </td>
-                                                    <td>
-                                                        <a href="{{ URL::to('concepto/' . $concepto->id)}}/{{$proyecto->id}}" class="glyphicon glyphicon-edit"></a>
-                                                         @if($concepto->adicional == 0 and  $proyecto->distribuido == 0)
-                                                            <a href="{{ URL::to('concepto/eliminar/'.$concepto->id)}}" class="glyphicon glyphicon-trash"></a>
-                                                        @endif
-                                                        @if($concepto->adicional == 1 and  $proyecto->adicionalesDistribuido == 0)
-                                                            <a href="{{ URL::to('concepto/eliminar/'.$concepto->id)}}" class="glyphicon glyphicon-trash"></a>
-                                                        @endif
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-
-                                    </div>
                                 </div>
                             </div>
+                        </div>
 
-							<div class="container center">
+							<div class="center">
 								<div class="row">
 									<div class="col-sm-1 align-self-center">
 									</div>
@@ -696,6 +719,10 @@
             </div>
         </div>
     </div>
-    @include('pago.tablaPagos')
-    @include('cotizacion.tablaCotizaciones')
+    <div class="container center divPagosCliente">
+        @include('pago.tablaPagos')
+    </div>
+    <div class="container center">
+        @include('cotizacion.tablaCotizaciones')
+    </div>
 @endsection

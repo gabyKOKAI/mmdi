@@ -151,10 +151,10 @@
                                                         <label>Costo:</label>
                                                     </div>
                                                     <div class="col-sm-3 " align="left">
-                                                        $ {{$concepto->costo}}
+                                                        ${{$concepto->costo}}
                                                     </div>
                                                     <div class="col-sm-3 " align="left">
-                                                        $ {{$concepto->costoTotal}}
+                                                        ${{$concepto->costoTotal}}
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -162,10 +162,10 @@
                                                         <label>Ganancia:</label>
                                                     </div>
                                                     <div class="col-sm-3 " align="left">
-                                                        $ {{$concepto->ganancia}}
+                                                        ${{$concepto->ganancia}}
                                                     </div>
                                                     <div class="col-sm-3 " align="left">
-                                                        $ {{$concepto->gananciaTotal}}
+                                                        ${{$concepto->gananciaTotal}}
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -173,10 +173,10 @@
                                                         <label>Precio</label>
                                                     </div>
                                                     <div class="col-sm-3 " align="left">
-                                                        $ {{$concepto->precioCliente}}
+                                                        ${{$concepto->precioCliente}}
                                                     </div>
                                                     <div class="col-sm-3 fontBold" align="left">
-                                                        $ {{$concepto->precioTotal}}
+                                                        ${{$concepto->precioTotal}}
                                                     </div>
                                                 </div>
                                             </div>

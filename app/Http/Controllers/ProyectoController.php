@@ -158,6 +158,8 @@ class ProyectoController extends Controller
 
         $proveedore = new Proveedore;
         $proveedore->id = -1;
+        $cotizacione = new Cotizacione;
+        $cotizacione->id = -1;
 
         $pagos = PagoCliente::where('proy_coti_id','=',$proyecto->id)->paginate(5);
         $cotizaciones = Cotizacione::where('proyecto_id','=',$proyecto->id)->paginate(5);
@@ -177,7 +179,8 @@ class ProyectoController extends Controller
                 'proveedore'=>$proveedore,
                 'pagos'=>$pagos,
                 'esCliente'=>1,
-                'cotizaciones'=>$cotizaciones
+                'cotizaciones'=>$cotizaciones,
+                'cotizacione'=>$cotizacione
                 ]);
 	}
 

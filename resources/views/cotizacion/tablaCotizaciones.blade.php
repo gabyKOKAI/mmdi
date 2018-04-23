@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-sm-12 align-right">
-            <div class="container">
+            <div>
                 <div class="row">
                     <div class="col-sm-4 align-left">
                         <hr>
@@ -18,7 +18,7 @@
                 </div>
             </div>
             @if(count($cotizaciones)>0)
-                <div class="container center">
+                <div class="center">
                     <div class="row">
                         <div class="col-sm-12 align-self-center">
                               <table class="table table-hover table-striped .table-striped table-responsive">
@@ -34,7 +34,7 @@
                                         <th class="center">Con IVA</th>
                                         <th class="center">Estatus</th>
                                         <th class="center">
-                                            <a href="{{ URL::to('cotizacion/-1/')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
+                                            <a href="{{ URL::to('cotizacion/-1/'.$cotizacione->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
                                         </th>
                                     </tr>
                                 </thead>
@@ -50,8 +50,8 @@
                                                 <td>---SIN PROYECTO---</td>
                                             @endif
                                             <td>{{$cotizacion->proveedor->nombre}}</td>
-                                            <td>{{$cotizacion->monto}}</td>
-                                            <td>{{$cotizacion->saldo}}</td>
+                                            <td>$ {{number_format($cotizacion->saldo,2)}}</td>
+                                            <td>$ {{number_format($cotizacion->saldo,2)}}</td>
                                             <td>
                                                 <input type="checkbox" class="form-check-input" id="con_iva" {{ $cotizacion->con_iva ? 'checked="checked"' : '' }} disabled>
                                             </td>

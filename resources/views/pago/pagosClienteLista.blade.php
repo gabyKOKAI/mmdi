@@ -5,5 +5,7 @@
 @endpush
 
 @section('content')
-    @include('pago.tablaPagos')
+    <div class="divPagosCliente">
+        @include('pago.tablaPagos')
+    </div>
 @endsection

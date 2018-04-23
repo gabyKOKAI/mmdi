@@ -103,11 +103,17 @@ class PagosProveedoreController extends Controller
         if (!$pago) {
             # Instantiate a new Concepto Model object
             $pago = new PagoProveedore();
-            ##$pago->id = -1;
+            $pago->id = -1;
             $pago->con_iva = -1;
             $res = "Creado";
          } else {
             $res = "Actualizado";
+        }
+
+        if ($request->input('conIva')) {
+            $pago->con_iva = 1;
+        } else{
+            $pago->con_iva = 0;
         }
 
         $saldo = 0;
@@ -128,11 +134,6 @@ class PagosProveedoreController extends Controller
             # Set the parameters
             $pago->monto = $request->input('monto');
             $pago->fecha_pago = $request->input('fecha');
-            if ($request->input('conIva')) {
-                $pago->con_iva = 1;
-            } else{
-                $pago->con_iva = 0;
-            }
             $pago->numero_factura =  $request->input('factura');
             $pago->fecha_factura = $request->input('fechaFact');
             $pago->entrega =  "-";// $request->input('entrega');
@@ -163,7 +164,7 @@ class PagosProveedoreController extends Controller
             }
 
             $tipoMensaje = "success";
-		    $mensaje = $mensaje.'El pago cliente por '.$pago->monto.' fue '.$res;
+		    $mensaje = $mensaje.'El pago proveedor por '.$pago->monto.' fue '.$res;
 
         }
 		# Redirect the user to the page to view the book

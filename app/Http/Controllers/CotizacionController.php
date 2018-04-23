@@ -24,11 +24,13 @@ class CotizacionController extends Controller
 
 		$proyecto = new Proyecto;
         $proyecto->id = -2;
+        $cotizacione = new Cotizacione;
+        $cotizacione->id = -2;
 
-		return view('cotizacion.cotizacionLista')->with(['cotizaciones' => $cotizaciones,'proyecto' => $proyecto]);
+		return view('cotizacion.cotizacionLista')->with(['cotizaciones' => $cotizaciones,'proyecto' => $proyecto,'cotizacione' => $cotizacione]);
     }
 
-    public function cotizacion(Request $request,$id= '-1') {
+    public function cotizacion(Request $request,$id= '-1',$idProy='-1') {
 	    $cotizacione = Cotizacione::find($id);
 
 	    # Get proveedores
@@ -55,6 +57,7 @@ class CotizacionController extends Controller
         else{
             $cotizacione = new Cotizacione;
             $cotizacione->id = -1;
+            $proyectoSelected = $idProy;
         }
 
         $cliente = new Cliente;

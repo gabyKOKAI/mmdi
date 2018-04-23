@@ -49,11 +49,15 @@
                                        <div class="row">
                                             <div class="col-sm-12 form-group control-label" align="left">
                                                 <label for='proyecto'>Proyecto</label>
-                                                <a href="{{ URL::to('proyecto/-1')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
+
                                                 @if($proyectoSelected!=-1)
                                                     <a href="{{ URL::to('proyecto/'.$proyectoSelected)}}" class="glyphicon glyphicon-edit"></a>
+                                                    <input type="hidden" name="proyecto_id" value="{{$proyectoSelected}}">
+                                                    <select name="proyecto_id"  class="form-control" disabled>
+                                                @else
+                                                    <a href="{{ URL::to('proyecto/-1')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
+                                                    <select name="proyecto_id"  class="form-control" required>
                                                 @endif
-                                                <select name="proyecto_id"  class="form-control">
                                                     <option value="---" {{ $cotizacione->id == -1 ? 'selected="selected"' : '' }}> {{ "---SIN PROYECTO---" }} </option>
                                                     @foreach($proyectosForDropdown as $proyecto)
                                                         <option value="{{ $proyecto->id }}" {{ $proyecto->id == $proyectoSelected ? 'selected="selected"' : '' }}> {{ $proyecto->nombre }} </option>
@@ -83,14 +87,12 @@
                                             </div>
                                        </div>
                                        <div class="row">
-                                            <div class="col-sm-12 form-group required control-label" align="left">
+                                            <div class="col-sm-8 form-group required control-label" align="left">
                                                     <label for='monto'>Monto</label>
                                                     <input type='number' name='monto' id='monto' value='{{$cotizacione->monto}}'  class="form-control" required>
                                             </div>
 
-                                       </div>
-                                        <div class="row">
-                                            <div class="col-sm-12 form-group control-label" align="left">
+                                            <div class="col-sm-4 form-group control-label" align="left">
                                                 <br>
                                                 <input type="checkbox" class="form-check-input" id="con_iva" name="con_iva" value="1" {{ $cotizacione->con_iva ? 'checked="checked"' : ''}}>Con IVA</input>
                                             </div>

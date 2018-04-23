@@ -48,8 +48,8 @@
                                         @if($cliente->id == -1)
                                             <td>{{$proyecto->cliente->nombre}}</td>
                                         @endif
-                                        <td>{{$proyecto->costo}}</td>
-                                        <td>{{$proyecto->saldo}}</td>
+                                        <td>$ {{number_format($proyecto->costo,2)}}</td>
+                                        <td>$ {{number_format($proyecto->saldo,2)}}</td>
                                         <td>{{$proyecto->estatus}}</td>
                                         <td>
                                             <input type="checkbox" class="form-check-input" id="distribuido" {{ $proyecto->distribuido ? 'checked="checked"' : '' }} disabled>

@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-sm-12 align-right">
-            <div class="container">
+            <div >
                 <div class="row">
                     <div class="col-sm-4 align-left">
                         <hr>
@@ -26,7 +26,7 @@
                 </div>
             </div>
             @if(count($pagos)>0)
-                <div class="container center">
+                <div class="center">
                     <div class="row">
                         <div class="col-sm-12 align-center">
                             <h1 class="center"></h1>
