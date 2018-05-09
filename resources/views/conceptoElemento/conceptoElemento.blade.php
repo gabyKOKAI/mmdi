@@ -35,7 +35,7 @@
                                         </div>
                                         <div class="row">
                                            <div class="col-sm-12 form-group required control-label" align="left">
-                                                <label for='elemento'>Elemento</label>
+                                                <label for='elemento'>Elemento (PU)</label>
 
                                                 @if($elementoSelected!=-1)
                                                     <a href="{{ URL::to('elemento/'.$elemento->id)}}" class="glyphicon glyphicon-edit"></a>
@@ -57,7 +57,7 @@
                                        </div>
                                        <div class="row">
                                             <div class="col-sm-6 form-group required control-label" align="left">
-                                                <label for='precio'>Precio </label>
+                                                <label for='precio'>Nuevo Precio</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">$</span>
                                                     @if($edit == 1)

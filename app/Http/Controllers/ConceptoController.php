@@ -88,7 +88,8 @@ class ConceptoController extends Controller
         $concepto->unidades = $request->input('unidades');
         $concepto->fecha =  $request->input('fecha');
         $concepto->comentario =  $request->input('comentario');
-        $concepto->estatus = $request->input('estatus');
+        ##$concepto->estatus = $request->input('estatus');
+        $concepto->estatus = "Sin Estatus";
         if ($request->input('adicional')) {
             $concepto->adicional = 1;
         } else{

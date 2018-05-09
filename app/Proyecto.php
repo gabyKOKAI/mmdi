@@ -113,7 +113,8 @@ class Proyecto extends Model
 
     public static function getConceptos($proyecto_id)
     {
-        $conceptos = Concepto::where('proyecto_id', 'LIKE', $proyecto_id)->paginate(5);
+        $conceptos = Concepto::where('proyecto_id', 'LIKE', $proyecto_id)->get();
+       //->paginate(5);
 
         $num = 1;
 

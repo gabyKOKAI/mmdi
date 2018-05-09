@@ -21,7 +21,7 @@ class Concepto extends Model
 
     public static function getEstatusDropDown()
     {
-        $estatus = ['Cotizado','En Proceso','Entregado','Cancelado'];
+        $estatus = ['Cotizado','En Proceso','Entregado','Cancelado','Sin Estatus'];
         return $estatus;
     }
 

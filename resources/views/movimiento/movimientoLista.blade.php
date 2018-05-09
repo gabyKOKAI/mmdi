@@ -84,7 +84,7 @@
                 <!-- { {$proyectos->lastItem()} } -->
                 <!-- { {$proyectos->firstItem()} } -->
                 <!-- { {$proyectos->count()} } -->
-                <!-- { {$proyectos->perPage()} } -->
+                <!-- { {$movimientos->perPage()} } -->
                 <!-- { {$proyectos->currentPage()} } -->
                 {{$movimientos->render()}}
 

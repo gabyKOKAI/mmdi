@@ -5,6 +5,7 @@ namespace mmdi\Http\Controllers;
 use Illuminate\Http\Request;
 use mmdi\Elemento;
 use mmdi\Proveedore;
+use mmdi\Concepto;
 
 class ElementoController extends Controller
 {
@@ -14,8 +15,10 @@ class ElementoController extends Controller
     public function lista()
     {
 		$elementos = Elemento::getElementos();
+        $concepto = new Concepto;
+        $concepto->id = -1;
 
-		return view('elemento.elementoLista')->with(['elementos' => $elementos]);
+		return view('elemento.elementoLista')->with(['elementos' => $elementos, 'concepto' => $concepto]);
     }
 
     /**

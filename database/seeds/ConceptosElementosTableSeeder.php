@@ -19,6 +19,30 @@ class ConceptosElementosTableSeeder extends Seeder
                 'concepto3' => ['elemento2', 'elemento4'],
                 'concepto4' => ['elemento1', 'elemento2', 'elemento3', 'elemento4', 'elemento5'],
                 'concepto5' => ['elemento1'],
+                'concepto6' => ['elemento1', 'elemento2', 'elemento3', 'elemento4'],
+                'concepto7' => ['elemento1', 'elemento3', 'elemento5'],
+                'concepto8' => ['elemento2', 'elemento4'],
+                'concepto9' => ['elemento1', 'elemento2', 'elemento3', 'elemento4', 'elemento5'],
+                'concepto10' => ['elemento1'],
+                'concepto11' => ['elemento1', 'elemento2', 'elemento3', 'elemento4'],
+                'concepto12' => ['elemento1', 'elemento3', 'elemento5'],
+                'concepto13' => ['elemento2', 'elemento4'],
+                'concepto14' => ['elemento1', 'elemento2', 'elemento3', 'elemento4', 'elemento5'],
+                'concepto15' => ['elemento1'],
+                'concepto16' => ['elemento1', 'elemento2', 'elemento3', 'elemento4'],
+                'concepto17' => ['elemento1', 'elemento3', 'elemento5'],
+                'concepto18' => ['elemento2', 'elemento4'],
+                'concepto19' => ['elemento1', 'elemento2', 'elemento3', 'elemento4', 'elemento5'],
+                'concepto20' => ['elemento1'],
+                'concepto21' => ['elemento1'],
+                'concepto22' => ['elemento1'],
+                'concepto23' => ['elemento1'],
+                'concepto24' => ['elemento1'],
+                'concepto25' => ['elemento1'],
+                'concepto26' => ['elemento1'],
+                'concepto27' => ['elemento1'],
+                'concepto28' => ['elemento1'],
+                'concepto29' => ['elemento1'],
     ];
 
      $preciosElementos =[
@@ -36,7 +60,6 @@ class ConceptosElementosTableSeeder extends Seeder
                 'elemento3' => 30,
                 'elemento4' => 40,
                 'elemento5' => 50,
-
     ];
 
     # Now loop through the above array, creating a new pivot for each book to tag

@@ -21,6 +21,32 @@ body {
     text-align:left;
 }
 
+.font30{
+    font-size:30%;
+}
+
+.font110{
+    font-size:110%;
+}
+
+.font140{
+    font-size:140%;
+}
+
+.fontBold{
+     font-weight: bold;
+}
+
+.black {
+    background-color:black;
+    color:white;
+}
+
+.gris{
+    background-color:darkgray;
+    color:white;
+
+}
 
 .divPagosCliente {
     background-color: #98fe98;
@@ -44,4 +70,8 @@ body {
 
 .table{
     width:100%;
+}
+
+.margenTexto{
+    margin: 0 30px;
 }
