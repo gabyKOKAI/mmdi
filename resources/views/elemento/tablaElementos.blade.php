@@ -123,7 +123,7 @@
                     <div class="row">
                         <div class="col-sm-12 align-center">
                             <h4 class="center">
-                                Sin Precios Unitarios
+                                Sin Precios Unitarios <a href="{{URL::to('conceptoElemento/'.$concepto->id.'/-1/1')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
 
                             </h4>
                         </div>
