@@ -239,7 +239,7 @@ class ProyectoController extends Controller
 		return redirect('/proyecto/'.$proyecto->id)->with('success', 'El proyecto '.$proyecto->nombre.' fue '.$res);
 	}
 
-	public function bajaPDF(Request $request,$id) {
+	public function bajaPDF(Request $request,$id,$sinIVA) {
 
 	    $proyecto = Proyecto::find($id);
 
@@ -257,7 +257,7 @@ class ProyectoController extends Controller
 
         $esCliente = 1;
 
-        $pdf = PDF::loadView('proyecto.proyectoPDF', compact('proyecto','conceptos','pagos','cotizaciones','cliente','esCliente'));
+        $pdf = PDF::loadView('proyecto.proyectoPDF', compact('proyecto','conceptos','pagos','cotizaciones','cliente','esCliente','sinIVA'));
         return $pdf->download('cotizacion.pdf');
 
 	}

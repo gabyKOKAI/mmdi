@@ -5,6 +5,7 @@ namespace mmdi\Http\Controllers;
 use Illuminate\Http\Request;
 use mmdi\Elemento;
 use mmdi\Concepto;
+use mmdi\Proveedore;
 
 class ConceptoElementoController extends Controller
 {
@@ -22,19 +23,25 @@ class ConceptoElementoController extends Controller
 	    if($idEle!='-1'){
 	        $elemento = $concepto->getElementos($concepto)->find($idEle);
 	        $precio = $elemento->precioCliente;
+	        $infoElemento = Elemento::getCostoGanancia($elemento);
 	    }
 	    else{
 	       $elemento = new Elemento;
            $elemento->id = -1;
+           $infoElemento = "";
 	    }
 
 
 	    # Get elementos
-        $elementosForDropdown = Elemento::all();
+	    $elementosForDropdown= Elemento::all();
         $elementoSelected = $idEle;
 
+        # Get elementos
+	    $proveedoresForDropdown= Proveedore::all();
+	    $tiposForDropdown= Elemento::getTiposDropDown();
+
         return view('conceptoElemento.conceptoElemento')->
-        with(['concepto' => $concepto,'elemento' => $elemento,'precio' => $precio, 'elementosForDropdown' => $elementosForDropdown,'elementoSelected'=>$elementoSelected,'edit'=>$edit]);
+        with(['concepto' => $concepto,'elemento' => $elemento,'precio' => $precio, 'elementosForDropdown' => $elementosForDropdown,'elementoSelected'=>$elementoSelected,'edit'=>$edit, 'proveedoresForDropdown' => $proveedoresForDropdown, 'tiposForDropdown' => $tiposForDropdown, 'infoElemento'=>$infoElemento]);
 	}
 
 
@@ -50,7 +57,7 @@ class ConceptoElementoController extends Controller
 		]);
 
         $concepto = Concepto::find($idCon);
-        $elemento = Elemento::find($request->input('elemento'));
+        $elemento = Elemento::find($request->input('elemento1'));
         ##dump($elemento);
         ##dump($concepto->getElementos($concepto)->find($request->input('elemento')));
         if($concepto->getElementos($concepto)->find($request->input('elemento'))){

@@ -33,24 +33,7 @@
                                             <div class="col-sm-4 form-group required control-label" align="left">
                                                     <label for='nombre'>Concepto</label>
                                                     <br>
-                                                    <input type='text' name='nombre' id='nombre' value='{{$concepto->nombre}}'  class="form-control" required>
-                                            </div>
-                                       </div>
-									   <div class="row">
-                                            <div class="col-sm-4 form-group required control-label" align="left">
-                                                <label for='proyecto_id'>Proyecto</label>
-
-                                                @if($proyectoSelected != -1)
-                                                    <a href="{{ URL::to('proyecto/'.$proyectoSelected) }}"  class="glyphicon glyphicon-edit"></a>
-                                                    <input type="hidden" name="proyecto_id" value="{{$proyectoSelected}}" required>
-                                                    <select name="proyecto_id"  class="form-control" disabled>
-                                                @else
-                                                    <select name="proyecto_id"  class="form-control">
-                                                @endif
-                                                    @foreach($proyectosForDropdown as $proyecto)
-                                                    <option value="{{ $proyecto->id }}" {{ $proyecto->id == $proyectoSelected ? 'selected="selected"' : '' }}> {{ $proyecto->nombre }} </option>
-                                                    @endforeach
-                                                </select>
+                                                    <textarea name='nombre' id='nombre' maxlength="250" rows="2"  class="form-control" required>{{$concepto->nombre}}</textarea>
                                             </div>
                                        </div>
                                        <div class="row">
@@ -81,6 +64,23 @@
                                                 @endif
                                             </div>
                                        </div>
+                                       <div class="row">
+                                            <div class="col-sm-4 form-group required control-label" align="left">
+                                                <label for='proyecto_id'>Proyecto</label>
+
+                                                @if($proyectoSelected != -1)
+                                                    <a href="{{ URL::to('proyecto/'.$proyectoSelected) }}"  class="glyphicon glyphicon-edit"></a>
+                                                    <input type="hidden" name="proyecto_id" value="{{$proyectoSelected}}" required>
+                                                    <select name="proyecto_id"  class="form-control" disabled>
+                                                @else
+                                                    <select name="proyecto_id"  class="form-control">
+                                                @endif
+                                                    @foreach($proyectosForDropdown as $proyecto)
+                                                    <option value="{{ $proyecto->id }}" {{ $proyecto->id == $proyectoSelected ? 'selected="selected"' : '' }}> {{ $proyecto->nombre }} </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
                                        <!--div class="row">
                                             <div class="col-sm-2 form-group required control-label" align="left">
                                                 <label for='estatus'>Estatus</label>
@@ -107,17 +107,12 @@
                                             <div class="col-sm-4" align="left">
                                                 <hr>
                                             </div>
-										</div>
-                                       <div class="row">
-                                             <div class="col-sm-12 form-group required control-label" align="left">
+									    </div>
+										<div class="row">
+                                             <div class="col-sm-5 form-group required control-label" align="left">
                                                 <label for='fecha'>Fecha</label>
                                                 <input type="hidden" name="fecha" value="{{$concepto->fecha}}">
-                                                @if($concepto->id == -1)
-                                                    <input type='date' name='fecha' id='fecha' value='{{$concepto->fecha}}' class="form-control"  disabled>
-                                                @else
-                                                    <input type='date' name='fecha' id='fecha' value='{{$concepto->fecha}}' class="form-control" disabled>
-                                                @endif
-
+                                                <label for='fecha' class="form-control" disabled>{{$concepto->fecha}}</label>
                                              </div>
                                        </div>
                                        <div class="row">

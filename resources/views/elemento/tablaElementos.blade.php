@@ -6,9 +6,11 @@
                         <hr>
                     </div>
                     <div class="col-sm-4 align-center">
-                        <h3 class="center">Precios Unitarios
-                            @if($concepto->id > -1)
-                                de Concepto
+                        <h3 class="center">
+                            @if($concepto->id >= -1)
+                                Subconceptos de Concepto
+                            @else
+                                Base de Datos (PU)
                             @endif
                          </h3>
                     </div>
@@ -25,9 +27,11 @@
                                 <thead>
                                     <tr>
                                         <!--th class="center">#</th-->
-                                        <th class="center">Elemento
-                                            @if($concepto->id > -1)
-                                                (PU)
+                                        <th class="center">
+                                            @if($concepto->id >= -1)
+                                                Subconcepto
+                                            @else
+                                                Elemento (PU)
                                             @endif
                                         </th>
                                         <th class="center">Tipo </th>
@@ -65,7 +69,7 @@
                                             <td>{{$elemento->tipo}}</td>
                                             <td>{{$elemento->proveedor->nombre}}</td>
                                             <td>{{$elemento->unidades}}</td>
-                                            <td>$ {{$elemento->costo}}</td>
+                                            <td>$ {{$elemento->costoCliente}}</td>
                                             <!--td>{{$elemento->tipo_ganancia}}</td-->
                                             <td>
                                                 @if($concepto->id > -1)
@@ -74,7 +78,13 @@
                                                     {{$elemento->ganancia}} - {{$elemento->tipo_ganancia}}
                                                 @endif
                                             </td>
-                                            <td>$ {{$elemento->precio}}</td>
+                                            <td>
+                                                @if($concepto->id > -1)
+                                                    $ {{$elemento->precioCliente}}
+                                                @else
+                                                    $ {{$elemento->precio}}
+                                                @endif
+                                            </td>
                                             <td>
                                                 @if($concepto->id > -1)
                                                     @if($proyectoCon->distribuido == 0 and $concepto->adicional == 0)
@@ -113,7 +123,9 @@
                             <!-- { {$proyectos->count()} } -->
                             <!-- { {$proyectos->perPage()} } -->
                             <!-- { {$proyectos->currentPage()} } -->
-                            <!-- { {$elementos->render()} } -->
+                             @if($concepto->id == -2)
+                                {{$elementos->render()}}
+                             @endif
 
                         </div>
                     </div>
@@ -123,8 +135,10 @@
                     <div class="row">
                         <div class="col-sm-12 align-center">
                             <h4 class="center">
-                                Sin Precios Unitarios <a href="{{URL::to('conceptoElemento/'.$concepto->id.'/-1/1')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
-
+                                @if($concepto->id > -1)
+                                    Sin Subconceptos
+                                    <a href="{{URL::to('conceptoElemento/'.$concepto->id.'/-1/1')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
+                                @endif
                             </h4>
                         </div>
                     </div>

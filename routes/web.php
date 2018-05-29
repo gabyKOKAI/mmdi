@@ -98,7 +98,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/proyecto/{id?}/{idCli?}', 'ProyectoController@proyecto');
     Route::get('/proyecto/guardar/{id?}/{idCli?}', 'ProyectoController@guardar');
     Route::post('/proyecto/guardar/{id?}/{idCli?}', 'ProyectoController@guardar');
-    Route::get('/proyectoPDF/bajaPDF/{id}','ProyectoController@bajaPDF');
+    Route::get('/proyectoPDF/bajaPDF/{id}/{iva}','ProyectoController@bajaPDF');
 
     Route::get('/concepto/eliminar/{id?}', 'ConceptoController@eliminar');
     Route::get('/concepto/guardar/{id?}', 'ConceptoController@guardar');
@@ -151,4 +151,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/pagosProveedores', 'PagosProveedoreController@lista');
     Route::get('/pagoProveedor/{id?}/{idPro?}/{idCot?}', 'PagosProveedoreController@pagoProveedore');
+
+    Route::get('/information/create/ajax-proveedoresElemento/{id?}','ElementoController@proveedoresElemento');
+    Route::get('/information/create/ajax-elementoCostoGanancia/{id?}','ElementoController@elementoCostoGanancia');
+
+
 });

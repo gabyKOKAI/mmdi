@@ -15,7 +15,7 @@
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Configuraciones
                             <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                              <li><a href="/elementos">Precios Unitarios</a></li>
+                              <li><a href="/elementos">Base de Datos (PU)</a></li>
                               <li><a href="/elemento/-1">Nuevo Elemento</a></li>
                               <li><a href="/proyecto/-1">Nuevo Proyecto</a></li>
                               <li><a href="/cliente/-1">Nuevo Cliente</a></li>

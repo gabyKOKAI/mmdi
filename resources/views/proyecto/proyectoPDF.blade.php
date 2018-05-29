@@ -76,32 +76,32 @@
 
                         @endforeach
                         <tr>
-                            <!--td class="center"> <a href="{{ URL::to('concepto/' . $concepto->id) }}">{{$concepto->id}}</a></td-->
-                            <td class="center"> {{$con}}</td>
-                            <td class="center">Honorarios</td>
-                            <td class="center">1</td>
-                            <td class="center">S/U</td>
-                            <td class="center">$ {{number_format($proyecto->honorarios,2)}}</td>
-                            <!--td class="center">fecha</td-->
-                            <!--td class="center">estatus</td-->
-                            <td class="right">$ {{number_format($proyecto->honorarios,2)}}</td>
-                        </tr>
-                        <tr>
                             <td colspan=4></td>
                             <td class="right gris">SUBTOTAL</td>
-                            <td class="right gris">$ {{number_format($proyecto->costo,2)}}</td>
+                            <td class="right gris">$ {{number_format($proyecto->inicial,2)}}</td>
                         </tr>
                         <tr>
                             <td colspan=4></td>
-                            <td class="right gris">IVA (16%)</td>
-                            <td class="right gris">$ {{number_format($proyecto->costo*.16,2)}}</td>
+                            <td class="right gris">HONORARIOS ({{$proyecto->gasto_porc_honorarios}}%)</td>
+                            <td class="right gris">$ {{number_format($proyecto->honorarios,2)}}</td>
                         </tr>
                         <tr>
                             <td colspan=4></td>
                             <td class="right gris">TOTAL</td>
-                            <td class="right gris">$ {{number_format($proyecto->costo*1.16,2)}}</td>
+                            <td class="right gris">$ {{number_format($proyecto->costo,2)}}</td>
                         </tr>
-
+                        @if($sinIVA == 0)
+                            <tr>
+                                <td colspan=4></td>
+                                <td class="right gris">IVA (16%)</td>
+                                <td class="right gris">$ {{number_format($proyecto->costo*.16,2)}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan=4></td>
+                                <td class="right gris">GRAN TOTAL</td>
+                                <td class="right gris">$ {{number_format($proyecto->costo*1.16,2)}}</td>
+                            </tr>
+                        @endif
 
                     </tbody>
                 </table>
@@ -140,7 +140,7 @@
                             <tr>
                                 <!--td class="center"> <a href="{{ URL::to('concepto/' . $concepto->id) }}">{{$concepto->id}}</a></td-->
                                 <td class="center"> {{$con}}</td>
-                                <td class="center"> {{$concepto->nombre}}</td>
+                                <td class="left"> {{$concepto->nombre}}</td>
                                 <td class="center">{{$concepto->cantidad}}</td>
                                 <td class="center">{{$concepto->unidades}}</td>
                                 <td class="center">$ {{number_format($concepto->precio,2)}}</td>
@@ -152,29 +152,32 @@
                             @endif
                         @endforeach
                         <tr>
-                            <!--td class="center"> <a href="{{ URL::to('concepto/' . $concepto->id) }}">{{$concepto->id}}</a></td-->
-                            <td class="center"> {{$con}}</td>
-                            <td class="center">Honorarios</td>
-                            <td class="center">1</td>
-                            <td class="center">S/U</td>
-                            <td class="center">$ {{number_format($proyecto->honorariosAdicional,2)}}</td>
-                            <!--td class="center">fecha</td-->
-                            <!--td class="center">estatus</td-->
-                            <td class="right">$ {{number_format($proyecto->honorariosAdicional,2)}}</td>
+                            <td colspan=4></td>
+                            <td class="right gris">SUBTOTAL</td>
+                            <td class="right gris">$ {{number_format($proyecto->adicional,2)}}</td>
                         </tr>
-                        <tr class="gris">
-                            <td colspan=5 class="right">SUBTOTAL</td>
-                            <td class="right">$ {{number_format($proyecto->adicional + $proyecto->honorariosAdicional,2)}}</td>
+                        <tr>
+                            <td colspan=4></td>
+                            <td class="right gris">HONORARIOS ({{$proyecto->gasto_porc_honorarios}}%)</td>
+                            <td class="right gris">$ {{number_format($proyecto->honorariosAdicional,2)}}</td>
                         </tr>
-                        <tr class="gris">
-                            <td colspan=5 class="right">IVA (16%)</td>
-                            <td class="right">$ {{number_format(($proyecto->adicional + $proyecto->honorariosAdicional)*.16,2)}}</td>
+                        <tr>
+                            <td colspan=4></td>
+                            <td class="right gris">TOTAL</td>
+                            <td class="right gris">$ {{number_format($proyecto->honorariosAdicional+$proyecto->adicional,2)}}</td>
                         </tr>
-                        <tr class="gris">
-                            <td colspan=5 class="right">TOTAL</td>
-                            <td class="right">$ {{number_format(($proyecto->adicional + $proyecto->honorariosAdicional)*1.16,2)}}</td>
-                        </tr>
-
+                        @if($sinIVA == 0)
+                            <tr>
+                                <td colspan=4></td>
+                                <td class="right gris">IVA (16%)</td>
+                                <td class="right gris">$ {{number_format(($proyecto->adicional + $proyecto->honorariosAdicional)*.16,2)}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan=4></td>
+                                <td class="right gris">GRAN TOTAL</td>
+                                <td class="right gris">$ {{number_format(($proyecto->adicional + $proyecto->honorariosAdicional)*1.16,2)}}</td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>
@@ -185,6 +188,7 @@
                 @endif
             </h4>
         @endif
+        <br>
         <div class="margenTexto">
                 <p class="center font140">
                     MM DISEÑO
@@ -201,17 +205,9 @@
         </div>
     </div>
 
-    <div class="page-break"></div>
+    <!--div class="page-break"></div-->
 
-    <div class="row">
-      @include('pago.tablaPagos')
-      <div class="margenTexto">
-                <p class="right">
-                    Saldo: {{$proyecto->saldo}}
-                </p>
-            </div>
-        </div>
-    </div>
+
 
   </body>
 </html>

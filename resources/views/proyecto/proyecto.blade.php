@@ -94,6 +94,16 @@
                                                 <textarea name='comentario' id='comentario' maxlength="250" rows="5"  class="form-control" >{{$proyecto->comentario}}</textarea>
                                              </div>
                                        </div>
+                                       <br>
+                                       <div class="row">
+                                            <div class="col-sm-4 align-self-center">
+                                                @if($proyecto)
+                                                    <a class='btn btn-primary btn-small' href="{{action('ProyectoController@bajaPDF', [$proyecto->id,'0'])}}">PDF Cotización (c/IVA)</a>
+                                                    <a class='btn btn-primary btn-small' href="{{action('ProyectoController@bajaPDF', [$proyecto->id,'1'])}}">PDF Cotización (s/IVA)</a>
+
+                                                @endif
+                                            </div>
+                                       </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4" align="left">
@@ -104,7 +114,7 @@
                                             </div>
                                        </div>
                                        <div class="row">
-                                             <div class="col-sm-6 form-group required control-label" align="left">
+                                             <div class="col-sm-12 form-group required control-label" align="left">
                                                 <label for='gasto_viaticos'>Viaticos</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">$</span>
@@ -117,8 +127,8 @@
 
                                                 </div>
                                             </div>
-                                             <div class="col-sm-6 form-group required control-label" align="left">
-                                                <label for='gasto_IMSS'>IMSS</label>
+                                             <div class="col-sm-12 form-group required control-label" align="left">
+                                                <label for='gasto_IMSS'>IMSS & Otros</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">$</span>
                                                     @if($proyecto->distribuido == 0)
@@ -132,10 +142,10 @@
                                              </div>
                                        </div>
                                        <div class="row">
-                                            <div class="col-sm-3" align="left">
-                                            </div>
-                                            <div class="col-sm-6 form-group required control-label" align="left">
-                                                <label for='gasto_porc_errores'>Errores</label>
+                                            <!--div class="col-sm-3" align="left">
+                                            </div-->
+                                            <div class="col-sm-4 form-group required control-label" align="left">
+                                                <label for='gasto_porc_errores'>% Errores</label>
                                                 <div class="input-group">
                                                     @if($proyecto->distribuido == 0)
                                                         <input type='number' name='gasto_porc_errores' id='gasto_porc_errores' value='{{$proyecto->gasto_porc_errores}}' class='form-control' required>
@@ -147,24 +157,8 @@
                                                     <span class="input-group-addon">%</span>
                                                 </div>
                                             </div>
-                                       </div>
-                                       <div class="row">
-                                            <div class="col-sm-6 form-group required control-label" align="left">
-                                                <label for='gasto_porc_ganancias_MMDI'>Gananacias MMDI</label>
-                                                <div class="input-group">
-                                                    @if($proyecto->distribuido == 0)
-                                                        <input type='number' name='gasto_porc_ganancias_MMDI' id='gasto_porc_ganancias_MMDI' value='{{$proyecto->gasto_porc_ganancias_MMDI}}' class='form-control' required>
-                                                    @else
-                                                        <input type="hidden" name="gasto_porc_ganancias_MMDI" value="{{$proyecto->gasto_porc_ganancias_MMDI}}">
-                                                        <input type='number' name='gasto_porc_ganancias_MMDI' id='gasto_porc_ganancias_MMDI' value='{{$proyecto->gasto_porc_ganancias_MMDI}}' class='form-control' disabled>
-                                                    @endif
-
-                                                    <span class="input-group-addon">%</span>
-                                                </div>
-
-                                            </div>
-                                            <div class="col-sm-6 form-group required control-label" align="left">
-                                                <label for='gasto_porc_honorarios'>Honorarios</label>
+                                            <div class="col-sm-4 form-group required control-label" align="left">
+                                                <label for='gasto_porc_honorarios'>%Honorarios</label>
                                                 <div class="input-group">
                                                     @if($proyecto->distribuido == 0)
                                                         <input type='number' name='gasto_porc_honorarios' id='gasto_porc_honorarios' value='{{$proyecto->gasto_porc_honorarios}}' class='form-control' required>
@@ -177,13 +171,28 @@
                                                 </div>
 
                                             </div>
+                                            <div class="col-sm-4 form-group required control-label" align="left">
+                                                <label for='gasto_porc_ganancias_MMDI'>% MMDI</label>
+                                                <div class="input-group">
+                                                    @if($proyecto->distribuido == 0)
+                                                        <input type='number' name='gasto_porc_ganancias_MMDI' id='gasto_porc_ganancias_MMDI' value='{{$proyecto->gasto_porc_ganancias_MMDI}}' class='form-control' required>
+                                                    @else
+                                                        <input type="hidden" name="gasto_porc_ganancias_MMDI" value="{{$proyecto->gasto_porc_ganancias_MMDI}}">
+                                                        <input type='number' name='gasto_porc_ganancias_MMDI' id='gasto_porc_ganancias_MMDI' value='{{$proyecto->gasto_porc_ganancias_MMDI}}' class='form-control' disabled>
+                                                    @endif
+
+                                                    <span class="input-group-addon">%</span>
+                                                </div>
+
+                                            </div>
+
                                        </div>
 
-                                       <div class="row">
+                                       <!--div class="row">
                                             <div class="col-sm-12" align="left">
                                                 <hr>
                                             </div>
-                                       </div>
+                                       </div-->
                                        <div class="row">
                                             <div class="col-sm-12" align="center">
                                                 <h4>Porcentaje Ganancia</h4>
@@ -269,10 +278,10 @@
                                                 <div class="row">
                                                     <div class="col-sm-1 " align="right">
                                                     </div>
-                                                    <div class="col-sm-5 " align="left">
-                                                        <label>Honorarios:</label>
+                                                    <div class="col-sm-6 " align="left">
+                                                        <label>Honorarios ({{$proyecto->gasto_porc_honorarios}}%):</label>
                                                     </div>
-                                                    <div class="col-sm-5 " align="right">
+                                                    <div class="col-sm-4 " align="right">
                                                         $ {{number_format($proyecto->honorarios,2)}}
                                                     </div>
                                                 </div>
@@ -281,7 +290,7 @@
                                                     <div class="col-sm-1 " align="right">
                                                     </div>
                                                     <div class="col-sm-5 " align="left">
-                                                        <label>TOTAL:</label>
+                                                        <label>TOTAL S/IVA:</label>
                                                     </div>
                                                     <div class="col-sm-5 " align="right">
                                                         $ {{number_format($proyecto->costo,2)}}
@@ -310,10 +319,10 @@
                                                 <div class="row">
                                                     <div class="col-sm-1 " align="right">
                                                     </div>
-                                                    <div class="col-sm-5 " align="left">
-                                                        <label>Honorarios:</label>
+                                                    <div class="col-sm-6 " align="left">
+                                                        <label>Honorarios ({{$proyecto->gasto_porc_honorarios}}%):</label>
                                                     </div>
-                                                    <div class="col-sm-5 " align="right">
+                                                    <div class="col-sm-4 " align="right">
                                                         $ {{number_format($proyecto->honorariosAdicional,2)}}
                                                     </div>
                                                 </div>
@@ -321,7 +330,7 @@
                                                     <div class="col-sm-1 " align="right">
                                                     </div>
                                                     <div class="col-sm-5 " align="left">
-                                                        <label>TOTAL:</label>
+                                                        <label>TOTAL S/IVA:</label>
                                                     </div>
                                                     <div class="col-sm-5 " align="right">
                                                         $ {{number_format($proyecto->adicional + $proyecto->honorariosAdicional, 2)}}
@@ -329,7 +338,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-sm-12" align="center">
-                                                        <label>TOTAL PROYECTO</label>
+                                                        <label>TOTAL PROYECTO S/ IVA</label>
                                                     </div>
                                                     <div class="col-sm-12 " align="center">
                                                          $ {{number_format($proyecto->totAdicionales, 2)}}
@@ -360,10 +369,10 @@
                                                    </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-sm-6 " align="left">
-                                                        <label>Honorarios:</label>
+                                                    <div class="col-sm-8 " align="left">
+                                                        <label>Honorarios ({{$proyecto->gasto_porc_honorarios}}%):</label>
                                                     </div>
-                                                    <div class="col-sm-6 " align="right">
+                                                    <div class="col-sm-4 " align="right">
                                                         $ {{number_format($proyecto->honorarios,2)}}
                                                    </div>
                                                 </div>
@@ -387,19 +396,11 @@
                                             <br>
                                             </div>
                                             <div class="col-sm-8 divPagos" align="center">
-                                                <div class="row">
+                                                <!--div class="row">
                                                     <div class="col-sm-12" align="center">
                                                         <h4 class="glyphicon glyphicon-bookmark">Gastos</h4>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-6 " align="left">
-                                                        <label>MMDI:</label>
-                                                    </div>
-                                                    <div class="col-sm-6 " align="right">
-                                                        $ {{number_format($proyecto->mmdi,2)}}
-                                                   </div>
-                                                </div>
+                                                </div-->
                                                 <div class="row">
                                                     <div class="col-sm-6 " align="left">
                                                         <label>Viaticos:</label>
@@ -409,76 +410,58 @@
                                                    </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-sm-6 " align="left">
-                                                        <label>IMSS:</label>
+                                                    <div class="col-sm-7    " align="left">
+                                                        <label>IMSS & Otros:</label>
                                                     </div>
-                                                    <div class="col-sm-6 " align="right">
+                                                    <div class="col-sm-5" align="right">
                                                         $ {{number_format($proyecto->gasto_IMSS,2)}}
                                                    </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-sm-6 " align="left">
-                                                        <label>Errores:</label>
+                                                    <div class="col-sm-7 " align="left">
+                                                        <label>Errores ({{$proyecto->gasto_porc_errores}}%):</label>
                                                     </div>
-                                                    <div class="col-sm-6 " align="right">
+                                                    <div class="col-sm-5 " align="right">
                                                         $ {{number_format($proyecto->errores,2)}}
                                                    </div>
                                                 </div>
-                                            </div>
-                                       </div>
-                                       <div class="row">
-                                            <div class="col-sm-12" align="center">
-                                            <br>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-2" align="center">
-                                                <br>
-                                            </div>
-                                            <div class="col-sm-8 divPagos" align="center">
                                                 <div class="row">
-                                                    <div class="col-sm-12" align="center">
-                                                        <!--($ { {number_format($proyecto->ddg,2)}})-->
-                                                        <h4 class="glyphicon glyphicon-bookmark">Distribución </h4>
+                                                    <div class="col-sm-7 " align="left">
+                                                        <label>MMDI ({{$proyecto->gasto_porc_ganancias_MMDI}}%):</label>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-6 " align="left">
-                                                        <label>MMDI:</label>
-                                                    </div>
-                                                    <div class="col-sm-6 " align="right">
-                                                        $ {{number_format($proyecto->recMmdi,2)}}
+                                                    <div class="col-sm-5 " align="right">
+                                                        $ {{number_format($proyecto->mmdi,2)}}
                                                    </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-sm-6 " align="left">
-                                                        <label>MEG:</label>
+                                                    <div class="col-sm-7 " align="left">
+                                                        <label>MEG ({{$proyecto->ganancia_MEG}}%):</label>
                                                     </div>
-                                                    <div class="col-sm-6 " align="right">
+                                                    <div class="col-sm-5 " align="right">
                                                         $ {{number_format($proyecto->meg,2)}}
                                                    </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-sm-6 " align="left">
-                                                        <label>AMM:</label>
+                                                    <div class="col-sm-7 " align="left">
+                                                        <label>AMM ({{$proyecto->ganancia_AMM}}%):</label>
                                                     </div>
-                                                    <div class="col-sm-6 " align="right">
+                                                    <div class="col-sm-5 " align="right">
                                                         $ {{number_format($proyecto->amm,2)}}
                                                    </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-sm-6 " align="left">
-                                                        <label>MME:</abel>
+                                                    <div class="col-sm-7 " align="left">
+                                                        <label>MME ({{$proyecto->ganancia_MME}}%):</abel>
                                                     </div>
-                                                    <div class="col-sm-6 " align="right">
+                                                    <div class="col-sm-5 " align="right">
                                                         $ {{number_format($proyecto->mme,2)}}
                                                    </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-sm-6 " align="left">
-                                                        <label>AME:</label>
+                                                    <div class="col-sm-7 " align="left">
+                                                        <label>AME ({{$proyecto->ganancia_AME}}%):</label>
                                                     </div>
-                                                    <div class="col-sm-6 " align="right">
+                                                    <div class="col-sm-5 " align="right">
                                                         $ {{number_format($proyecto->ame,2)}}
                                                    </div>
                                                 </div>
@@ -496,43 +479,72 @@
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-sm-7 font30" align="right">
-                                                       <br>
+                                                    <div class="col-sm-7 " align="left">
+                                                        <label>MMDI Adicionales:</label>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-6 " align="left">
-                                                        <label>MMDI:</label>
-                                                    </div>
-                                                    <div class="col-sm-6 " align="right">
-                                                        $ {{number_format($proyecto->adicional + $proyecto->honorariosAdicional,2)}}
+                                                    <div class="col-sm-5 " align="right">
+                                                        ${{number_format($proyecto->adicional + $proyecto->honorariosAdicional,2)}}
                                                    </div>
                                                 </div>
                                                 <div class="row">
-                                                        <div class="col-sm-12" align="center">
-                                                            @if($estatusSelected == "Terminado" and !$proyecto->adicionalesDistribuido)
-                                                                <a href="{{ URL::to('distribuirAdicionales')}}/{{$proyecto->id}}" class="glyphicon glyphicon glyphicon-list btn btn-primary"> Distribuir Adicionales</a>
+                                                    <div class="col-sm-12" align="center">
+                                                        @if($estatusSelected == "Terminado" and !$proyecto->adicionalesDistribuido)
+                                                            <a href="{{ URL::to('distribuirAdicionales')}}/{{$proyecto->id}}" class="glyphicon glyphicon glyphicon-list btn btn-primary"> Distribuir Adicionales</a>
+                                                        @else
+                                                            @if($estatusSelected != "Terminado")
+                                                                <label class="alert-info form-control">Proyecto no terminado</label>
                                                             @else
-                                                                @if($estatusSelected != "Terminado")
-                                                                    <label class="alert-info form-control">Proyecto no terminado</label>
-                                                                @else
-                                                                    <label class="alert-info form-control">Distribuido</label>
-                                                                @endif
+                                                                <label class="alert-info form-control">Distribuido</label>
                                                             @endif
-                                                        </div>
-                                                    </div>
-                                                <div class="row">
-                                                    <div class="col-sm-7 font30" align="right">
-                                                       <br>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
                                        </div>
                                        <div class="row">
                                             <div class="col-sm-12" align="center">
-                                            <hr>
+                                            <br>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-sm-2" align="center">
+                                                <br>
+                                            </div>
+                                            <div class="col-sm-8" align="center">
+                                                <!--div class="row">
+                                                    <div class="col-sm-12" align="center">
+                                                        <! - -($ { {number_format($proyecto->ddg,2)}})- ->
+                                                        <h4 class="glyphicon glyphicon-bookmark">Distribución </h4>
+                                                    </div>
+                                                </div-->
+                                                <div class="row">
+                                                    <div class="col-sm-12 " align="center">
+                                                        <label>Total distribuido a MMDI incluyendo costos:</label>
+                                                    </div>
+                                                    <div class="col-sm-12 " align="center">
+                                                        $ {{number_format($proyecto->recMmdi,2)}}
+                                                   </div>
+                                                </div>
+
+                                                <!--div class="row">
+                                                    <div class="col-sm-7 font30" align="right">
+                                                       <br>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-sm-7 font30" align="right">
+                                                       <br>
+                                                    </div>
+                                                </div-->
+                                            </div>
+                                       </div>
+                                       <br>
+                                       <!--div class="row">
+                                            <div class="col-sm-12" align="center">
+                                            <hr>
+                                            </div>
+                                        </div-->
                                         <div class="row">
                                             <div class="col-sm-2" align="center">
                                             <br>
@@ -589,7 +601,6 @@
                                 <div class="col-sm-12 align-self-center">
                                     @if($proyecto)
                                         <input type='submit' value='Guarda Proyecto' class='btn btn-primary btn-small'>
-                                        <a class='btn btn-primary btn-small' href="{{action('ProyectoController@bajaPDF', $proyecto->id)}}">PDF</a>
                                     @else
                                         <input type='submit' value='Crear Proyecto' class='btn btn-primary btn-small'>
                                     @endif
@@ -653,14 +664,14 @@
                                                 <!--td> <a href="{{ URL::to('concepto/' . $concepto->id) }}">{{$concepto->id}}</a></td-->
                                                  <td> {{$concepto->num}}</td>
                                                 <td> {{$concepto->nombre}}</td>
-                                                <td>$ {{$concepto->costo}}</td>
-                                                <td>$ {{$concepto->ganancia}}</td>
-                                                <td>$ {{$concepto->precio}}</td>
+                                                <td>${{$concepto->costo}}</td>
+                                                <td>${{$concepto->ganancia}}</td>
+                                                <td>${{$concepto->precio}}</td>
                                                 <td>{{$concepto->cantidad}}</td>
                                                 <td>{{$concepto->unidades}}</td>
-                                                <td>$ {{$concepto->costoTotal}}</td>
-                                                <td>$ {{$concepto->gananciaTotal}}</td>
-                                                <td>$ {{$concepto->precioTotal}}</td>
+                                                <td>${{$concepto->costoTotal}}</td>
+                                                <td>${{$concepto->gananciaTotal}}</td>
+                                                <td>${{$concepto->precioTotal}}</td>
                                                 <!--td>{{$concepto->fecha}}</td>
                                                 <td>{{$concepto->estatus}}</td-->
 

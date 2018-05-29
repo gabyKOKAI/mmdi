@@ -21,7 +21,7 @@ class Elemento extends Model
 
     public static function getTiposDropDown()
     {
-        $tipos = ['Material', 'Mano de Obra', 'Mueble', 'Viaticos','Otro'];
+        $tipos = ['Material', 'Mano de Obra', 'Material & Mano de Obra', 'Mueble', 'Viaticos','Otro'];
         return $tipos;
     }
 
@@ -41,6 +41,17 @@ class Elemento extends Model
             $precio = $elemento->costo + $elemento->ganancia;
         }
         return $precio;
+    }
+
+    public static function getCostoGanancia($elemento)
+    {
+        $res = "Precio BD = $ ".$elemento->getPrecio($elemento)." | Costo = $ ".$elemento->costo;
+        if($elemento->tipo_ganancia =="%"){
+            $res = $res." | Ganancia = ".$elemento->ganancia." ".$elemento->tipo_ganancia;
+        }else{
+            $res = $res." | Ganancia = ".$elemento->tipo_ganancia." ".$elemento->ganancia;
+        }
+        return $res;
     }
 
     public static function getElementos()

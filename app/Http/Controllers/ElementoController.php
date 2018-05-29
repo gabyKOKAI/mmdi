@@ -16,10 +16,35 @@ class ElementoController extends Controller
     {
 		$elementos = Elemento::getElementos();
         $concepto = new Concepto;
-        $concepto->id = -1;
+        $concepto->id = -2;
 
 		return view('elemento.elementoLista')->with(['elementos' => $elementos, 'concepto' => $concepto]);
     }
+
+    public function proveedoresElemento($id= '-1') {
+        $proveedore_id = $id;
+        //dump($proveedore_id);
+        $elementos = Elemento::where('proveedor_id','=',$proveedore_id)->get();
+        if (!$elementos->isEmpty()) {
+            foreach ($elementos as $elemento) {
+                $elemento->precio = Elemento::getPrecio($elemento);
+            }
+        }
+        //dump($elementos);
+        return $elementos;
+
+    }
+
+    public function elementoCostoGanancia($id= '-1') {
+        $res = "";
+        $elemento = Elemento::find($id);
+        if($elemento){
+            $res = Elemento::getCostoGanancia($elemento);
+        }
+        return $res;
+    }
+
+
 
     /**
 	* GET
