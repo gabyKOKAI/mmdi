@@ -103,10 +103,12 @@ class PagosClienteController extends Controller
         if (!$pago) {
             # Instantiate a new Concepto Model object
             $pago = new PagoCliente();
-            $pago->id = -1;
+            #$pago->id = -1;
             $pago->con_iva = -1;
+            $estatusAnterior = "";
             $res = "Creado";
          } else {
+            $estatusAnterior = $pago->estatus;
             $res = "Actualizado";
         }
 
@@ -117,20 +119,23 @@ class PagosClienteController extends Controller
         }
 
         $saldo = 0;
-        if( $pago->con_iva == 1)
+        if($proyecto and $pago->con_iva == 1)
         {
             $saldo = $proyecto->getSaldo($proyecto)-($request->input('monto'))/1.16;
         }
-        elseif( $pago->con_iva == 0)
+        elseif($proyecto and $pago->con_iva == 0)
         {
             $saldo =$proyecto->getSaldo($proyecto)-$request->input('monto');
         }
 
         $mensaje = "";
-        if($saldo<0){
+        if($saldo<0 and $request->input('estatus')<>'Cancelado'){
 		    $tipoMensaje = "error";
 		    $mensaje = 'El pago no puede hacerse porque el cliente está pagando de más al proyecto. El Saldo Actual es de:'.$proyecto->getSaldo($proyecto);
-		}else{
+		    $pago->id = -1;
+		}
+		else{
+
             # Set the parameters
             $pago->monto = $request->input('monto');
             $pago->fecha_pago = $request->input('fecha');
@@ -151,22 +156,50 @@ class PagosClienteController extends Controller
             $recurso1 = Recurso::where('nombre', '=', "Proyectos")->first();
 
             if($mensaje== ""){
-                $cuenta->saldo = $cuenta->saldo + $pago->monto;
                 $pago->save();
-                $cuenta->save();
-                Movimiento::registraMovimiento(
-                $pago->fecha_pago,
-                $pago->monto,
-                $pago->tipo.' de cliente '. $pago->cli_prov_id.' para el proyecto '.$pago->proy_coti_id,
-                "Entrada",
-                $recurso1->id,
-                $pago->cuenta_id);
+                if($res == "Creado" and $pago->estatus <>  "Cancelado"){
+                    $cuenta->saldo = $cuenta->saldo + $pago->monto;
+                    $cuenta->save();
+                    Movimiento::registraMovimiento(
+                        $pago->fecha_pago,
+                        $pago->monto,
+                        $pago->tipo.' de cliente '. $pago->cli_prov_id.' para el proyecto '.$pago->proy_coti_id,
+                        "Entrada",
+                        $recurso1->id,
+                        $pago->cuenta_id);
+                }
+                if($res == "Actualizado" and $pago->estatus <> $estatusAnterior){
+                    if($pago->estatus ==  "Cancelado"){
+                        #elimino de la cuenta y registro movimiento inverso
+                        $cuenta->saldo = $cuenta->saldo - $pago->monto;
+                        $cuenta->save();
+                        Movimiento::registraMovimiento(
+                            $pago->fecha_pago,
+                            $pago->monto,
+                            'Se cancelo'.$pago->tipo.' de cliente '. $pago->cli_prov_id.' para el proyecto '.$pago->proy_coti_id,
+                            "Cancelado",
+                            $recurso1->id,
+                            $pago->cuenta_id);
+                    }else{
+                        #agrego a la cuenta y registro movimiento
+                        $cuenta->saldo = $cuenta->saldo + $pago->monto;
+                        $cuenta->save();
+                        Movimiento::registraMovimiento(
+                            $pago->fecha_pago,
+                            $pago->monto,
+                            'Se activa '.$pago->tipo.' de cliente '. $pago->cli_prov_id.' para el proyecto '.$pago->proy_coti_id,
+                            "NoCancelado",
+                            $recurso1->id,
+                            $pago->cuenta_id);
+                    }
+                }
             }
 
             $tipoMensaje = "success";
 		    $mensaje = $mensaje.'El pago cliente por '.$pago->monto.' fue '.$res.$saldo;
 
         }
+        #dump($mensaje);
 		# Redirect the user to the page to view the book
 		#return redirect('/pagoCliente/'.$pago->id)->with('success', 'El pago cliente por '.$pago->monto.' fue '.$res);
 		return redirect('/pagoCliente/'.$pago->id.'/'.$idCli.'/'.$idProy)->with($tipoMensaje, $mensaje);

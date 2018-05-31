@@ -91,15 +91,21 @@
                                        <div class="row">
                                              <div class="col-sm-4" align="left">
                                                 <label for='comentario'>Comentario</label>
-                                                <textarea name='comentario' id='comentario' maxlength="250" rows="5"  class="form-control" >{{$proyecto->comentario}}</textarea>
+                                                <textarea name='comentario' id='comentario' maxlength="250" rows="4"  class="form-control" >{{$proyecto->comentario}}</textarea>
+                                             </div>
+                                       </div>
+                                       <div class="row">
+                                             <div class="col-sm-4" align="left">
+                                                <label for='nota_PDF'>Nota PDF</label>
+                                                <textarea name='nota_PDF' id='nota_PDF' maxlength="250" rows="4"  class="form-control" >{{$proyecto->nota_PDF}}</textarea>
                                              </div>
                                        </div>
                                        <br>
                                        <div class="row">
                                             <div class="col-sm-4 align-self-center">
                                                 @if($proyecto)
-                                                    <a class='btn btn-primary btn-small' href="{{action('ProyectoController@bajaPDF', [$proyecto->id,'0'])}}">PDF Cotización (c/IVA)</a>
-                                                    <a class='btn btn-primary btn-small' href="{{action('ProyectoController@bajaPDF', [$proyecto->id,'1'])}}">PDF Cotización (s/IVA)</a>
+                                                    <a class='btn btn-primary btn-small' href="{{action('ProyectoController@bajaPDF', [$proyecto->id,'0'])}}">Cotización con IVA</a>
+                                                    <a class='btn btn-primary btn-small' href="{{action('ProyectoController@bajaPDF', [$proyecto->id,'1'])}}">Cotización sin IVA</a>
 
                                                 @endif
                                             </div>
@@ -116,6 +122,7 @@
                                        <div class="row">
                                              <div class="col-sm-12 form-group required control-label" align="left">
                                                 <label for='gasto_viaticos'>Viaticos</label>
+                                                <a title="Crea CXP" href="{{ URL::to('cotizacionNew/-1/-1/'.$proyecto->id)}}" class="glyphicon glyphicon glyphicon-list-alt"></a>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">$</span>
                                                     @if($proyecto->distribuido == 0)
@@ -499,6 +506,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
+                                                <br>
                                             </div>
                                        </div>
                                        <div class="row">
@@ -589,9 +597,20 @@
                                                 </div>
                                             </div>
                                         </div>
-
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-sm-4" align="center">
+                                                <br>
+                                            </div>
+                                            <div class="col-sm-3 align-self-center">
+                                                @if($proyecto)
+                                                    <a class='btn btn-primary btn-small' href="{{action('ProyectoController@bajaPDFSaldo', [$proyecto->id])}}">PDF Saldo</a>
+                                                @endif
+                                            </div>
+                                        </div>
                                    </div>
 								</div>
+
                             </div>
                         </div>
 

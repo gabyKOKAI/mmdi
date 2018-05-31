@@ -9,10 +9,10 @@
         <div class="row">
             <div class="col-sm-12 align-center">
                 @if($cotizacione->id != -1)
-                    <h1 class="center">[{{$cotizacione->id}}] Cotizacion {{$cotizacione->nombre}}</h1>
+                    <h1 class="center">[{{$cotizacione->id}}] CXP {{$cotizacione->nombre}}</h1>
                      <form method='GET' action='/cotizacion/guardar/{{$cotizacione->id}}'>
                @else
-                    <h1 class="center">Nueva Cotizacion</h1>
+                    <h1 class="center">Nueva CXP</h1>
                     <form method='GET' action='/cotizacion/guardar/-1'>
                @endif
                        {{ csrf_field() }}
@@ -29,7 +29,12 @@
                                         <div class="row">
                                             <div class="col-sm-12 form-group required control-label" align="left">
                                                     <label for='nombre'>Nombre</label>
-                                                    <input type='text' name='nombre' id='nombre' value='{{$cotizacione->nombre}}'  class="form-control" required>
+                                                    @if($cotizacione->id != -1)
+                                                        <input type="hidden" name="nombre" value="{{$cotizacione->nombre}}">
+                                                        <input type='text' name='nombre' id='nombre' value='{{$cotizacione->nombre}}'  class="form-control" disabled>
+                                                    @else
+                                                        <input type='text' name='nombre' id='nombre' value='{{$cotizacione->nombre}}'  class="form-control" required>
+                                                    @endif
                                             </div>
                                        </div>
                                        <div class="row">
@@ -50,7 +55,7 @@
                                             <div class="col-sm-12 form-group control-label" align="left">
                                                 <label for='proyecto'>Proyecto</label>
 
-                                                @if($proyectoSelected!=-1)
+                                                @if($proyectoSelected>0)
                                                     <a href="{{ URL::to('proyecto/'.$proyectoSelected)}}" class="glyphicon glyphicon-edit"></a>
                                                     <input type="hidden" name="proyecto_id" value="{{$proyectoSelected}}">
                                                     <select name="proyecto_id"  class="form-control" disabled>
@@ -70,7 +75,7 @@
                                 <div class="col-sm-4" align="left">
                                     <div class="container center col-sm-12  ">
                                         <div class="row">
-                                            <div class="col-sm-12 form-group required control-label" align="left">
+                                            <div class="col-sm-12 form-group control-label" align="left">
                                                     <label for='descripcion'>Descripcion</label>
                                                     <input type='text' name='descripcion' id='descripcion' value='{{$cotizacione->descripcion}}'  class="form-control" required>
                                             </div>
@@ -144,9 +149,9 @@
                             <div class="row">
                                 <div class="col-sm-12 align-self-center">
                                     @if($cotizacione)
-                                        <input type='submit' value='Guarda Cotizacion' class='btn btn-primary btn-small'>
+                                        <input type='submit' value='Guarda CXP' class='btn btn-primary btn-small'>
                                     @else
-                                        <input type='submit' value='Crear Cotizacion' class='btn btn-primary btn-small'>
+                                        <input type='submit' value='Crear CXP' class='btn btn-primary btn-small'>
                                     @endif
                                 </div>
                             </div>

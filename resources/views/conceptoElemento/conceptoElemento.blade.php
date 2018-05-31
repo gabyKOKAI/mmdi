@@ -80,7 +80,7 @@
                                        <div class="row">
                                             <div class="col-sm-6 form-group required control-label" align="left">
                                                 <label for='precio'>Nuevo Precio</label>
-                                                <a title="Este es el precio cliente que puede ser modificado, por cotización.">
+                                                <a title="Este es el precio cliente que puede ser modificado, por proyecto.">
                                                     <div class="input-group">
 
                                                         <span class="input-group-addon">$</span>

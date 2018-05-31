@@ -30,7 +30,7 @@ class Cotizacione extends Model
 
     public static function getEstatusDropDown()
     {
-        $estatus = ['Pendiente Cotizar','Cotizado','En Proceso','Entregado','Entrega Pendiente','Cancelado','Rechazado'];
+        $estatus = ['Pendiente Cotizar','Cotizado','En Proceso','Entregado','Entrega Pendiente','Cancelado'];
 
         return $estatus;
     }
@@ -46,22 +46,22 @@ class Cotizacione extends Model
 
     public static function getEfectivo($cotizacione_id)
     {
-        $efectivo = PagoProveedore::where('proy_coti_id','=',$cotizacione_id)->where('tipo','=','Efectivo')->where('con_iva','=',0)->sum('monto');
-        $efectivoIVA = PagoProveedore::where('proy_coti_id','=',$cotizacione_id)->where('tipo','=','Efectivo')->where('con_iva','=',1)->sum('monto')/1.16;
+        $efectivo = PagoProveedore::where('proy_coti_id','=',$cotizacione_id)->where('tipo','=','Efectivo')->where('con_iva','=',0)->where('estatus','<>','Cancelado')->sum('monto');
+        $efectivoIVA = PagoProveedore::where('proy_coti_id','=',$cotizacione_id)->where('tipo','=','Efectivo')->where('con_iva','=',1)->where('estatus','<>','Cancelado')->sum('monto')/1.16;
         return $efectivo + $efectivoIVA;
     }
 
     public static function getTransferencias($cotizacione_id)
     {
-        $transferencias = PagoProveedore::where('proy_coti_id','=',$cotizacione_id)->where('tipo','=','Transferencia')->where('con_iva','=',0)->sum('monto');
-        $transferenciasIVA = PagoProveedore::where('proy_coti_id','=',$cotizacione_id)->where('tipo','=','Transferencia')->where('con_iva','=',1)->sum('monto')/1.16;
+        $transferencias = PagoProveedore::where('proy_coti_id','=',$cotizacione_id)->where('tipo','=','Transferencia')->where('con_iva','=',0)->where('estatus','<>','Cancelado')->sum('monto');
+        $transferenciasIVA = PagoProveedore::where('proy_coti_id','=',$cotizacione_id)->where('tipo','=','Transferencia')->where('con_iva','=',1)->where('estatus','<>','Cancelado')->sum('monto')/1.16;
         return $transferencias + $transferenciasIVA;
     }
 
     public static function getCheques($cotizacione_id)
     {
-        $cheques = PagoProveedore::where('proy_coti_id','=',$cotizacione_id)->where('tipo','=','Cheque')->where('con_iva','=',0)->sum('monto');
-        $chequesIVA = PagoProveedore::where('proy_coti_id','=',$cotizacione_id)->where('tipo','=','Cheque')->where('con_iva','=',1)->sum('monto')/1.16;
+        $cheques = PagoProveedore::where('proy_coti_id','=',$cotizacione_id)->where('tipo','=','Cheque')->where('con_iva','=',0)->where('estatus','<>','Cancelado')->sum('monto');
+        $chequesIVA = PagoProveedore::where('proy_coti_id','=',$cotizacione_id)->where('tipo','=','Cheque')->where('con_iva','=',1)->where('estatus','<>','Cancelado')->sum('monto')/1.16;
         return $cheques + $chequesIVA;
     }
 

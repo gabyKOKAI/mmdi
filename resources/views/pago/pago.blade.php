@@ -100,7 +100,7 @@
                                                 <a href="{{ URL::to('proyecto/-1')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
                                             @endif
                                         @else
-                                            <label for='proy_coti_id'>Cotizacion</label>
+                                            <label for='proy_coti_id'>CXP</label>
                                             @if($cliProvSelected!=-1)
                                                 <a href="{{ URL::to('cotizacion/'.$proyCotiSelected)}}" class="glyphicon glyphicon-edit"></a>
                                             @else
@@ -118,7 +118,7 @@
                                             @if($esCliente == 1)
                                                 {{"--- SIN PROYECTO ---"}}
                                             @else
-                                                {{"--- SIN COTIZACION ---"}}
+                                                {{"--- SIN CXP ---"}}
                                             @endif
                                             </option>
 

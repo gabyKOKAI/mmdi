@@ -42,6 +42,10 @@ body {
     color:white;
 }
 
+.fontItalic {
+    font-style: italic;
+}
+
 .gris{
     background-color:darkgray;
     color:white;

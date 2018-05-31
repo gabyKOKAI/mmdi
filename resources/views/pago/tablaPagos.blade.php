@@ -43,7 +43,7 @@
                                             <th class="center">Proyecto</th>
                                         @else
                                             <th class="center">Proveedor</th>
-                                            <th class="center">Cotización</th>
+                                            <th class="center">CXP</th>
                                         @endif
                                         <th class="center">Tipo</th>
                                         <th class="center">Cuenta</th>
@@ -51,8 +51,8 @@
                                         <th class="center">Monto</th>
                                         <th class="center">Con IVA</th>
                                         <th class="center">Factura</th>
-                                        <!--th class="center">Fecha Factura</th>
-                                        <th class="center">Estatus</th-->
+                                        <!--th class="center">Fecha Factura</th-->
+                                        <th class="center">Estatus</th>
                                         <!--th class="center">Registro</th-->
                                         <th class="center">
                                             @if($esCliente == 1)
@@ -88,8 +88,8 @@
                                                 <input type="checkbox" class="form-check-input" id="conIva" {{ $pago->con_iva ? 'checked="checked"' : '' }} disabled>
                                             </td>
                                             <td>{{$pago->numero_factura}}</td>
-                                            <!--td>{{$pago->fecha_factura}}</td>
-                                            <td>{{$pago->estatus}}</td-->
+                                            <!--td>{{$pago->fecha_factura}}</td-->
+                                            <td>{{$pago->estatus}}</td>
                                             <!--td>{{$pago->user->name}}</td-->
                                             <td>
                                                 @if($esCliente == 1)

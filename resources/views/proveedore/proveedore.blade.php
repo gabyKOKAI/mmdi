@@ -11,8 +11,8 @@
 
                @if($proveedore->id != -1)
                     <h1 class="center">[{{$proveedore->id}}] Proveedor {{$proveedore->nombre}}
-                    <!--a href="{{ URL::to('cotizaciones/'.$proveedore->id)}}" class="glyphicon glyphicon-list-alt" title="Lista de Cotizaciones"></a>
-                    <a href="{{ URL::to('cotizacion/-1/'.$proveedore->id)}}" class="glyphicon glyphicon glyphicon-plus-sign" title="Nueva Cotizacion"></a-->
+                    <!--a href="{{ URL::to('cotizaciones/'.$proveedore->id)}}" class="glyphicon glyphicon-list-alt" title="Lista de CXP"></a>
+                    <a href="{{ URL::to('cotizacion/-1/'.$proveedore->id)}}" class="glyphicon glyphicon glyphicon-plus-sign" title="Nueva CXP"></a-->
                     </h1>
                      <form method='GET' action='/proveedor/guardar/{{$proveedore->id}}'>
                @else

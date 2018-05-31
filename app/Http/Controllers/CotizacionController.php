@@ -8,6 +8,8 @@ use mmdi\Proveedore;
 use mmdi\Proyecto;
 use mmdi\PagoProveedore;
 use mmdi\Cliente;
+use mmdi\Concepto;
+use mmdi\Elemento;
 
 class CotizacionController extends Controller
 {
@@ -90,7 +92,7 @@ class CotizacionController extends Controller
     public function guardar(Request $request,$id) {
 		# Validate the request data
 		$this->validate($request, [
-			'descripcion' => 'required|min:3',
+			'nombre' => 'required|min:3',
 			'proveedor_id' => 'required',
 			'estatus' => 'required',
 			'monto' => 'required',
@@ -125,7 +127,83 @@ class CotizacionController extends Controller
         $cotizacione->save();
 
 		# Redirect the user to the page to view the book
-		return redirect('/cotizacion/'.$cotizacione->id)->with('success', 'La cotizacion '.$cotizacione->descripcion.' fue '.$res);
+		#return view('layouts.prueba');
+		return redirect('/cotizacion/'.$cotizacione->id)->with('success', 'La CXP '.$cotizacione->descripcion.' fue '.$res);
 	}
+
+	public function creaCotizacion(Request $request,$idCon='-1', $idEle='-1', $idProy='-1') {
+	    if($idProy==-1){
+            $elemento = Elemento::find($idEle);
+            $concepto = Concepto::find($idCon);
+
+            $subConcepto = $concepto->getElementos($concepto)->find($idEle);
+
+            $proyecto = Proyecto::find($concepto->proyecto_id);
+
+            # Get proyectos
+            $proyectosForDropdown = Proyecto::all();
+            # Get estatus
+            $estatusForDropdown = Concepto::getEstatusDropDown();
+            $elementos = [];
+            $proyectoSelected = $concepto->proyecto_id;
+            $estatusSelected = $concepto->estatus;
+            $elementos = Concepto::getElementos($concepto);
+            $concepto->costo = Concepto::getCosto($concepto);
+            $concepto->precioCliente = $concepto->getprecio($concepto);
+            $concepto->ganancia = Concepto::getGananciaReal($concepto);
+            $concepto->precioTotal = $concepto->precioCliente * $concepto->cantidad;
+            $concepto->gananciaTotal = $concepto->ganancia * $concepto->cantidad ;
+            $concepto->costoTotal = $concepto->costo * $concepto->cantidad ;
+
+            $nombre = "(".$concepto->proyecto_id.":".$concepto->id.":".$subConcepto->id.") ".$concepto->nombre."-".$subConcepto->nombre."(".$subConcepto->tipo.")";
+            $nombreLike = "%(".$concepto->proyecto_id.":".$concepto->id.":".$subConcepto->id.") %";
+            $descripcion = "CXP creada automaticamente desde el concepto ".$concepto->nombre.", para el subconcepto ".$subConcepto->nombre.".";
+            $monto = $subConcepto->costoCliente * $concepto->cantidad;
+            $idProyCot = $concepto->proyecto_id;
+            $idProvCot = $subConcepto->proveedor_id;
+        }
+        else{
+            $proyecto = Proyecto::find($idProy);
+            $nombre = "(".$proyecto->id.":viaticos:viaticos) ".$proyecto->nombre."(viaticos)";
+            $nombreLike = "%(".$proyecto->id.":viaticos:viaticos) %";
+            $descripcion = "CXP de viaticos creada automaticamente desde el proyecto ".$proyecto->nombre;
+            $monto = $proyecto->gasto_viaticos;
+            $idProyCot = $idProy;
+            $proveedore = Proveedore::where('nombre', 'LIKE', '%iaticos%' )->first();
+            $idProvCot = $proveedore->id;
+        }
+        $cotizacione = Cotizacione::where('nombre', 'LIKE', $nombreLike )->first();
+
+        if(!$cotizacione){
+
+            $cotizacione = new Cotizacione();
+            $res = "creada";
+        }else{
+            $res = "actualizada";
+        }
+
+        # Set the parameters
+        $cotizacione->nombre = $nombre;
+        $cotizacione->descripcion = $descripcion;
+        $cotizacione->estatus = "Cotizado";
+        $cotizacione->monto = $monto;
+        $cotizacione->con_iva = 0;
+        $cotizacione->proyecto_id = $idProyCot;
+        $cotizacione->proveedor_id = $idProvCot;
+        $cotizacione->save();
+
+        $tipoMensaje = 'success';
+        $mensaje = 'La CXP fue '.$res.' con exito.';
+
+        #return redirect('/concepto/'.$concepto->id.'/'.$concepto->proyecto_id.'/'.$tipoMensaje.'/'.$mensaje)->with($tipoMensaje, $mensaje);
+        #return view('layouts.prueba');
+        if($idProy==-1){
+            return view('concepto.concepto')->
+            with(['concepto' => $concepto,'elementos' => $elementos, 'proyectosForDropdown' => $proyectosForDropdown,'proyectoSelected'=>$proyectoSelected,'estatusForDropdown' => $estatusForDropdown,'estatusSelected'=>$estatusSelected,'proyectoCon'=>$proyecto,'mensaje'=>$mensaje,'tipoMensaje'=>$tipoMensaje]);
+        }
+        else{
+            return redirect('/proyecto/'.$idProy)->with($tipoMensaje, $mensaje);
+        }
+    }
 
 }

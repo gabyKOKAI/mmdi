@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
     <head>
         <title>Cotización {{$proyecto->nombre}}</title>
@@ -29,7 +30,9 @@
         </div>
         <div class="margenTexto">
                 <p class="right">
-                    CDMX, FECHA
+                    <?php setlocale(LC_ALL,"es_ES"); ?>
+                    {{strftime("CDMX, %A %d de %B del %Y")}}
+                    <?php setlocale(LC_ALL,NULL); ?>
                 </p>
                 <p class="left fontBold">At´n: {{$proyecto->cliente->nombre}}
                 <br> P R E S E N T E
@@ -182,11 +185,7 @@
                 </table>
             </div>
         @else
-            <h4>Sin Conceptos
-                @if($proyecto->id != -1)
-                    <a href="{{ URL::to('concepto/-1/'.$proyecto->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
-                @endif
-            </h4>
+            <h4>Sin Conceptos</h4>
         @endif
         <br>
         <div class="margenTexto">
@@ -194,11 +193,7 @@
                     MM DISEÑO
                 </p>
                 <p class="left">
-                <span class="fontBold">Forma de Pago:</span> 60% de anticipo
-                <br>
-                <span class="fontBold">Tiempo de Entrega:</span> 8 semanas
-                <br>
-                <span class="fontBold">* Precios sujetos a cambio de acuerdo al TC del día. (USD/MXN)</span>
+                <span class="fontBold">NOTA:</span> <span class="fontItalic">{{$proyecto->nota_PDF}}</span>
                 </p>
 
             </div>

@@ -53,6 +53,7 @@ class MovimientoController extends Controller
         else{
             $movimiento = new Movimiento;
             $movimiento->id = -1;
+            $movimiento->fecha = date("Y-m-d");
             $recursoSelected = $idRec;
             $cuentaSelected = $idCue;
         }

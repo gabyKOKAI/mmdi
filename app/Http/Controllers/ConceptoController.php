@@ -5,6 +5,7 @@ namespace mmdi\Http\Controllers;
 use Illuminate\Http\Request;
 use mmdi\Proyecto;
 use mmdi\Concepto;
+use mmdi\Cotizacione;
 
 class ConceptoController extends Controller
 {
@@ -14,7 +15,9 @@ class ConceptoController extends Controller
 	* /proyecto/agrega
 	* Display the form to add a new proyecto
 	*/
-	public function concepto(Request $request,$id= '-1',$idProy='-1') {
+	public function concepto(Request $request,$id= '-1',$idProy='-1')
+	    #, $tipoMensaje='', $mensaje='')
+	    {
 	    $concepto = Concepto::find($id);
 	    if($idProy == -1){
 	        $proyecto = Proyecto::find($concepto->proyecto_id);
@@ -108,6 +111,8 @@ class ConceptoController extends Controller
 
 	    $concepto = Concepto::find($idCon);
 
+        $nombreLike = "%(".$concepto->proyecto_id.":".$concepto->id.":%";
+
 	    if (!$concepto) {
             return redirect('/proyecto')->with('alert', 'concepto no encontrado');
         }
@@ -116,6 +121,15 @@ class ConceptoController extends Controller
 
 	    $proyecto_id = $concepto->proyecto_id;
 	    $concepto->delete();
+
+
+	    $cotizaciones = Cotizacione::where('nombre', 'LIKE', $nombreLike )->get();
+	    foreach ($cotizaciones as $cotizacione) {
+            $cotizacione->delete();
+        }
+
 	    return redirect('/proyecto/'.$proyecto_id)->with('success','El concepto '.$concepto->nombre.' se elimino.');
+	    #return view('layouts.prueba');
 	}
+
 }

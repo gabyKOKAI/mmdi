@@ -82,7 +82,8 @@
                                             </div>
                                              <div class="col-sm-3 form-group required control-label" align="left">
                                                 <label for='fecha'>Fecha</label>
-                                                <input type='date' name='fecha' id='fecha' value='{{$movimiento->fecha}}' class="form-control" required>
+                                                <input type="hidden" name="fecha" value="{{$movimiento->fecha}}">
+                                                <label for='fecha' class="form-control" disabled>{{$movimiento->fecha}}</label>
                                              </div>
                                              <div class="col-sm-3 form-group required control-label" align="left">
                                                 <label for='descripcion'>Descripción</label>

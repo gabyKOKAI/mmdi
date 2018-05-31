@@ -214,6 +214,7 @@ class ProyectoController extends Controller
         $proyecto->descripcion = $request->input('descripcion');
         $proyecto->direccion = $request->input('direccion');
         $proyecto->comentario =  $request->input('comentario');
+        $proyecto->nota_PDF = $request->input('nota_PDF');
         $proyecto->gasto_viaticos =  $request->input('gasto_viaticos');
         $proyecto->gasto_IMSS =  $request->input('gasto_IMSS');
 
@@ -246,19 +247,40 @@ class ProyectoController extends Controller
         $proyecto->calculoVariables($proyecto);
         $cliente = Cliente::find($proyecto->cliente_id);
         $conceptos = Proyecto::getConceptos($proyecto->id);
-        $pagos = PagoCliente::where('proy_coti_id','=',$proyecto->id)->paginate(5);
         $cotizaciones = Cotizacione::where('proyecto_id','=',$proyecto->id)->paginate(5);
+
+        /*if (!$cotizaciones->isEmpty()) {
+            foreach ($cotizaciones as $cotizacione) {
+                $cotizacione->saldo = Cotizacione::getSaldo($cotizacione);
+            }
+        }*/
+
+        $esCliente = 1;
+
+        $pdf = PDF::loadView('proyecto.proyectoPDF', compact('proyecto','conceptos','cliente','esCliente','sinIVA'));
+        return $pdf->download('cotizacion.pdf');
+
+	}
+
+	public function bajaPDFSaldo(Request $request,$id) {
+
+	    $proyecto = Proyecto::find($id);
+
+        $proyecto->calculoVariables($proyecto);
+        $cliente = Cliente::find($proyecto->cliente_id);
+        $pagos = PagoCliente::where('proy_coti_id','=',$proyecto->id)->paginate(5);
+        /*$cotizaciones = Cotizacione::where('proyecto_id','=',$proyecto->id)->paginate(5);
 
         if (!$cotizaciones->isEmpty()) {
             foreach ($cotizaciones as $cotizacione) {
                 $cotizacione->saldo = Cotizacione::getSaldo($cotizacione);
             }
-        }
+        }*/
 
         $esCliente = 1;
 
-        $pdf = PDF::loadView('proyecto.proyectoPDF', compact('proyecto','conceptos','pagos','cotizaciones','cliente','esCliente','sinIVA'));
-        return $pdf->download('cotizacion.pdf');
+        $pdf = PDF::loadView('proyecto.proyectoPDFSaldo', compact('proyecto','pagos','cliente','esCliente'));
+        return $pdf->download('saldo.pdf');
 
 	}
 

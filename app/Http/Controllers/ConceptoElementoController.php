@@ -62,7 +62,7 @@ class ConceptoElementoController extends Controller
         ##dump($concepto->getElementos($concepto)->find($request->input('elemento')));
         if($concepto->getElementos($concepto)->find($request->input('elemento'))){
             $res = "actualizado";
-            $concepto->elementos()->sync([ $elemento->id => ['concepto_id'=>$concepto->id,'precio' => $request->input('precio'),'elemento_id'=>$elemento->id]],
+            $concepto->elementos()->sync([ $elemento->id => ['concepto_id'=>$concepto->id,'precio' => $request->input('precio'),'costo' => $elemento->costo,'elemento_id'=>$elemento->id]],
                                         false);
         }
         else{

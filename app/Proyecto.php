@@ -61,22 +61,22 @@ class Proyecto extends Model
 
     public static function getEfectivo($proyecto_id)
     {
-        $efectivo = PagoCliente::where('proy_coti_id','=',$proyecto_id)->where('tipo','=','Efectivo')->where('con_iva','=',0)->sum('monto');
-        $efectivoIVA = PagoCliente::where('proy_coti_id','=',$proyecto_id)->where('tipo','=','Efectivo')->where('con_iva','=',1)->sum('monto')/1.16;
+        $efectivo = PagoCliente::where('proy_coti_id','=',$proyecto_id)->where('tipo','=','Efectivo')->where('con_iva','=',0)->where('estatus','<>','Cancelado')->sum('monto');
+        $efectivoIVA = PagoCliente::where('proy_coti_id','=',$proyecto_id)->where('tipo','=','Efectivo')->where('con_iva','=',1)->where('estatus','<>','Cancelado')->sum('monto')/1.16;
         return $efectivo + $efectivoIVA;
     }
 
     public static function getTransferencias($proyecto_id)
     {
-        $transferencias = PagoCliente::where('proy_coti_id','=',$proyecto_id)->where('tipo','=','Transferencia')->where('con_iva','=',0)->sum('monto');
-        $transferenciasIVA = PagoCliente::where('proy_coti_id','=',$proyecto_id)->where('tipo','=','Transferencia')->where('con_iva','=',1)->sum('monto')/1.16;
+        $transferencias = PagoCliente::where('proy_coti_id','=',$proyecto_id)->where('tipo','=','Transferencia')->where('con_iva','=',0)->where('estatus','<>','Cancelado')->sum('monto');
+        $transferenciasIVA = PagoCliente::where('proy_coti_id','=',$proyecto_id)->where('tipo','=','Transferencia')->where('con_iva','=',1)->where('estatus','<>','Cancelado')->sum('monto')/1.16;
         return $transferencias + $transferenciasIVA;
     }
 
     public static function getCheques($proyecto_id)
     {
-        $cheques = PagoCliente::where('proy_coti_id','=',$proyecto_id)->where('tipo','=','Cheque')->where('con_iva','=',0)->sum('monto');
-        $chequesIVA = PagoCliente::where('proy_coti_id','=',$proyecto_id)->where('tipo','=','Cheque')->where('con_iva','=',1)->sum('monto')/1.16;
+        $cheques = PagoCliente::where('proy_coti_id','=',$proyecto_id)->where('tipo','=','Cheque')->where('con_iva','=',0)->where('estatus','<>','Cancelado')->sum('monto');
+        $chequesIVA = PagoCliente::where('proy_coti_id','=',$proyecto_id)->where('tipo','=','Cheque')->where('con_iva','=',1)->where('estatus','<>','Cancelado')->sum('monto')/1.16;
         return $cheques + $chequesIVA;
     }
 

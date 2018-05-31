@@ -99,11 +99,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/proyecto/guardar/{id?}/{idCli?}', 'ProyectoController@guardar');
     Route::post('/proyecto/guardar/{id?}/{idCli?}', 'ProyectoController@guardar');
     Route::get('/proyectoPDF/bajaPDF/{id}/{iva}','ProyectoController@bajaPDF');
+    Route::get('/proyectoPDF/bajaPDFSaldo/{id}','ProyectoController@bajaPDFSaldo');
 
     Route::get('/concepto/eliminar/{id?}', 'ConceptoController@eliminar');
     Route::get('/concepto/guardar/{id?}', 'ConceptoController@guardar');
     Route::post('/concepto/guardar/{id?}', 'ConceptoController@guardar');
     Route::get('/concepto/{id?}/{idproy?}', 'ConceptoController@concepto');
+    #{tipoMensaje?}/{mensaje?
 
     Route::get('/conceptoElemento/eliminar/{idCon}/{idEle?}/{edit?}', 'ConceptoElementoController@eliminar');
     Route::get('/conceptoElemento/guardar/{idCon}/{idEle?}/{edit?}', 'ConceptoElementoController@guardar');
@@ -116,9 +118,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/elemento/{id?}', 'ElementoController@elemento');
 
     Route::get('/cotizaciones', 'CotizacionController@lista');
-    Route::get('/cotizacion/{id?}/{idProy?}', 'CotizacionController@cotizacion');
     Route::get('/cotizacion/guardar/{id?}', 'CotizacionController@guardar');
     Route::post('/cotizacion/guardar/{id?}', 'CotizacionController@guardar');
+    Route::get('/cotizacion/{id?}/{idProy?}', 'CotizacionController@cotizacion');
+    Route::get('/cotizacionNew/{idCon}/{idEle}/{idProy?}','CotizacionController@creaCotizacion');
 
     Route::get('/cuentas', 'CuentaController@lista');
 

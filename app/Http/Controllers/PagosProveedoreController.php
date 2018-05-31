@@ -103,10 +103,12 @@ class PagosProveedoreController extends Controller
         if (!$pago) {
             # Instantiate a new Concepto Model object
             $pago = new PagoProveedore();
-            $pago->id = -1;
+            #$pago->id = -1;
             $pago->con_iva = -1;
+            $estatusAnterior = "";
             $res = "Creado";
          } else {
+            $estatusAnterior = $pago->estatus;
             $res = "Actualizado";
         }
 
@@ -117,20 +119,27 @@ class PagosProveedoreController extends Controller
         }
 
         $saldo = 0;
-        if( $pago->con_iva == 1)
+        if($cotizacione and $pago->con_iva == 1)
         {
             $saldo = $cotizacione->getSaldo($cotizacione)-($request->input('monto'))/1.16;
         }
-        elseif( $pago->con_iva == 0)
+        elseif($cotizacione and $pago->con_iva == 0)
         {
             $saldo = $cotizacione->getSaldo($cotizacione)-$request->input('monto');
         }
 
         $mensaje = "";
-        if($saldo<0){
+        if($saldo<0 and $request->input('estatus')<>'Cancelado'){
 		    $tipoMensaje = "error";
-		    $mensaje = 'El pago no puede hacerse porque se está pagando de más al proveedor por la cotización. El Saldo Actual es de:'.$cotizacione->getSaldo($cotizacione);
-		}else{
+		    $mensaje = 'El pago no puede hacerse porque se está pagando de más al proveedor por la CXP. El Saldo Actual es de:'.$cotizacione->getSaldo($cotizacione);
+		    $pago->id = -1;
+		}elseif($cuenta->saldo < $request->input('monto') and $request->input('estatus')<>'Cancelado'){
+		    $tipoMensaje = "error";
+		    $mensaje = 'El pago no puede hacerse porque no se tiene suficiente dinero en la cuenta. El Saldo Actual es de:'.$cuenta->saldo;
+		    $pago->id = -1;
+		}
+		else{
+
             # Set the parameters
             $pago->monto = $request->input('monto');
             $pago->fecha_pago = $request->input('fecha');
@@ -151,16 +160,43 @@ class PagosProveedoreController extends Controller
             $recurso1 = Recurso::where('nombre', '=', "Proyectos")->first();
 
             if($mensaje== ""){
-                $cuenta->saldo = $cuenta->saldo - $pago->monto;
                 $pago->save();
-                $cuenta->save();
-                Movimiento::registraMovimiento(
-                $pago->fecha_pago,
-                $pago->monto,
-                $pago->tipo.' de proveedor '. $pago->cli_prov_id.' para la cotización '.$pago->proy_coti_id,
-                "Salida",
-                $recurso1->id,
-                $pago->cuenta_id);
+                if($res == "Creado" and $pago->estatus <>  "Cancelado"){
+                	$cuenta->saldo = $cuenta->saldo - $pago->monto;                
+                    $cuenta->save();
+                    Movimiento::registraMovimiento(
+                        $pago->fecha_pago,
+                        $pago->monto,
+		                $pago->tipo.' de proveedor '. $pago->cli_prov_id.' para la CXP '.$pago->proy_coti_id,
+		                "Salida",
+                        $recurso1->id,
+                        $pago->cuenta_id);
+                }
+                if($res == "Actualizado" and $pago->estatus <> $estatusAnterior){
+                    if($pago->estatus ==  "Cancelado"){
+                        #agrego a la cuenta y registro movimiento inverso
+                        $cuenta->saldo = $cuenta->saldo + $pago->monto;
+                        $cuenta->save();
+                        Movimiento::registraMovimiento(
+                            $pago->fecha_pago,
+                            $pago->monto,
+                            'Se cancelo'.$pago->tipo.' de proveedor '. $pago->cli_prov_id.' para la CXP '.$pago->proy_coti_id,
+                            "Cancelado",
+                            $recurso1->id,
+                            $pago->cuenta_id);
+                    }else{
+                        #elimino la cuenta y registro movimiento
+                        $cuenta->saldo = $cuenta->saldo - $pago->monto;
+                        $cuenta->save();
+                        Movimiento::registraMovimiento(
+                            $pago->fecha_pago,
+                            $pago->monto,
+                            'Se activa '.$pago->tipo.' de proveedor '. $pago->cli_prov_id.' para la CXP '.$pago->proy_coti_id,
+                            "NoCancelado",
+                            $recurso1->id,
+                            $pago->cuenta_id);
+                    }
+                }
             }
 
             $tipoMensaje = "success";

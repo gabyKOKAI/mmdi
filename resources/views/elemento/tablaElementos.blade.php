@@ -88,14 +88,15 @@
                                             <td>
                                                 @if($concepto->id > -1)
                                                     @if($proyectoCon->distribuido == 0 and $concepto->adicional == 0)
-                                                            <a href="{{ URL::to('conceptoElemento/' . $concepto->id.'/'.$elemento->id).'/1'}}" class="glyphicon glyphicon-edit"></a>
-                                                            <a href="{{ URL::to('conceptoElemento/eliminar/'.$concepto->id.'/'.$elemento->id)}}" class="glyphicon glyphicon-trash"></a>
-                                                        @elseif($proyectoCon->adicionalesDistribuido == 0 and $concepto->adicional == 1)
-                                                            <a href="{{ URL::to('conceptoElemento/' . $concepto->id.'/'.$elemento->id.'/1')}}" class="glyphicon glyphicon-edit"></a>
-                                                            <a href="{{ URL::to('conceptoElemento/eliminar/'.$concepto->id.'/'.$elemento->id)}}" class="glyphicon glyphicon-trash"></a>
-                                                        @else
-                                                            <a href="{{ URL::to('conceptoElemento/' . $concepto->id.'/'.$elemento->id.'/0')}}" class="glyphicon glyphicon-edit"></a>
-                                                        @endif
+                                                        <a href="{{ URL::to('conceptoElemento/' . $concepto->id.'/'.$elemento->id).'/1'}}" class="glyphicon glyphicon-edit"></a>
+                                                        <a href="{{ URL::to('conceptoElemento/eliminar/'.$concepto->id.'/'.$elemento->id)}}" class="glyphicon glyphicon-trash"></a>
+                                                    @elseif($proyectoCon->adicionalesDistribuido == 0 and $concepto->adicional == 1)
+                                                        <a href="{{ URL::to('conceptoElemento/' . $concepto->id.'/'.$elemento->id.'/1')}}" class="glyphicon glyphicon-edit"></a>
+                                                        <a href="{{ URL::to('conceptoElemento/eliminar/'.$concepto->id.'/'.$elemento->id)}}" class="glyphicon glyphicon-trash"></a>
+                                                    @else
+                                                        <a href="{{ URL::to('conceptoElemento/' . $concepto->id.'/'.$elemento->id.'/0')}}" class="glyphicon glyphicon-edit"></a>
+                                                    @endif
+                                                    <a title="Crea CXP" href="{{ URL::to('cotizacionNew/'.$concepto->id.'/'.$elemento->id)}}" class="glyphicon glyphicon glyphicon-list-alt"></a>
                                                 @else
                                                     <a href="{{ URL::to('elemento/'.$elemento->id)}}" class="glyphicon glyphicon-edit"></a>
                                                 @endif

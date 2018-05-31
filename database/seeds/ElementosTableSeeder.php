@@ -14,7 +14,7 @@ class ElementosTableSeeder extends Seeder
     public function run()
     {
         $elementos = [
-            ['elemento1','comentario 1',100,10,'pza','Material','%','proveedor1'],
+            ['elemento1','comentario 1',100,10,'pza','Material','%','proveedor2'],
             ['elemento2','comentario 2',200,20,'pza','Mano de Obra','$','proveedor2'],
             ['elemento3','comentario 3',300,30,'pza','Mueble','%','proveedor3'],
             ['elemento4','comentario 4',400,40,'pza','Viaticos','$','proveedor4'],

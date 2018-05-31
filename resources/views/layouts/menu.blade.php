@@ -20,7 +20,7 @@
                               <li><a href="/proyecto/-1">Nuevo Proyecto</a></li>
                               <li><a href="/cliente/-1">Nuevo Cliente</a></li>
                               <!--li><a href="/pagoCliente/-1">Nuevo Pago Cliente</a></li-->
-                              <li><a href="/cotizacion/-1">Nueva Cotización</a></li>
+                              <li><a href="/cotizacion/-1">Nueva CXP</a></li>
                               <li><a href="/proveedor/-1">Nuevo Proveedor</a></li>
                               <!--li><a href="/pagoProveedor/-1">Nuevo Pago Proveedore</a></li-->
                               <li><a href="/movimiento/-1">Nuevo Movimiento</a></li>
@@ -30,7 +30,7 @@
                             <a href="/proyectos">Proyectos</a>
                         </li>
                         <li class="dropdown" id="menu">
-                            <a href="/cotizaciones">Cotizaciones</a>
+                            <a href="/cotizaciones">CXP</a>
                         </li>
                         <li class="dropdown" id="menu">
                             <a href="/clientes">Clientes</a>

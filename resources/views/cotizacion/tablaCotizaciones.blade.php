@@ -6,7 +6,7 @@
                         <hr>
                     </div>
                     <div class="col-sm-4 align-center">
-                         <h3 class="center">Cotizaciones
+                         <h3 class="center">CXP
                          @if($proyecto->id > -1)
                             de {{$proyecto->nombre}}
                             @endif
@@ -26,7 +26,7 @@
                                     <tr>
                                         <!--th class="center">#</th-->
                                         <th class="center">Nombre</th>
-                                        <th class="center">Descripcion</th>
+                                        <!--th class="center">Descripcion</th-->
                                         <th class="center">Proyecto</th>
                                         <th class="center">Proveedor</th>
                                         <th class="center">Monto</th>
@@ -43,7 +43,7 @@
                                         <tr>
                                             <!--td> <a href="{{ URL::to('proyecto/' . $cotizacion->id) }}">{{$cotizacion->id}}</a></td-->
                                             <td>{{$cotizacion->nombre}}</td>
-                                            <td>{{$cotizacion->descripcion}}</td>
+                                            <!--td>{{$cotizacion->descripcion}}</td-->
                                             @if($cotizacion->proyecto)
                                                 <td>{{$cotizacion->proyecto->nombre}}</td>
                                             @else
@@ -92,7 +92,7 @@
                     <div class="row">
                         <div class="col-sm-12 align-center">
                             <h4 class="center">
-                                Sin Cotizaciones
+                                Sin CXP
                                 @if($proyecto->id != -1 or $proveedore->id !=-1)
                                     <a href="{{ URL::to('cotizacion/-1/')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
                                 @endif
