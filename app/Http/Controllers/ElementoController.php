@@ -86,7 +86,7 @@ class ElementoController extends Controller
 	* /proyecto
 	* Process the form for adding a new book
 	*/
-	public function guardar(Request $request,$id) {
+	public function guardar(Request $request,$id, $idCon) {
 		# Validate the request data
 		$this->validate($request, [
 			'nombre' => 'required|min:3',
@@ -116,7 +116,12 @@ class ElementoController extends Controller
         $elemento->save();
 
 		# Redirect the user to the page to view the book
-		return redirect('/elemento/'.$elemento->id)->with('success', 'El elemento '.$elemento->nombre.' fue '.$res);
+		if($idCon != -1){
+		    $concepto = Concepto::find($idCon);
+		    return redirect('/conceptoElemento/'.$idCon.'/-1/'.$concepto->proyecto->id)->with('success', 'El elemento '.$elemento->nombre.' fue '.$res);
+		}else{
+		    return redirect('/elemento/'.$elemento->id.'/'.$idCon)->with('success', 'El elemento '.$elemento->nombre.' fue '.$res);
+		}
 	}
 
 }

@@ -10,15 +10,13 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12 align-center">
-               {{--
                @if($cotizacione->id != -1)
-                    <h1 class="center">[{{$cotizacione->id}}] CXP {{$cotizacione->nombre}}</h1>
+                    <!--h1 class="center">[{{$cotizacione->id}}] CXP {{$cotizacione->nombre}}</h1-->
                      <form method='GET' action='/cotizacion/guardar/{{$cotizacione->id}}'>
                @else
-                    <h1 class="center">Nueva CXP</h1>
+                    <!--h1 class="center">Nueva CXP</h1-->
                     <form method='GET' action='/cotizacion/guardar/-1'>
                @endif
-               --}}
                        {{ csrf_field() }}
                        <input type="hidden" name="_method" value="PUT">
                        <input type="hidden" name="_token" value="{{ csrf_token() }}">

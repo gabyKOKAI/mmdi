@@ -10,15 +10,13 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12 align-center">
-                {{--
                 @if($concepto->id != -1)
-                    <h1 class="center">Concepto '{{$concepto->nombre}}' de proyecto  '{{$concepto->proyecto->nombre}}' </h1>
+                    <!--h1 class="center">Concepto '{{$concepto->nombre}}' de proyecto  '{{$concepto->proyecto->nombre}}' </h1-->
                      <form method='GET' action='/concepto/guardar/{{$concepto->id}}'>
                @else
-                    <h1 class="center">Nuevo Concepto</h1>
+                    <!--h1 class="center">Nuevo Concepto</h1-->
                     <form method='GET' action='/concepto/guardar/-1'>
                @endif
-               --}}
                        {{ csrf_field() }}
                        <input type="hidden" name="_method" value="PUT">
                        <input type="hidden" name="_token" value="{{ csrf_token() }}">

@@ -114,8 +114,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/conceptoElemento/{idCon}/{idEle?}/{edit?}', 'ConceptoElementoController@conceptoElemento')->name('subConcepto');
 
     Route::get('/elementos', 'ElementoController@lista')->name('elementos');
-    Route::get('/elemento/guardar/{id?}', 'ElementoController@guardar');
-    Route::post('/elemento/guardar/{id?}', 'ElementoController@guardar');
+    Route::get('/elemento/guardar/{id?}/{idCon?}', 'ElementoController@guardar');
+    Route::post('/elemento/guardar/{id?}/{idCon?}', 'ElementoController@guardar');
     Route::get('/elemento/{id?}/{idCon?}', 'ElementoController@elemento')->name('elemento');
 
     Route::get('/cotizaciones', 'CotizacionController@lista')->name('cotizaciones');

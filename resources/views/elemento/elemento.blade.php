@@ -4,25 +4,23 @@
     <!--link href="/css/elemento.css" type='text/css' rel='stylesheet'-->
 @endpush
 
-@if($idCon != -1)
-    @section('breadcrumbs', Breadcrumbs::render('conceptosElemento', $elemento, $idCon))
-@else
+@if($idCon == -1)
     @section('breadcrumbs', Breadcrumbs::render('elemento', $elemento))
+@else
+    @section('breadcrumbs', Breadcrumbs::render('conceptosElemento', $elemento, $idCon))
 @endif
 
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-sm-12 align-center">
-                {{--
-                @if($elemento->id != -1)
-                    <h1 class="center">[{{$elemento->id}}] Elemento (PU) '{{$elemento->nombre}}' </h1>
-                     <form method='GET' action='/elemento/guardar/{{$elemento->id}}'>
+               @if($elemento->id != -1)
+                    <!--h1 class="center">[{{$elemento->id}}] Elemento (PU) '{{$elemento->nombre}}' </h1-->
+                    <form method='GET' action='/elemento/guardar/{{$elemento->id}}/{{$idCon}}'>
                @else
-                    <h1 class="center">Nuevo Elemento (PU)</h1>
-                    <form method='GET' action='/elemento/guardar/-1'>
+                    <!--h1 class="center">Nuevo Elemento (PU)</h1-->
+                    <form method='GET' action='/elemento/guardar/-1/{{$idCon}}'>
                @endif
-               --}}
                        {{ csrf_field() }}
                        <input type="hidden" name="_method" value="PUT">
                        <input type="hidden" name="_token" value="{{ csrf_token() }}">

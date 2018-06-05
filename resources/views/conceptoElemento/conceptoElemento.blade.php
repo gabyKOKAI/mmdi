@@ -10,15 +10,13 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12 align-center">
-                {{--
                 @if($elemento->id != -1)
-                    <h1 class="center">Concepto '{{$concepto->nombre}}' con Elemento  '{{$elemento->nombre}}' </h1>
-                     <form method='GET' action='/conceptoElemento/guardar/{{$concepto->id}}/{{$elemento->id}}/{{$edit}}'>
+                    <!--h1 class="center">Concepto '{{$concepto->nombre}}' con Elemento  '{{$elemento->nombre}}' </h1-->
+                    <form method='GET' action='/conceptoElemento/guardar/{{$concepto->id}}/{{$elemento->id}}/{{$edit}}'>
                @else
-                    <h1 class="center">Nuevo Subconcepto para concepto</h1>
+                    <!--h1 class="center">Nuevo Subconcepto para concepto</h1-->
                     <form method='GET' action='/conceptoElemento/guardar/{{$concepto->id}}/-1/{{$edit}}'>
                @endif
-               --}}
                        {{ csrf_field() }}
                        <input type="hidden" name="_method" value="PUT">
                        <input type="hidden" name="_token" value="{{ csrf_token() }}">

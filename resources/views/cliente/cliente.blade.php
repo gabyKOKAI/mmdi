@@ -14,18 +14,16 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-12 align-center">
-               {{--
                @if($cliente->id != -1)
-                    <h1 class="center">[{{$cliente->id}}] Cliente {{$cliente->nombre}}
+                    <!--h1 class="center">[{{$cliente->id}}] Cliente {{$cliente->nombre}}
                     <!--a href="{{ URL::to('proyectos/'.$cliente->id)}}" class="glyphicon glyphicon-list-alt" title="Lista de Proyectos"></a>
-                    <a href="{{ URL::to('proyecto/-1/'.$cliente->id)}}" class="glyphicon glyphicon glyphicon-plus-sign" title="Nuevo Proyecto"></a-->
-                    </h1>
+                    <a href="{{ URL::to('proyecto/-1/'.$cliente->id)}}" class="glyphicon glyphicon glyphicon-plus-sign" title="Nuevo Proyecto"></a- ->
+                    </h1-->
                      <form method='GET' action='/cliente/guardar/{{$cliente->id}}'>
                @else
-                    <h1 class="center">Nuevo Cliente</h1>
+                    <!--h1 class="center">Nuevo Cliente</h1-->
                     <form method='GET' action='/cliente/guardar/-1'>
                @endif
-               --}}
                        {{ csrf_field() }}
                        <input type="hidden" name="_method" value="PUT">
                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
