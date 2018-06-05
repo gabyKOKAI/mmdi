@@ -33,9 +33,9 @@ Breadcrumbs::register('concepto', function ($breadcrumbs, $concepto, $idProy) {
         $breadcrumbs->parent('proyecto', $proyecto);
     }
     if($concepto->id != -1){
-        $breadcrumbs->push($concepto->nombre, route('concepto', ['id' => $concepto->id]));
+        $breadcrumbs->push($concepto->nombre, route('concepto', ['id' => $concepto->id, 'idProy'=>$idProy]));
     }else{
-        $breadcrumbs->push("Nuevo Concepto", route('concepto', ['id' => $concepto->id]));
+        $breadcrumbs->push("Nuevo Concepto", route('concepto', ['id' => $concepto->id, 'idProy'=>$idProy]));
     }
 
 });
