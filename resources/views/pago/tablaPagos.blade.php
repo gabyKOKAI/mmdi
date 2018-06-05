@@ -133,12 +133,12 @@
                                 Sin Pagos
                                 @if($esCliente == 1)
                                     de Cliente(s)
-                                    @if($proyecto->id != -1 or $cliente->id != -1)
+                                    @if($proyecto->id != -1 and $cliente->id != -1)
                                         <a href="{{ URL::to('pagoCliente/-1/'.$cliente->id.'/'.$proyecto->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
                                     @endif
                                 @else
                                     de Proveedore(s)
-                                    @if($cotizacione->id != -1 or $proveedore->id != -1)
+                                    @if($cotizacione->id != -1 and $proveedore->id != -1)
                                         <a href="{{ URL::to('pagoProveedor/-1/'.$proveedore->id.'/'.$cotizacione->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
                                     @endif
                                 @endif

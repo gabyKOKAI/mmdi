@@ -199,7 +199,7 @@ class CotizacionController extends Controller
         #return view('layouts.prueba');
         if($idProy==-1){
             return view('concepto.concepto')->
-            with(['concepto' => $concepto,'elementos' => $elementos, 'proyectosForDropdown' => $proyectosForDropdown,'proyectoSelected'=>$proyectoSelected,'estatusForDropdown' => $estatusForDropdown,'estatusSelected'=>$estatusSelected,'proyectoCon'=>$proyecto,'mensaje'=>$mensaje,'tipoMensaje'=>$tipoMensaje]);
+            with(['concepto' => $concepto,'elementos' => $elementos, 'proyectosForDropdown' => $proyectosForDropdown,'proyectoSelected'=>$proyectoSelected,'estatusForDropdown' => $estatusForDropdown,'estatusSelected'=>$estatusSelected,'proyectoCon'=>$proyecto,'mensaje'=>$mensaje,'tipoMensaje'=>$tipoMensaje, 'idProy'=>$idProyCot ]);
         }
         else{
             return redirect('/proyecto/'.$idProy)->with($tipoMensaje, $mensaje);

@@ -4,11 +4,17 @@
     <!--link href="/css/proveedore.css" type='text/css' rel='stylesheet'-->
 @endpush
 
+@if($proveedore)
+    @section('breadcrumbs', Breadcrumbs::render('proveedor', $proveedore, $idCoti))
+@else
+    @section('breadcrumbs', Breadcrumbs::render('$proveedor', '-1', '-1'))
+@endif
+
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-sm-12 align-center">
-
+               {{--
                @if($proveedore->id != -1)
                     <h1 class="center">[{{$proveedore->id}}] Proveedor {{$proveedore->nombre}}
                     <!--a href="{{ URL::to('cotizaciones/'.$proveedore->id)}}" class="glyphicon glyphicon-list-alt" title="Lista de CXP"></a>
@@ -19,6 +25,7 @@
                     <h1 class="center">Nuevo Proveedor</h1>
                     <form method='GET' action='/proveedor/guardar/-1'>
                @endif
+               --}}
                        {{ csrf_field() }}
                        <input type="hidden" name="_method" value="PUT">
                        <input type="hidden" name="_token" value="{{ csrf_token() }}">

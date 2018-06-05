@@ -4,26 +4,30 @@
     <!--link href="/css/cotizacion.css" type='text/css' rel='stylesheet'-->
 @endpush
 
+@section('breadcrumbs', Breadcrumbs::render('cotizacion', $cotizacione))
+
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-sm-12 align-center">
-                @if($cotizacione->id != -1)
+               {{--
+               @if($cotizacione->id != -1)
                     <h1 class="center">[{{$cotizacione->id}}] CXP {{$cotizacione->nombre}}</h1>
                      <form method='GET' action='/cotizacion/guardar/{{$cotizacione->id}}'>
                @else
                     <h1 class="center">Nueva CXP</h1>
                     <form method='GET' action='/cotizacion/guardar/-1'>
                @endif
+               --}}
                        {{ csrf_field() }}
                        <input type="hidden" name="_method" value="PUT">
                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                         <div class="container center">
                             <div class="row">
-                                <div class="col-sm-12" align="left">
+                                <!--div class="col-sm-12" align="left">
                                     <hr>
-                                </div>
+                                </div-->
                                 <div class="col-sm-4" align="left">
                                     <div class="container center col-sm-12">
                                         <div class="row">
@@ -40,9 +44,13 @@
                                        <div class="row">
                                             <div class="col-sm-12 form-group required control-label" align="left">
                                                 <label for='proveedor_id'>Proveedor</label>
-                                                <a href="{{ URL::to('proveedor/-1')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
+                                                @if($cotizacione->id == -1)
+                                                    <a href="{{ URL::to('proveedor/-1/-2')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
+                                                @else
+                                                    <a href="{{ URL::to('proveedor/-1/'.$cotizacione->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
+                                                @endif
                                                 @if($proveedorSelected!=-1)
-                                                    <a href="{{ URL::to('proveedor/'.$proveedorSelected)}}" class="glyphicon glyphicon-edit"></a>
+                                                    <a href="{{ URL::to('proveedor/'.$proveedorSelected.'/'.$cotizacione->id)}}" class="glyphicon glyphicon-edit"></a>
                                                 @endif
                                                 <select name="proveedor_id"  class="form-control" required>
                                                     @foreach($proveedoresForDropdown as $proveedor)

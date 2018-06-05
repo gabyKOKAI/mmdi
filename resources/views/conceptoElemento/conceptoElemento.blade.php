@@ -4,11 +4,13 @@
     <!--link href="/css/conceptoElemento.css" type='text/css' rel='stylesheet'-->
 @endpush
 
+@section('breadcrumbs', Breadcrumbs::render('subConcepto', $concepto, $elemento))
+
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-sm-12 align-center">
-
+                {{--
                 @if($elemento->id != -1)
                     <h1 class="center">Concepto '{{$concepto->nombre}}' con Elemento  '{{$elemento->nombre}}' </h1>
                      <form method='GET' action='/conceptoElemento/guardar/{{$concepto->id}}/{{$elemento->id}}/{{$edit}}'>
@@ -16,6 +18,7 @@
                     <h1 class="center">Nuevo Subconcepto para concepto</h1>
                     <form method='GET' action='/conceptoElemento/guardar/{{$concepto->id}}/-1/{{$edit}}'>
                @endif
+               --}}
                        {{ csrf_field() }}
                        <input type="hidden" name="_method" value="PUT">
                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -37,7 +40,7 @@
                                            <div class="col-sm-12 form-group required control-label" align="left">
                                                 @if($elementoSelected!=-1)
                                                     <label for='elemento'>SubConcepto</label>
-                                                    <a href="{{ URL::to('elemento/'.$elemento->id)}}" class="glyphicon glyphicon-edit"></a>
+                                                    <a href="{{ URL::to('elemento/'.$elemento->id.'/'.$concepto->id)}}" class="glyphicon glyphicon-edit"></a>
                                                     <input type="hidden" name="elemento1" value="{{$elementoSelected}}">
                                                     <select name="elemento1"  class="form-control" disabled>
                                                     @foreach($elementosForDropdown as $elemento)
@@ -68,7 +71,7 @@
                                                     </select>
                                                     <div class="form-group required control-label" align="left">
                                                         <label for='elemento'>SubConcepto</label>
-                                                        <a href="{{ URL::to('elemento/-1')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
+                                                        <a href="{{ URL::to('elemento/-1/'.$concepto->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
                                                         <select id="elemento1" class="form-control" name="elemento1" required multiple>
                                                             <option value="">Favor de Seleccionar un Proveedor primero.</option>
                                                        </select>

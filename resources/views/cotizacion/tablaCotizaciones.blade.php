@@ -34,7 +34,7 @@
                                         <th class="center">Con IVA</th>
                                         <th class="center">Estatus</th>
                                         <th class="center">
-                                            <a href="{{ URL::to('cotizacion/-1/'.$cotizacione->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
+                                            <a href="{{ URL::to('cotizacion/-1/'.$proyecto->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
                                         </th>
                                     </tr>
                                 </thead>
@@ -50,7 +50,7 @@
                                                 <td>---SIN PROYECTO---</td>
                                             @endif
                                             <td>{{$cotizacion->proveedor->nombre}}</td>
-                                            <td>$ {{number_format($cotizacion->saldo,2)}}</td>
+                                            <td>$ {{number_format($cotizacion->monto,2)}}</td>
                                             <td>$ {{number_format($cotizacion->saldo,2)}}</td>
                                             <td>
                                                 <input type="checkbox" class="form-check-input" id="con_iva" {{ $cotizacion->con_iva ? 'checked="checked"' : '' }} disabled>

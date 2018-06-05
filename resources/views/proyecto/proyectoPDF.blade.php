@@ -111,9 +111,6 @@
             </div>
         @else
             <h4>Sin Conceptos
-                @if($proyecto->id != -1)
-                    <a href="{{ URL::to('concepto/-1/'.$proyecto->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
-                @endif
             </h4>
         @endif
         <br>

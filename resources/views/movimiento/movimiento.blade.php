@@ -4,11 +4,13 @@
     <!--link href="/css/movimiento.css" type='text/css' rel='stylesheet'-->
 @endpush
 
+@section('breadcrumbs', Breadcrumbs::render('movimiento', $movimiento))
+
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-sm-12 align-center">
-
+                {{--
                @if($movimiento->id != -1)
                     <h1 class="center">[{{$movimiento->id}}] Movimiento </h1>
                      <form method='GET' action='/movimiento/guardar/{{$movimiento->id}}'>
@@ -16,6 +18,7 @@
                     <h1 class="center">Nuevo Movimiento</h1>
                     <form method='GET' action='/movimiento/guardar/-1'>
                @endif
+               --}}
                        {{ csrf_field() }}
                        <input type="hidden" name="_method" value="PUT">
                        <input type="hidden" name="_token" value="{{ csrf_token() }}">

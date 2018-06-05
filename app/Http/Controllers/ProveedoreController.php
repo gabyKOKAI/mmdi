@@ -19,7 +19,7 @@ class ProveedoreController extends Controller
 		return view('proveedore.proveedoreLista')->with(['proveedores' => $proveedores]);
     }
 
-    public function proveedore(Request $request,$id= '-1') {
+    public function proveedore(Request $request,$id= '-1',$idCoti='-1') {
 	    $proveedore = Proveedore::find($id);
 
 	    if(!$proveedore){
@@ -54,7 +54,8 @@ class ProveedoreController extends Controller
                 'proveedore'=>$proveedore, 'cotizacione' => $cotizacione,
                 'contactos'=>$contactos,
                 'cotizaciones'=>$cotizaciones,
-                'pagos'=>$pagos,'esCliente'=>0]);
+                'pagos'=>$pagos,'esCliente'=>0,
+                'idCoti'=>$idCoti]);
 	}
 
 	public function guardar(Request $request,$id) {

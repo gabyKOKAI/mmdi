@@ -4,10 +4,13 @@
     <!--link href="/css/proyecto.css" type='text/css' rel='stylesheet'-->
 @endpush
 
+@section('breadcrumbs', Breadcrumbs::render('proyecto', $proyecto))
+
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-sm-12 align-center">
+                {{--
                 @if($proyecto->id != -1)
                     <h1 class="center">[{{$proyecto->id}}] Proyecto {{$proyecto->nombre}}</h1>
                      <form method='GET' action='/proyecto/guardar/{{$proyecto->id}}/-1'>
@@ -15,16 +18,17 @@
                     <h1 class="center">Nuevo Proyecto</h1>
                     <form method='GET' action='/proyecto/guardar/-1/-1'>
                @endif
+               --}}
                        {{ csrf_field() }}
                        <input type="hidden" name="_method" value="PUT">
                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                         <div class="container center">
-                            <div class="row">
+                            <!--div class="row">
                                 <div class="col-sm-12" align="left">
                                     <hr>
                                 </div>
-                            </div>
+                            </div-->
                             <div class="row">
                                 <div class="col-sm-4" align="left">
                                     <div class="container center">
@@ -43,9 +47,11 @@
                                        <div class="row">
                                             <div class="col-sm-4 form-group required control-label" align="left">
                                                 <label for='cliente'>Cliente</label>
-                                                <a href="{{ URL::to('cliente/-1')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
-                                                @if($clienteSelected!=-1)
-                                                    <a href="{{ URL::to('cliente/'.$clienteSelected)}}" class="glyphicon glyphicon-edit"></a>
+
+                                                @if($clienteSelected>-1)
+                                                    <a href="{{ URL::to('cliente/'.$clienteSelected.'/'.$proyecto->id)}}" class="glyphicon glyphicon-edit"></a>
+                                                @else
+                                                    <a href="{{ URL::to('cliente/-1/'.$proyecto->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
                                                 @endif
                                                 @if($proyecto->id == -1)
                                                     <select name="cliente_id"  class="form-control" required>

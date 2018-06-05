@@ -4,11 +4,17 @@
     <!--link href="/css/cliente.css" type='text/css' rel='stylesheet'-->
 @endpush
 
+@if($cliente)
+    @section('breadcrumbs', Breadcrumbs::render('cliente', $cliente, $idProy))
+@else
+    @section('breadcrumbs', Breadcrumbs::render('cliente', '-1', '-1'))
+@endif
+
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-sm-12 align-center">
-
+               {{--
                @if($cliente->id != -1)
                     <h1 class="center">[{{$cliente->id}}] Cliente {{$cliente->nombre}}
                     <!--a href="{{ URL::to('proyectos/'.$cliente->id)}}" class="glyphicon glyphicon-list-alt" title="Lista de Proyectos"></a>
@@ -19,6 +25,7 @@
                     <h1 class="center">Nuevo Cliente</h1>
                     <form method='GET' action='/cliente/guardar/-1'>
                @endif
+               --}}
                        {{ csrf_field() }}
                        <input type="hidden" name="_method" value="PUT">
                        <input type="hidden" name="_token" value="{{ csrf_token() }}">

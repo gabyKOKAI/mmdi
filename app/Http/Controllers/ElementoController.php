@@ -51,7 +51,7 @@ class ElementoController extends Controller
 	* /proyecto/agrega
 	* Display the form to add a new proyecto
 	*/
-	public function elemento(Request $request,$id= '-1') {
+	public function elemento(Request $request,$id= '-1',$idCon= '-1') {
 	    $elemento = Elemento::find($id);
 
 	    # Get proveedores
@@ -78,7 +78,7 @@ class ElementoController extends Controller
         }
 
         return view('elemento.elemento')->
-        with(['elemento' => $elemento, 'tiposForDropdown' => $tiposForDropdown,'tipoSelected'=>$tipoSelected,'tiposGananciasForDropdown' => $tiposGananciasForDropdown,'tipoGananciaSelected'=>$tipoGananciaSelected,'proveedoresForDropdown' => $proveedoresForDropdown,'proveedorSelected'=>$proveedorSelected]);
+        with(['elemento' => $elemento, 'tiposForDropdown' => $tiposForDropdown,'tipoSelected'=>$tipoSelected,'tiposGananciasForDropdown' => $tiposGananciasForDropdown,'tipoGananciaSelected'=>$tipoGananciaSelected,'proveedoresForDropdown' => $proveedoresForDropdown,'proveedorSelected'=>$proveedorSelected, 'idCon'=>$idCon]);
 	}
 
 	/**

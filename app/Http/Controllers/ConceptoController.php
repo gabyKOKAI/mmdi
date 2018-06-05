@@ -56,7 +56,7 @@ class ConceptoController extends Controller
         }
 
         return view('concepto.concepto')->
-        with(['concepto' => $concepto,'elementos' => $elementos, 'proyectosForDropdown' => $proyectosForDropdown,'proyectoSelected'=>$proyectoSelected,'estatusForDropdown' => $estatusForDropdown,'estatusSelected'=>$estatusSelected,'proyectoCon'=>$proyecto]);
+        with(['concepto' => $concepto,'elementos' => $elementos, 'proyectosForDropdown' => $proyectosForDropdown,'proyectoSelected'=>$proyectoSelected,'estatusForDropdown' => $estatusForDropdown,'estatusSelected'=>$estatusSelected,'proyectoCon'=>$proyecto, 'idProy'=>$idProy]);
 	}
 
 

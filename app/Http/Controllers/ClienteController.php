@@ -19,7 +19,7 @@ class ClienteController extends Controller
 		return view('cliente.clienteLista')->with(['clientes' => $clientes]);
     }
 
-    public function cliente(Request $request,$id= '-1') {
+    public function cliente(Request $request,$id= '-1',$idProy='-1') {
 	    $cliente = Cliente::find($id);
 
 	    if(!$cliente){
@@ -54,7 +54,8 @@ class ClienteController extends Controller
                 'proveedore'=>$proveedore, 'cotizacione' => $cotizacione,
                 'contactos'=>$contactos,
                 'proyectos'=>$proyectos,
-                'pagos'=>$pagos,'esCliente'=>1]);
+                'pagos'=>$pagos,'esCliente'=>1,
+                'idProy'=>$idProy]);
 	}
 
 	public function guardar(Request $request,$id) {
