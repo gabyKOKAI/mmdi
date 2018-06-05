@@ -68,7 +68,11 @@ Breadcrumbs::register('conceptosElemento', function ($breadcrumbs, $elemento, $c
     if($conceptoId != -1){
         $concepto = Concepto::find($conceptoId);
         $breadcrumbs->parent('subConcepto', $concepto, $elemento);
-        $breadcrumbs->push($elemento->nombre, route('subConcepto', ['idCon' => $conceptoId,'id1Ele' => $elemento->id]));
+        if($elemento->id != -1){
+            $breadcrumbs->push($elemento->nombre, route('subConcepto', ['idCon' => $conceptoId,'idEle' => $elemento->id]));
+        }else{
+            $breadcrumbs->push('Nuevo Elemento', route('subConcepto', ['idCon' => $conceptoId,'idEle' => '-1']));
+        }
     }
 });
 
