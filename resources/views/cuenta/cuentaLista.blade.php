@@ -38,7 +38,7 @@
                                                     <td> {{$cuenta->descripcion}}</td>
                                                     <td>{{$cuenta->saldo}}</td>
                                                     <td>
-                                                        <a href="{{ URL::to('movimientos/-1/'.$cuenta->id)}}" class="glyphicon glyphicon-list-alt"></a>
+                                                        <a href="{{ URL::to('movimientos?sinfiltros=1&cuenta_id='.$cuenta->id)}}" class="glyphicon glyphicon-list-alt"></a>
                                                     </td>
                                                 </tr>
                                             @endforeach

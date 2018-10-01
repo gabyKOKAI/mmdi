@@ -43,4 +43,51 @@ class Movimiento extends Model
         $res = 1;
         return $res;
     }
+
+    public static function getMovimientos()
+    {
+        $movimientos = Movimiento::query();
+        $queries = [];
+
+        $columnas = ['tipo','cuenta_id','recurso_id'];
+
+        foreach($columnas as $columna){
+            if(request()->has($columna) and request($columna)!= 'all' and request($columna)!= ''){
+                $pagos = $movimientos->where($columna,'LIKE','%'.request($columna).'%');
+                $queries[$columna] = request($columna);
+            }
+        }
+
+        if(request()->has('montoMayorA') and request('montoMayorA')!= ''){
+            $montoMayorA = request('montoMayorA');
+            $movimientos = $movimientos->where('monto', '>=', $montoMayorA);
+            $queries['montoMayorA'] = request('montoMayorA');
+        }
+        if(request()->has('montoMenorA') and request('montoMenorA')!= ''){
+            $montoMenorA = request('montoMenorA');
+            $movimientos = $movimientos->where('monto', '<=', $montoMenorA);
+            $queries['montoMenorA'] = request('montoMenorA');
+        }
+
+        if(request()->has('fechaMayorA') and request('fechaMayorA')!= ''){
+            $fechaMayorA = request('fechaMayorA');
+            $movimientos = $movimientos->where('fecha', '>=', $fechaMayorA);
+            $queries['fechaMayorA'] = request('fechaMayorA');
+        }
+        if(request()->has('fechaMenorA') and request('fechaMenorA')!= ''){
+            $fechaMenorA = request('fechaMenorA');
+            $movimientos = $movimientos->where('fecha', '<=', $fechaMenorA);
+            $queries['fechaMenorA'] = request('fechaMenorA');
+        }
+
+		if(request()->has('sort'))
+		{
+            $movimientos = $clientes->orderBy('fecha',request('sort'));
+            $queries['sort'] = request('sort');
+		}
+
+		$movimientos = $movimientos->paginate(15,['*'], 'movimentos_p')->appends($queries);
+
+        return $movimientos ;
+    }
 }

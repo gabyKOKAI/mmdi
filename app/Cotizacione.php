@@ -72,4 +72,54 @@ class Cotizacione extends Model
         $cotizacione->cheques = $cotizacione->getCheques($cotizacione->id);
         $cotizacione->saldo = $cotizacione->getSaldo($cotizacione);
     }
+
+    public static function getCotizaciones()
+    {
+        $cotizaciones = Cotizacione::query();
+        $queries = [];
+
+        $columnas = ['nombre', 'proyecto_id', 'proveedor_id','estatus', 'saldo'];
+
+        foreach($columnas as $columna){
+            if(request()->has($columna) and request($columna)!= 'all' and request($columna)!= ''){
+                $cotizaciones = $cotizaciones->where($columna,'LIKE','%'.request($columna).'%');
+                $queries[$columna] = request($columna);
+            }
+        }
+
+        /*
+        $saldoMayorA = -1000000000000;
+        $saldoMenorA = 1000000000000;
+        if(request()->has('saldoMayorA')){
+            $saldoMayorA = request('saldoMayorA');
+            $queries['saldoMayorA'] = request('saldoMayorA');
+        }
+        if(request()->has('saldoMenorA')){
+            $saldoMenorA = request('saldoMenorA');
+            $queries['saldoMenorA'] = request('saldoMenorA');
+        }
+        */
+
+		if(request()->has('sort'))
+		{
+            $cotizaciones = $cotizaciones->orderBy('nombre',request('sort'));
+            $queries['sort'] = request('sort');
+		}
+
+		$cotizaciones = $cotizaciones->paginate(15,['*'], 'cotizaciones_p')->appends($queries);
+
+        if (!$cotizaciones->isEmpty()) {
+            foreach ($cotizaciones as $cotizacione) {
+                $cotizacione->saldo = Cotizacione::getSaldo($cotizacione);
+            }
+        }
+
+        /*if(request()->has('saldoMayorA') or request()->has('saldoMenorA')){
+            $cotizaciones = $cotizaciones->where('saldo', '>=', $saldoMayorA);
+            $cotizaciones = $cotizaciones->where('saldo', '<=', $saldoMenorA);
+        }*/
+
+
+        return $cotizaciones ;
+    }
 }

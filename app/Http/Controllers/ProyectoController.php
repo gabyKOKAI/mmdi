@@ -20,27 +20,33 @@ class ProyectoController extends Controller
     */
     public function lista($idCli= '-1')
     {
+        $proyectos = Proyecto::getProyectos();
 		if($idCli == -1){
-		    $proyectos = Proyecto::paginate(15);
 		    $cliente = new Cliente;
             $cliente->id = -2;
 		}else{
-		    $proyectos = Proyecto::where('cliente_id','=',$idCli)->paginate(15);
+		    $proyectos = $proyectos->where('cliente_id','=',$idCli);
 		    $cliente = Cliente::find($idCli);
 		}
-
-        if (!$proyectos->isEmpty()) {
-            foreach ($proyectos as $proyecto) {
-                $proyecto->costo = Proyecto::getCosto($proyecto);
-                $proyecto->saldo = Proyecto::getSaldo($proyecto);
-            }
-        }
 
          $cotizacione = new Cotizacione;
          $cotizacione->id = -2;
 
+         # Get clientes
+        $clientesForDropdown = Cliente::all();
+        # Get estatus
+        $estatusForDropdown = Proyecto::getEstatusDropDown();
 
-		return view('proyecto.proyectoLista')->with(['proyectos' => $proyectos, 'cliente'=>$cliente, 'cotizacione'=>$cotizacione]);
+        $clienteSelected = request('cliente_id');
+        $estatusSelected = request('estatus');
+
+        //dump(request());
+        //return view('layouts.prueba');
+		return view('proyecto.proyectoLista')->with(['proyectos' => $proyectos, 'cliente'=>$cliente, 'cotizacione'=>$cotizacione,
+		    'clientesForDropdown' => $clientesForDropdown,'clienteSelected'=>$clienteSelected,
+            'estatusForDropdown' => $estatusForDropdown,'estatusSelected'=>$estatusSelected,
+            ]);
+
     }
 
      /**
@@ -142,7 +148,7 @@ class ProyectoController extends Controller
             $estatusSelected = $proyecto->estatus;
 
             $proyecto->calculoVariables($proyecto);
-            $conceptos = Proyecto::getConceptos($proyecto->id);
+            $conceptos = Proyecto::getConceptos($proyecto->id,-1);
             $cliente = Cliente::find($proyecto->cliente_id);
         }
         else{
@@ -161,8 +167,8 @@ class ProyectoController extends Controller
         $cotizacione = new Cotizacione;
         $cotizacione->id = -1;
 
-        $pagos = PagoCliente::where('proy_coti_id','=',$proyecto->id)->paginate(5);
-        $cotizaciones = Cotizacione::where('proyecto_id','=',$proyecto->id)->paginate(5);
+        $pagos = PagoCliente::where('proy_coti_id','=',$proyecto->id)->paginate(5,['*'], 'pagos_p');
+        $cotizaciones = Cotizacione::where('proyecto_id','=',$proyecto->id)->paginate(5,['*'], 'cotizaciones_p');
 
         if (!$cotizaciones->isEmpty()) {
             foreach ($cotizaciones as $cotizacione) {
@@ -246,8 +252,9 @@ class ProyectoController extends Controller
 
         $proyecto->calculoVariables($proyecto);
         $cliente = Cliente::find($proyecto->cliente_id);
-        $conceptos = Proyecto::getConceptos($proyecto->id);
-        $cotizaciones = Cotizacione::where('proyecto_id','=',$proyecto->id)->paginate(5);
+        $conceptos = Proyecto::getConceptos($proyecto->id,0);
+        $conceptosAdicionales = Proyecto::getConceptos($proyecto->id,1);
+        $cotizaciones = Cotizacione::where('proyecto_id','=',$proyecto->id)->paginate(5,['*'], 'cotizaciones_p');
 
         /*if (!$cotizaciones->isEmpty()) {
             foreach ($cotizaciones as $cotizacione) {
@@ -257,8 +264,13 @@ class ProyectoController extends Controller
 
         $esCliente = 1;
 
-        $pdf = PDF::loadView('proyecto.proyectoPDF', compact('proyecto','conceptos','cliente','esCliente','sinIVA'));
-        return $pdf->download('cotizacion.pdf');
+        $pdf = PDF::loadView('proyecto.proyectoPDF', compact('proyecto','conceptos','cliente','esCliente','sinIVA','conceptosAdicionales'));
+        if($sinIVA == 1){
+            return $pdf->download('COT.SI.'.strftime("%y%m%d").".".$cliente->id.'_'.substr($cliente->nombre,0,15).'_'.substr($proyecto->nombre,0,15).'.pdf');
+        }
+        else{
+            return $pdf->download('COT.CI.'.strftime("%y%m%d").".".$cliente->id.'_'.substr($cliente->nombre,0,15).'_'.substr($proyecto->nombre,0,15).'.pdf');
+        }
 
 	}
 
@@ -268,8 +280,8 @@ class ProyectoController extends Controller
 
         $proyecto->calculoVariables($proyecto);
         $cliente = Cliente::find($proyecto->cliente_id);
-        $pagos = PagoCliente::where('proy_coti_id','=',$proyecto->id)->paginate(5);
-        /*$cotizaciones = Cotizacione::where('proyecto_id','=',$proyecto->id)->paginate(5);
+        $pagos = PagoCliente::where('proy_coti_id','=',$proyecto->id)->paginate(5,['*'], 'pagoss_p');
+        /*$cotizaciones = Cotizacione::where('proyecto_id','=',$proyecto->id)->paginate(5,['*'], 'cotizaciones_p');
 
         if (!$cotizaciones->isEmpty()) {
             foreach ($cotizaciones as $cotizacione) {
@@ -280,7 +292,7 @@ class ProyectoController extends Controller
         $esCliente = 1;
 
         $pdf = PDF::loadView('proyecto.proyectoPDFSaldo', compact('proyecto','pagos','cliente','esCliente'));
-        return $pdf->download('saldo.pdf');
+        return $pdf->download('SALDO.'.strftime("%y%m%d").".".$cliente->id.'_'.substr($cliente->nombre,0,15).'_'.substr($proyecto->nombre,0,15).'.pdf');
 
 	}
 

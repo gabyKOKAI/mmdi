@@ -14,7 +14,7 @@ class ClienteController extends Controller
 {
     public function lista()
     {
-        $clientes = Cliente::paginate(15);
+        $clientes = Cliente::getClientes();
 
 		return view('cliente.clienteLista')->with(['clientes' => $clientes]);
     }
@@ -38,7 +38,7 @@ class ClienteController extends Controller
 
         $contactos = Contacto::where('cliente_id','=',$cliente->id)->paginate(5);
 
-        $proyectos = Proyecto::where('cliente_id','=',$cliente->id)->paginate(5);
+        $proyectos = Proyecto::where('cliente_id','=',$cliente->id)->paginate(5,['*'], 'proyectos_p');
 
         if (!$proyectos->isEmpty()) {
             foreach ($proyectos as $proyecto1) {
@@ -47,7 +47,7 @@ class ClienteController extends Controller
             }
         }
 
-        $pagos = PagoCliente::where('cli_prov_id','=',$cliente->id)->paginate(5);
+        $pagos = PagoCliente::where('cli_prov_id','=',$cliente->id)->paginate(5,['*'], 'pagos_p');
 
         return view('cliente.cliente')->
         with([  'cliente' => $cliente, 'proyecto' => $proyecto,

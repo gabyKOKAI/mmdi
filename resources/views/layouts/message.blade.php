@@ -10,6 +10,19 @@
 </div>
 <div class="container-center">
     <div class="row">
+        @if ($message = Session::get('success'))
+        <div class="col-sm-12 align-self-center alert">
+            <span class="close" data-dismiss="alert">&times;</span>
+            <div class="alert-success">
+                <strong>{{ $message }}</strong>
+            </div>
+        </div>
+        @endif
+    </div>
+</div>
+
+<div class="container-center">
+    <div class="row">
         @if ($message = Session::get('error'))
         <div class="col-sm-12 align-self-center alert">
             <span class="close" data-dismiss="alert">&times;</span>

@@ -75,7 +75,7 @@ class ConceptoElementoController extends Controller
 
 
 		# Redirect the user to the page to view the book
-		return redirect('/concepto/'.$concepto->id)->with('success', 'El elemento '.$elemento->nombre.' fue '.$res.' para el concepto '.$concepto->nombre);
+		return redirect('/concepto/'.$concepto->id.'/'.$concepto->proyecto_id)->with('success', 'El elemento '.$elemento->nombre.' fue '.$res.' para el concepto '.$concepto->nombre);
 		#return view('layouts.prueba');
 	}
 

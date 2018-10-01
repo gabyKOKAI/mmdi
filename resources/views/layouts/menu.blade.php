@@ -12,19 +12,7 @@
                 <div class="collapse navbar-collapse center">
                     <ul class="nav navbar-nav center">
                         <li class="dropdown" id="menu">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Configuraciones
-                            <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                              <li><a href="/elementos">Base de Datos (PU)</a></li>
-                              <li><a href="/elemento/-1">Nuevo Elemento</a></li>
-                              <li><a href="/proyecto/-1">Nuevo Proyecto</a></li>
-                              <li><a href="/cliente/-1">Nuevo Cliente</a></li>
-                              <!--li><a href="/pagoCliente/-1">Nuevo Pago Cliente</a></li-->
-                              <li><a href="/cotizacion/-1">Nueva CXP</a></li>
-                              <li><a href="/proveedor/-1">Nuevo Proveedor</a></li>
-                              <!--li><a href="/pagoProveedor/-1">Nuevo Pago Proveedore</a></li-->
-                              <li><a href="/movimiento/-1">Nuevo Movimiento</a></li>
-                            </ul>
+                            <a href="/elementos">Base Datos</a>
                         </li>
                         <li class="dropdown" id="menu">
                             <a href="/proyectos">Proyectos</a>
@@ -47,14 +35,35 @@
 
                             </ul>
                         </li>
+
                         <li class="dropdown" id="menu">
-                            <a href="/recursos">Recursos</a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Cuentas y Recursos
+                            <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown" id="menu">
+                                    <a href="/cuentas">Cuentas</a>
+                                </li>
+                                <li class="dropdown" id="menu">
+                                    <a href="/recursos">Recursos</a>
+                                </li>
+                                <li class="dropdown" id="menu">
+                                    <a href="/movimientos">Movimientos</a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="dropdown" id="menu">
-                            <a href="/cuentas">Cuentas</a>
-                        </li>
-                        <li class="dropdown" id="menu">
-                            <a href="/movimientos">Movimientos</a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Configuraciones
+                            <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                              <li><a href="/elemento/-1">Nuevo Elemento BD</a></li>
+                              <li><a href="/proyecto/-1">Nuevo Proyecto</a></li>
+                              <li><a href="/cotizacion/-1">Nueva CXP</a></li>
+                              <li><a href="/cliente/-1">Nuevo Cliente</a></li>
+                              <li><a href="/proveedor/-1">Nuevo Proveedor</a></li>
+                              <!--li><a href="/pagoCliente/-1">Nuevo Pago Cliente</a></li-->
+                              <!--li><a href="/pagoProveedor/-1">Nuevo Pago Proveedore</a></li-->
+                              <li><a href="/movimiento/-1">Nuevo Movimiento</a></li>
+                            </ul>
                         </li>
                         <!--li class="dropdown" id="menu">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Movimientos

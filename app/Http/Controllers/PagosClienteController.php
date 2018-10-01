@@ -16,24 +16,41 @@ class PagosClienteController extends Controller
 {
     public function lista()
     {
-         $pagosClientes = PagoCliente::paginate(15);
+        $pagosClientes = PagoCliente::getPagos();
 
-         $cliente = new Cliente;
-         $cliente->id = -1;
+        $cliente = new Cliente;
+        $cliente->id = -1;
 
-         $proveedore = new Proveedore;
-         $proveedore->id = -1;
+        $proveedore = new Proveedore;
+        $proveedore->id = -1;
 
-         $proyecto = new Proyecto;
-         $proyecto->id = -2;
+        $proyecto = new Proyecto;
+        $proyecto->id = -2;
 
-         $cotizacione = new Cotizacione;
-         $cotizacione->id = -2;
+        $cotizacione = new Cotizacione;
+        $cotizacione->id = -2;
+
+        $cliProvForDropdown = Cliente::all();
+        $proyCotiForDropdown = Proyecto::all();
+        $cuentasForDropdown = Cuenta::where('saldo', '<>', -1)->get();
+        $tiposForDropdown = PagoCliente::getTiposDropDown();
+        $estatusForDropdown = PagoCliente::getEstatusDropDown();
+
+        $cliProvSelected = request('cli_prov_id');
+        $proyCotiSelected = request('proy_coti_id');
+        $cuentaSelected = request('cuenta');
+        $tipoSelected = request('tipo');
+        $estatusSelected = request('estatus');
 
 		return view('pago.pagosClienteLista')
 		            ->with(['pagos' => $pagosClientes,
 		                    'proveedore'=>$proveedore, 'cotizacione' => $cotizacione,
 		                    'cliente'=>$cliente, 'proyecto' => $proyecto,
+                            'cliProvForDropdown' => $cliProvForDropdown,'cliProvSelected'=>$cliProvSelected,
+                            'proyCotiForDropdown' => $proyCotiForDropdown,'proyCotiSelected'=>$proyCotiSelected,
+                            'cuentasForDropdown' => $cuentasForDropdown,'cuentaSelected'=>$cuentaSelected,
+                            'tiposForDropdown' => $tiposForDropdown,'tipoSelected'=>$tipoSelected,
+                            'estatusForDropdown' => $estatusForDropdown,'estatusSelected'=>$estatusSelected,
 		                    'esCliente'=>1]);
     }
 
@@ -131,7 +148,7 @@ class PagosClienteController extends Controller
         $mensaje = "";
         if($saldo<0 and $request->input('estatus')<>'Cancelado'){
 		    $tipoMensaje = "error";
-		    $mensaje = 'El pago no puede hacerse porque el cliente está pagando de más al proyecto. El Saldo Actual es de:'.$proyecto->getSaldo($proyecto);
+		    $mensaje = 'El pago no puede hacerse porque el cliente está pagando de más al proyecto. El Saldo Actual es de: $ '.number_format($proyecto->getSaldo($proyecto),2);
 		    $pago->id = -1;
 		}
 		else{
@@ -157,13 +174,14 @@ class PagosClienteController extends Controller
 
             if($mensaje== ""){
                 $pago->save();
+                $cliente = Cliente::find($pago->cli_prov_id);
                 if($res == "Creado" and $pago->estatus <>  "Cancelado"){
                     $cuenta->saldo = $cuenta->saldo + $pago->monto;
                     $cuenta->save();
                     Movimiento::registraMovimiento(
                         $pago->fecha_pago,
                         $pago->monto,
-                        $pago->tipo.' de cliente '. $pago->cli_prov_id.' para el proyecto '.$pago->proy_coti_id,
+                        $pago->tipo.' de cliente '.substr($cliente->nombre,0,15).' para el proyecto '.substr($proyecto->nombre,0,15),
                         "Entrada",
                         $recurso1->id,
                         $pago->cuenta_id);
@@ -176,7 +194,7 @@ class PagosClienteController extends Controller
                         Movimiento::registraMovimiento(
                             $pago->fecha_pago,
                             $pago->monto,
-                            'Se cancelo'.$pago->tipo.' de cliente '. $pago->cli_prov_id.' para el proyecto '.$pago->proy_coti_id,
+                            'Se cancelo '.$pago->tipo.' de cliente '.substr($cliente->nombre,0,15).' para el proyecto '.substr($proyecto->nombre,0,15),
                             "Cancelado",
                             $recurso1->id,
                             $pago->cuenta_id);
@@ -187,7 +205,7 @@ class PagosClienteController extends Controller
                         Movimiento::registraMovimiento(
                             $pago->fecha_pago,
                             $pago->monto,
-                            'Se activa '.$pago->tipo.' de cliente '. $pago->cli_prov_id.' para el proyecto '.$pago->proy_coti_id,
+                            'Se activa '.$pago->tipo.' del cliente '.substr($cliente->nombre,0,15).' para el proyecto '.substr($proyecto->nombre,0,15),
                             "NoCancelado",
                             $recurso1->id,
                             $pago->cuenta_id);
@@ -196,7 +214,7 @@ class PagosClienteController extends Controller
             }
 
             $tipoMensaje = "success";
-		    $mensaje = $mensaje.'El pago cliente por '.$pago->monto.' fue '.$res.$saldo;
+		    $mensaje = $mensaje.'El pago del cliente: '.$cliente->nombre.' por $ '.$pago->monto.' fue '.$res.' y el saldo actual es de: $ '.number_format($saldo,2);
 
         }
         #dump($mensaje);

@@ -5,6 +5,7 @@
 @endpush
 
 @section('content')
+    @include('pago.pagoFiltros')
     <div class="divPagosCliente">
         @include('pago.tablaPagos')
     </div>

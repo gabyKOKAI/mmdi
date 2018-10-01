@@ -15,10 +15,19 @@ class ElementoController extends Controller
     public function lista()
     {
 		$elementos = Elemento::getElementos();
+
         $concepto = new Concepto;
         $concepto->id = -2;
 
-		return view('elemento.elementoLista')->with(['elementos' => $elementos, 'concepto' => $concepto]);
+        # Get proveedores
+        $proveedoresForDropdown = Proveedore::all();
+        $proveedorSelected = request('proveedor_id');
+
+        # Get tipos
+        $tiposForDropdown = Elemento::getTiposDropDown();
+        $tipoSelected = request('tipo');
+
+		return view('elemento.elementoLista')->with(['elementos' => $elementos, 'concepto' => $concepto,'tiposForDropdown' => $tiposForDropdown,'tipoSelected'=>$tipoSelected,'proveedoresForDropdown' => $proveedoresForDropdown,'proveedorSelected'=>$proveedorSelected]);
     }
 
     public function proveedoresElemento($id= '-1') {

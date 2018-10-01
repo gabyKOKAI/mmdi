@@ -111,9 +111,14 @@ class Proyecto extends Model
     }
 
 
-    public static function getConceptos($proyecto_id)
+    public static function getConceptos($proyecto_id, $adicionales)
     {
-        $conceptos = Concepto::where('proyecto_id', 'LIKE', $proyecto_id)->get();
+        if($adicionales == -1){
+            $conceptos = Concepto::where('proyecto_id', 'LIKE', $proyecto_id)->get();
+        }
+        else{
+            $conceptos = Concepto::where('proyecto_id', 'LIKE', $proyecto_id)->where('adicional', '=', $adicionales)->get();
+        }
        //->paginate(5);
 
         $num = 1;
@@ -165,5 +170,74 @@ class Proyecto extends Model
         $proyecto->amm = $proyecto->ddg * $proyecto->ganancia_AMM / 100;
         $proyecto->mme = $proyecto->ddg * $proyecto->ganancia_MME / 100;
         $proyecto->ame = $proyecto->ddg * $proyecto->ganancia_AME / 100;
+    }
+
+    public static function getProyectos()
+    {
+        $proyectos = Proyecto::query();
+        $queries = [];
+
+        $columnas = ['nombre', 'cliente_id','estatus', 'saldo'];
+        $columnasCk = ['distribuido', 'adicionalesDistribuido'];
+
+        foreach($columnas as $columna){
+
+            if(request()->has($columna) and request($columna)!= 'all' and request($columna)!= ''){
+                $proyectos = $proyectos->where($columna,'LIKE','%'.request($columna).'%');
+                $queries[$columna] = request($columna);
+            }
+        }
+
+        foreach($columnasCk as $columna){
+
+            if(request()->has($columna) and request()->has('no'.$columna)){
+                $queries[$columna] = request($columna);
+                $queries['no'.$columna] = request('no'.$columna);
+            }
+            elseif(request()->has($columna)){
+                $proyectos = $proyectos->where($columna,'LIKE','%'.request($columna).'%');
+                $queries[$columna] = request($columna);
+            }
+            elseif(request()->has('no'.$columna)){
+                $proyectos = $proyectos->where($columna,0);
+                $queries['no'.$columna] = request('no'.$columna);
+            }
+        }
+
+        /*
+        $saldoMayorA = -1000000000000;
+        $saldoMenorA = 1000000000000;
+        if(request()->has('saldoMayorA')){
+            $saldoMayorA = request('saldoMayorA');
+            $queries['saldoMayorA'] = request('saldoMayorA');
+        }
+        if(request()->has('saldoMenorA')){
+            $saldoMenorA = request('saldoMenorA');
+            $queries['saldoMenorA'] = request('saldoMenorA');
+        }
+        */
+
+		if(request()->has('sort'))
+		{
+            $proyectos = $proyectos->orderBy('nombre',request('sort'));
+            $queries['sort'] = request('sort');
+		}
+
+		$proyectos = $proyectos->paginate(15,['*'], 'proyectos_p')->appends($queries);
+
+        if (!$proyectos->isEmpty()) {
+            foreach ($proyectos as $proyecto) {
+                $proyecto->costo = Proyecto::getCosto($proyecto);
+                $proyecto->saldo = Proyecto::getSaldo($proyecto);
+            }
+        }
+
+        /*if(request()->has('saldoMayorA') or request()->has('saldoMenorA')){
+            $proyectos = $proyectos->where('saldo', '>=', $saldoMayorA);
+            $proyectos = $proyectos->where('saldo', '<=', $saldoMenorA);
+        }*/
+
+
+        return $proyectos ;
     }
 }

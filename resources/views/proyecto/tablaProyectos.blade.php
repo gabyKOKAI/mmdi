@@ -85,7 +85,12 @@
                             <!-- { {$proyectos->count()} } -->
                             <!-- { {$proyectos->perPage()} } -->
                             <!-- { {$proyectos->currentPage()} } -->
-                            {{$proyectos->render()}}
+                            <!-- { {$proyectos->render()} } -->
+                            @if($cliente->id > 0)
+                                {{$proyectos->appends(['proyectos_p' => $proyectos->currentPage(), 'pagos_p' => $pagos->currentPage()])->links()}}
+                            @else
+                                {{$proyectos->appends(['proyectos_p' => $proyectos->currentPage()])->links()}}
+                            @endif
                         </div>
                     </div>
                 </div>

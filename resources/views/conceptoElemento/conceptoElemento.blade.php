@@ -69,7 +69,7 @@
                                                     </select>
                                                     <div class="form-group required control-label" align="left">
                                                         <label for='elemento'>SubConcepto</label>
-                                                        <a href="{{ URL::to('elemento/-1/'.$concepto->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
+                                                        <a href="{{ URL::to('elemento/-1/'.$concepto->id)}}" class="glyphicon glyphicon-plus-sign"></a>
                                                         <select id="elemento1" class="form-control" name="elemento1" required multiple>
                                                             <option value="">Favor de Seleccionar un Proveedor primero.</option>
                                                        </select>
@@ -80,10 +80,9 @@
                                        </div>
                                        <div class="row">
                                             <div class="col-sm-6 form-group required control-label" align="left">
-                                                <label for='precio'>Nuevo Precio</label>
-                                                <a title="Este es el precio cliente que puede ser modificado, por proyecto.">
+                                                <label for='precio'>Nuevo Precio o Precio al Cliente</label>
+                                                <span title="Este es el precio cliente que puede ser modificado, por proyecto." class="glyphicon glyphicon-info-sign"></span>
                                                     <div class="input-group">
-
                                                         <span class="input-group-addon">$</span>
                                                         @if($edit == 1)
                                                             <input type='number' name='precio' id='precio' step='0.01' value='{{$precio}}' class='float form-control'required>
@@ -92,7 +91,7 @@
                                                             <input type='number' name='precio' id='precio' step='0.01' value='{{$precio}}' class='float form-control'disabled>
                                                         @endif
                                                     </div>
-                                                </a>
+
                                             </div>
                                         </div>
 									</div>

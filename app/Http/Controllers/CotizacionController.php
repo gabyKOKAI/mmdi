@@ -16,20 +16,31 @@ class CotizacionController extends Controller
     public function lista()
     {
 
-		$cotizaciones = Cotizacione::paginate(15);
-
-		if (!$cotizaciones->isEmpty()) {
-            foreach ($cotizaciones as $cotizacione) {
-                $cotizacione->saldo = Cotizacione::getSaldo($cotizacione);
-            }
-        }
+		$cotizaciones = Cotizacione::getCotizaciones();
 
 		$proyecto = new Proyecto;
         $proyecto->id = -2;
         $cotizacione = new Cotizacione;
         $cotizacione->id = -2;
 
-		return view('cotizacion.cotizacionLista')->with(['cotizaciones' => $cotizaciones,'proyecto' => $proyecto,'cotizacione' => $cotizacione]);
+        # Get proveedores
+        $proveedoresForDropdown = Proveedore::all();
+
+        # Get proyectos
+        $proyectosForDropdown = Proyecto::all();
+
+        # Get estatus
+        $estatusForDropdown = Cotizacione::getEstatusDropDown();
+
+        $proyectoSelected = request('proyecto_id');
+        $proveedorSelected = request('proveedor_id');
+        $estatusSelected = request('estatus');
+
+		return view('cotizacion.cotizacionLista')->with(['cotizaciones' => $cotizaciones,
+		'proyectosForDropdown' => $proyectosForDropdown,'proyectoSelected'=>$proyectoSelected,
+        'proveedoresForDropdown' => $proveedoresForDropdown,'proveedorSelected'=>$proveedorSelected,
+        'estatusForDropdown' => $estatusForDropdown,'estatusSelected'=>$estatusSelected,
+		'proyecto' => $proyecto,'cotizacione' => $cotizacione]);
     }
 
     public function cotizacion(Request $request,$id= '-1',$idProy='-1') {
@@ -48,13 +59,13 @@ class CotizacionController extends Controller
         $proyectoSelected = -1;
         $proveedorSelected = -1;
         $estatusSelected = -1;
-        $pagos = PagoProveedore::where('cli_prov_id','=',-1)->paginate(5);
+        $pagos = PagoProveedore::where('cli_prov_id','=',-1)->paginate(5,['*'], 'pagos_p');
         if($cotizacione){
             $proyectoSelected = $cotizacione->proyecto_id;
             $proveedorSelected = $cotizacione->proveedor_id;
             $estatusSelected = $cotizacione->estatus;
             $cotizacione->calculoVariables($cotizacione);
-            $pagos = PagoProveedore::where('cli_prov_id','=',$cotizacione->proveedore_id)->paginate(5);
+            $pagos = PagoProveedore::where('cli_prov_id','=',$cotizacione->proveedore_id)->paginate(5,['*'], 'pagos_p');
         }
         else{
             $cotizacione = new Cotizacione;
@@ -74,7 +85,7 @@ class CotizacionController extends Controller
         if($proveedorSelected != -1){
            $proveedore = Proveedore::find($proveedorSelected);
 
-            $pagos = PagoProveedore::where('proy_coti_id','=',$cotizacione->id)->paginate(5);
+            $pagos = PagoProveedore::where('proy_coti_id','=',$cotizacione->id)->paginate(5,['*'], 'pagos_p');
         }
 
         return view('cotizacion.cotizacion')->
@@ -155,7 +166,7 @@ class CotizacionController extends Controller
             $concepto->gananciaTotal = $concepto->ganancia * $concepto->cantidad ;
             $concepto->costoTotal = $concepto->costo * $concepto->cantidad ;
 
-            $nombre = "(".$concepto->proyecto_id.":".$concepto->id.":".$subConcepto->id.") ".$concepto->nombre."-".$subConcepto->nombre."(".$subConcepto->tipo.")";
+            $nombre = "(".$concepto->proyecto_id.":".$concepto->id.":".$subConcepto->id.") CXP del subconcepto ".$subConcepto->nombre." del concepto ".$concepto->nombre." de tipo ".$subConcepto->tipo.".";
             $nombreLike = "%(".$concepto->proyecto_id.":".$concepto->id.":".$subConcepto->id.") %";
             $descripcion = "CXP creada automaticamente desde el concepto ".$concepto->nombre.", para el subconcepto ".$subConcepto->nombre.".";
             $monto = $subConcepto->costoCliente * $concepto->cantidad;
@@ -164,7 +175,7 @@ class CotizacionController extends Controller
         }
         else{
             $proyecto = Proyecto::find($idProy);
-            $nombre = "(".$proyecto->id.":viaticos:viaticos) ".$proyecto->nombre."(viaticos)";
+            $nombre = "(".$proyecto->id.":viaticos:viaticos) CXP de viaticos del proyecto ".$proyecto->nombre;
             $nombreLike = "%(".$proyecto->id.":viaticos:viaticos) %";
             $descripcion = "CXP de viaticos creada automaticamente desde el proyecto ".$proyecto->nombre;
             $monto = $proyecto->gasto_viaticos;

@@ -19,6 +19,13 @@
                     </div>
                 </div>
             </div>
+            <div>
+                <div class="row">
+                    <div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
             @if(count($elementos)>0)
                 <div class="center">
                     <div class="row">
@@ -69,7 +76,13 @@
                                             <td>{{$elemento->tipo}}</td>
                                             <td>{{$elemento->proveedor->nombre}}</td>
                                             <td>{{$elemento->unidades}}</td>
-                                            <td>$ {{$elemento->costoCliente}}</td>
+                                            <td>
+                                                @if($concepto->id > -1)
+                                                    $ {{$elemento->costoCliente}}
+                                                @else
+                                                    $ {{$elemento->costo}}
+                                                @endif
+                                            </td>
                                             <!--td>{{$elemento->tipo_ganancia}}</td-->
                                             <td>
                                                 @if($concepto->id > -1)

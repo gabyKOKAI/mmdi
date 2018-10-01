@@ -5,6 +5,7 @@
 @endpush
 
 @section('content')
+    @include('cotizacion.cotizacionFiltros')
     @include('cotizacion.tablaCotizaciones')
 @endsection
 

@@ -45,18 +45,37 @@ class Elemento extends Model
 
     public static function getCostoGanancia($elemento)
     {
-        $res = "Precio BD = $ ".$elemento->getPrecio($elemento)." | Costo = $ ".$elemento->costo;
+        $res = "Precio General de Base de Datos (PU) = $ ".$elemento->getPrecio($elemento)."   [Costo = $ ".$elemento->costo;
         if($elemento->tipo_ganancia =="%"){
-            $res = $res." | Ganancia = ".$elemento->ganancia." ".$elemento->tipo_ganancia;
+            $res = $res." | Ganancia = ".$elemento->ganancia." ".$elemento->tipo_ganancia."]";
         }else{
-            $res = $res." | Ganancia = ".$elemento->tipo_ganancia." ".$elemento->ganancia;
+            $res = $res." | Ganancia = ".$elemento->tipo_ganancia." ".$elemento->ganancia."]";
         }
         return $res;
     }
 
     public static function getElementos()
     {
-        $elementos = Elemento::paginate(15);
+        $elementos = Elemento::query();
+        $queries = [];
+
+        $columnas = ['tipo', 'proveedor_id', 'nombre'];
+
+        foreach($columnas as $columna){
+
+            if(request()->has($columna) and request($columna)!= 'all' and request($columna)!= ''){
+                $elementos = $elementos->where($columna,'LIKE','%'.request($columna).'%');
+                $queries[$columna] = request($columna);
+            }
+        }
+
+		if(request()->has('sort'))
+		{
+            $elementos = $elementos->orderBy('proveedor_id',request('sort'));
+            $queries['sort'] = request('sort');
+		}
+
+		$elementos = $elementos->paginate(15)->appends($queries);
 
         foreach ($elementos as $elemento) {
             $elemento->precio = Elemento::getPrecio($elemento);

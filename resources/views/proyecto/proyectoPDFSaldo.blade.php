@@ -53,9 +53,10 @@
                             <th class="center">Forma de Pago</th>
                             <th class="center">Estatus </th>
                             <th class="center">Fecha</th>
-                            <th class="center">Pago </th>
+                            <th class="center">Monto (NETO)</th>
                             <th class="center">IVA </th>
-                            <th class="center">NETO </th>
+                            <th class="center">Total (Pago) </th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -70,19 +71,19 @@
                                 <td class="center"> {{$pago->descripcion}}</td>
                                 <td class="center"> {{$pago->tipo}}</td>
                                 <td class="center"> {{$pago->estatus}}</td>
-                                <td class="center">{{$pago->fecha_pago}}</td-->
-                                <td class="right">$ {{number_format($pago->monto,2)}}</td>
+                                <td class="center">{{$pago->fecha_pago}}</td>
                                 {{$totalPagosConIVA = $totalPagosConIVA + $pago->monto}}
                                 @if($pago->con_iva)
-                                    <td class="right">$ {{number_format($pago->monto*(.16/1.16),2)}}</td>
-                                    {{$totalPagosIVA = $totalPagosIVA + $pago->monto*(.16/1.16)}}
                                     <td class="right">$ {{number_format($pago->monto/1.16,2)}}</td>
                                     {{$totalPagosSinIVA = $totalPagosSinIVA + $pago->monto/1.16}}
+                                    <td class="right">$ {{number_format($pago->monto*(.16/1.16),2)}}</td>
+                                    {{$totalPagosIVA = $totalPagosIVA + $pago->monto*(.16/1.16)}}
                                 @else
-                                    <td class="right">$ {{number_format(0,2)}}</td>
                                     <td class="right">$ {{number_format($pago->monto,2)}}</td>
+                                    <td class="right">$ {{number_format(0,2)}}</td>
                                     {{$totalPagosSinIVA = $totalPagosSinIVA + $pago->monto}}
                                 @endif
+                                <td class="right">$ {{number_format($pago->monto,2)}}</td>
                             </tr>
                             {{$con = $con + 1}}
                             @endif
@@ -92,21 +93,25 @@
                         </tr>
                         <tr>
                             <td colspan=5></td>
-                            <td class="right gris">$ {{number_format($totalPagosConIVA,2)}}</td>
-                            <td class="right gris">$ {{number_format($totalPagosIVA,2)}}</td>
                             <td class="right gris">$ {{number_format($totalPagosSinIVA,2)}}</td>
+                            <td class="right gris">$ {{number_format($totalPagosIVA,2)}}</td>
+                            <td class="right gris">$ {{number_format($totalPagosConIVA,2)}}</td>
                         </tr>
                         <tr>
                             <td colspan=8></td>
                         </tr>
                         <tr>
-                            <td colspan=5></td>
-                            <td colspan=2 class="right gris">TOTAL PROYECTO</td>
+                            <td colspan=8></td>
+                        </tr>
+                        <tr>
+                            <td colspan=8></td>
+                        </tr>
+                        <tr>
+                            <td colspan=5 class="right gris">TOTAL PROYECTO S/IVA</td>
                             <td class="right gris">$ {{number_format($proyecto->totAdicionales, 2)}}</td>
                         </tr>
                         <tr>
-                            <td colspan=5></td>
-                            <td colspan=2 class="right gris">SALDO</td>
+                            <td colspan=5 class="right gris">SALDO S/IVA</td>
                             <td class="right gris">$ {{number_format($proyecto->saldo,2)}}</td>
                         </tr>
 
@@ -115,7 +120,31 @@
                 </table>
             </div>
         @else
-            <h4>Sin Pagos</h4>
+             <div class="margenTexto">
+                <table class="table">
+                    <thead>
+                        <tr class="black">
+                            <th colspan=2 class="center font110">Pagos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan=2 class="center">---</td>
+                        </tr>
+                        <tr>
+                            <td colspan=2></td>
+                        </tr>
+                        <tr>
+                            <td colspan=1 class="right gris">TOTAL PROYECTO S/IVA</td>
+                            <td class="right gris">$ {{number_format($proyecto->totAdicionales, 2)}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan=1 class="right gris">SALDO S/IVA</td>
+                            <td class="right gris">$ {{number_format($proyecto->saldo,2)}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         @endif
         <br>
         <div class="margenTexto">

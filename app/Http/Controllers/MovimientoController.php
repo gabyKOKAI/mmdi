@@ -10,29 +10,47 @@ use mmdi\Proyecto;
 
 class MovimientoController extends Controller
 {
-    public function lista($idRec= '-1',$idCue= '-1')
+    public function lista()
     {
-        if($idRec != -1){
-		    $movimientos = Movimiento::where('recurso_id', 'LIKE', $idRec)->paginate(15);
-		    $recurso = Recurso::find($idRec);
+        $movimientos = Movimiento::getMovimientos();
+
+        if(request()->has('recurso_id') and request('recurso_id') != 'all'){
+		    //$movimientos = Movimiento::where('recurso_id', 'LIKE', $idRec)->paginate(15);
+		    //$recurso = Recurso::find($idRec);
+		    $recurso = Recurso::find(request('recurso_id'));
 		    $cuenta = new Cuenta;
 		    $cuenta->id = -1;
 		}
-		elseif($idCue != -1){
-		    $movimientos = Movimiento::where('cuenta_id', 'LIKE', $idCue)->paginate(15);
-		    $cuenta = Cuenta::find($idCue);
+		elseif(request()->has('cuenta_id') and request('cuenta_id') != 'all'){
+		    //$movimientos = Movimiento::where('cuenta_id', 'LIKE', $idCue)->paginate(15);
+		    //$cuenta = Cuenta::find($idCue);
+		    $cuenta = Cuenta::find(request('cuenta_id'));
 		    $recurso = new Recurso;
 		    $recurso->id = -1;
 		}
 		else{
-		     $movimientos = Movimiento::paginate(15);
+		     //$movimientos = Movimiento::getMovimientos();
 		     $recurso = new Recurso;
 		     $recurso->id = -1;
 		     $cuenta = new Cuenta;
 		     $cuenta->id = -1;
 		}
 
-		return view('movimiento.movimientoLista')->with(['movimientos' => $movimientos, 'recurso' => $recurso,'cuenta' => $cuenta]);
+		$recursosForDropdown = Recurso::all();
+        $cuentasForDropdown = Cuenta::all();
+        $tiposForDropdown = Movimiento::getTiposDropDown();
+
+        $recursoSelected = request('recurso_id');;
+        $cuentaSelected = request('cuenta_id');;
+        $tipoSelected = request('tipo');;
+
+		return view('movimiento.movimientoLista')->with([
+		'movimientos' => $movimientos,
+		'recurso' => $recurso,
+		'cuenta' => $cuenta,
+		'tiposForDropdown' => $tiposForDropdown,'tipoSelected'=>$tipoSelected,
+        'recursosForDropdown' => $recursosForDropdown,'recursoSelected'=>$recursoSelected,
+        'cuentasForDropdown' => $cuentasForDropdown,'cuentaSelected'=>$cuentaSelected]);
     }
 
     public function movimiento(Request $request,$id= '-1',$idRec='-1',$idCue= '-1') {
@@ -59,7 +77,10 @@ class MovimientoController extends Controller
         }
 
         return view('movimiento.movimiento')->
-        with(['movimiento' => $movimiento, 'tiposForDropdown' => $tiposForDropdown,'tipoSelected'=>$tipoSelected, 'recursosForDropdown' => $recursosForDropdown,'recursoSelected'=>$recursoSelected, 'cuentasForDropdown' => $cuentasForDropdown,'cuentaSelected'=>$cuentaSelected]);
+        with(['movimiento' => $movimiento,
+        'tiposForDropdown' => $tiposForDropdown,'tipoSelected'=>$tipoSelected,
+        'recursosForDropdown' => $recursosForDropdown,'recursoSelected'=>$recursoSelected,
+        'cuentasForDropdown' => $cuentasForDropdown,'cuentaSelected'=>$cuentaSelected]);
 	}
 
 	public function guardar(Request $request,$id,$idRec='-1',$idCue= '-1') {

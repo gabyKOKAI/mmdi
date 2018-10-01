@@ -110,11 +110,23 @@
                 </table>
             </div>
         @else
-            <h4>Sin Conceptos
-            </h4>
+            <div class="margenTexto">
+                <table class="table">
+                    <thead>
+                        <tr class="black">
+                            <th colspan=6 class="center font110">Conceptos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan=8 class="center">---</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         @endif
         <br>
-        @if(count($conceptos)>0)
+        @if(count($conceptosAdicionales)>0)
             <div class="margenTexto">
                 <table class="table">
                     <thead>
@@ -134,7 +146,7 @@
                     </thead>
                     <tbody>
                         {{$con = 1}}
-                         @foreach($conceptos as $concepto)
+                         @foreach($conceptosAdicionales as $concepto)
 
                           @if($concepto->adicional)
                             <tr>
@@ -182,7 +194,20 @@
                 </table>
             </div>
         @else
-            <h4>Sin Conceptos</h4>
+            <div class="margenTexto">
+                <table class="table">
+                    <thead>
+                        <tr class="black">
+                            <th colspan=6 class="center font110">Conceptos Adicionales</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan=8 class="center">---</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         @endif
         <br>
         <div class="margenTexto">

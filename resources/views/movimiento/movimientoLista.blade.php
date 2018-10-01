@@ -5,6 +5,9 @@
 @endpush
 
 @section('content')
+    @if(!app('request')->input('sinfiltros')==1)
+        @include('movimiento.movimientoFiltros')
+    @endif
     @if(count($movimientos)>0)
         <div class="container center">
             <div class="row">

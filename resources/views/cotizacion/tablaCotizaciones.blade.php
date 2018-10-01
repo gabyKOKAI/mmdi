@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row divCXP">
     <div class="col-sm-12 align-right">
             <div>
                 <div class="row">
@@ -29,7 +29,7 @@
                                         <!--th class="center">Descripcion</th-->
                                         <th class="center">Proyecto</th>
                                         <th class="center">Proveedor</th>
-                                        <th class="center">Monto</th>
+                                        <th class="center">Total</th>
                                         <th class="center">Saldo</th>
                                         <th class="center">Con IVA</th>
                                         <th class="center">Estatus</th>

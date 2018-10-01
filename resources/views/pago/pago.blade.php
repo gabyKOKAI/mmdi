@@ -154,12 +154,17 @@
                                      <div class="col-sm-2 form-group control-label" align="left">
                                         <div><br></div>
                                         <div>
-                                        @if($pago->id == -1)
-                                            <input type="checkbox" class="form-check-input" id="conIva" name="conIva" value="1" {{ $pago->con_iva ? 'checked="checked"' : ''}}>Con IVA</input>
-                                        @else
-                                            <input type="hidden" name="conIva" value="<?php echo e($pago->con_iva); ?>">
-                                            <input type="checkbox" class="form-check-input" id="conIva" name="conIva" value="1" {{ $pago->con_iva ? 'checked="checked"' : ''}} disabled>Con IVA</input>
-                                        @endif
+                                            @if($pago->id == -1)
+                                                <a id="more" href="#" onclick="
+                                                    $('.details').slideToggle(1);
+                                                    $('.details1').slideToggle(1);
+                                                ">
+                                                    <input type="checkbox" class="form-check-input" id="conIva" name="conIva" value="1" {{ $pago->con_iva ? 'checked="checked"' : ''}}>Con IVA</input>
+                                                </a>
+                                            @else
+                                                <input type="hidden" name="conIva" value="<?php echo e($pago->con_iva); ?>">
+                                                <input type="checkbox" class="form-check-input" id="conIva" name="conIva" value="1" {{ $pago->con_iva ? 'checked="checked"' : ''}} disabled>Con IVA</input>
+                                            @endif
                                         </div>
                                      </div>
                                      <div class="col-sm-3 form-group required control-label" align="left">
@@ -201,11 +206,17 @@
                                     </div-->
                                      <div class="col-sm-2 form-group required control-label" align="left">
                                         <label for='estatus'>Estatus</label>
+                                        <span class="details" style="display:visible">
                                             <select name="estatus"  class="form-control" required>
                                             @foreach($estatusForDropdown as $estatus)
                                                 <option value="{{ $estatus }}" {{ $estatus == $estatusSelected ? 'selected="selected"' : '' }}> {{ $estatus }} </option>
                                             @endforeach
                                         </select>
+                                        </span>
+                                        <span class="details1" style="display:none">
+                                            <input type="hidden" name="estatus" value="Sin Factura">
+                                            <input type='text' name='estatus' id='estatus' value='Sin Factura' class="form-control" disabled>
+                                        </span>
                                     </div>
                                     <div class="col-sm-2 form-group control-label" align="left">
                                         <label for='factura'>Factura</label>

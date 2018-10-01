@@ -4,7 +4,7 @@
     <!--link href="/css/proyecto.css" type='text/css' rel='stylesheet'-->
 @endpush
 
-@section('breadcrumbs', Breadcrumbs::render('proyecto', $proyecto))
+@section('breadcrumbs', Breadcrumbs::render('proyecto', $proyecto,'1'))
 
 @section('content')
     <div class="container">
@@ -302,7 +302,7 @@
                                                     <div class="col-sm-1 " align="right">
                                                     </div>
                                                     <div class="col-sm-5 " align="left">
-                                                        <label>TOTAL S/IVA:</label>
+                                                        <label>TOTAL<span class="fontRed">  S/IVA</span>:</label>
                                                     </div>
                                                     <div class="col-sm-5 " align="right">
                                                         $ {{number_format($proyecto->costo,2)}}
@@ -342,7 +342,7 @@
                                                     <div class="col-sm-1 " align="right">
                                                     </div>
                                                     <div class="col-sm-5 " align="left">
-                                                        <label>TOTAL S/IVA:</label>
+                                                        <label>TOTAL<span class="fontRed">  S/IVA</span>:</label>
                                                     </div>
                                                     <div class="col-sm-5 " align="right">
                                                         $ {{number_format($proyecto->adicional + $proyecto->honorariosAdicional, 2)}}
@@ -350,7 +350,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-sm-12" align="center">
-                                                        <label>TOTAL PROYECTO S/ IVA</label>
+                                                        <label>TOTAL PROYECTO<span class="fontRed">  S/IVA</span></label>
                                                     </div>
                                                     <div class="col-sm-12 " align="center">
                                                          $ {{number_format($proyecto->totAdicionales, 2)}}
@@ -565,7 +565,7 @@
                                             <div class="col-sm-8 divPagosCliente" align="center">
                                                 <div class="row">
                                                     <div class="col-sm-12" align="center">
-                                                        <h4 class="glyphicon glyphicon-bookmark">Pagos Cliente</h4>
+                                                        <h4 class="glyphicon glyphicon-bookmark">Pagos Cliente<span class="fontRed">  S/IVA</span></h4>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -757,7 +757,13 @@
     <div class="container center divPagosCliente">
         @include('pago.tablaPagos')
     </div>
+    <div>
+        <br>
+    </div>
     <div class="container center">
         @include('cotizacion.tablaCotizaciones')
+    </div>
+    <div>
+        <br>
     </div>
 @endsection

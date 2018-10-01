@@ -14,7 +14,7 @@ class ProveedoreController extends Controller
 {
     public function lista()
     {
-         $proveedores = Proveedore::paginate(15);
+        $proveedores = Proveedore::getProveedores();
 
 		return view('proveedore.proveedoreLista')->with(['proveedores' => $proveedores]);
     }
@@ -38,7 +38,7 @@ class ProveedoreController extends Controller
 
         $contactos = Contacto::where('proveedor_id','=',$proveedore->id)->paginate(5);
 
-        $cotizaciones = Cotizacione::where('proveedor_id','=',$proveedore->id)->paginate(5);
+        $cotizaciones = Cotizacione::where('proveedor_id','=',$proveedore->id)->paginate(5,['*'], 'cotizaciones_p');
 
         if (!$cotizaciones->isEmpty()) {
             foreach ($cotizaciones as $cotizacion1) {
@@ -47,7 +47,7 @@ class ProveedoreController extends Controller
             }
         }
 
-        $pagos = PagoProveedore::where('cli_prov_id','=',$proveedore->id)->paginate(5);
+        $pagos = PagoProveedore::where('cli_prov_id','=',$proveedore->id)->paginate(5,['*'], 'pagos_p');
 
         return view('proveedore.proveedore')->
         with([  'cliente' => $cliente, 'proyecto' => $proyecto,
@@ -88,6 +88,7 @@ class ProveedoreController extends Controller
 
         $proveedore->save();
 
+        #return view('layouts.prueba');
 		# Redirect the user to the page to view the book
 		return redirect('/proveedor/'.$proveedore->id)->with('success', 'El proveedor '.$proveedore->nombre.' fue '.$res);
 	}

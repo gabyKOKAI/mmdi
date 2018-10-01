@@ -33,9 +33,9 @@
                                                     <label for='nombre'>Nombre</label>
                                                     @if($cotizacione->id != -1)
                                                         <input type="hidden" name="nombre" value="{{$cotizacione->nombre}}">
-                                                        <input type='text' name='nombre' id='nombre' value='{{$cotizacione->nombre}}'  class="form-control" disabled>
+                                                        <textarea name='nombre' id='nombre' maxlength="250" rows="4"  class="form-control" disabled>{{$cotizacione->nombre}}</textarea>
                                                     @else
-                                                        <input type='text' name='nombre' id='nombre' value='{{$cotizacione->nombre}}'  class="form-control" required>
+                                                        <textarea name='nombre' id='nombre' maxlength="250" rows="4"  class="form-control" required>{{$cotizacione->nombre}}</textarea>
                                                     @endif
                                             </div>
                                        </div>
@@ -44,13 +44,16 @@
                                                 <label for='proveedor_id'>Proveedor</label>
                                                 @if($cotizacione->id == -1)
                                                     <a href="{{ URL::to('proveedor/-1/-2')}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
+                                                    <select name="proveedor_id"  class="form-control" required>
                                                 @else
-                                                    <a href="{{ URL::to('proveedor/-1/'.$cotizacione->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a>
+                                                    @if($proveedorSelected!=-1)
+                                                        <a href="{{ URL::to('proveedor/'.$proveedorSelected.'/'.$cotizacione->id)}}" class="glyphicon glyphicon-edit"></a>
+                                                    @endif
+                                                    <!--a href="{{ URL::to('proveedor/-1/'.$cotizacione->id)}}" class="glyphicon glyphicon glyphicon-plus-sign"></a-->
+                                                    <select name="proveedor_id"  class="form-control" disabled>
                                                 @endif
-                                                @if($proveedorSelected!=-1)
-                                                    <a href="{{ URL::to('proveedor/'.$proveedorSelected.'/'.$cotizacione->id)}}" class="glyphicon glyphicon-edit"></a>
-                                                @endif
-                                                <select name="proveedor_id"  class="form-control" required>
+
+
                                                     @foreach($proveedoresForDropdown as $proveedor)
                                                         <option value="{{ $proveedor->id }}" {{ $proveedor->id == $proveedorSelected ? 'selected="selected"' : '' }}> {{ $proveedor->nombre }} </option>
                                                     @endforeach

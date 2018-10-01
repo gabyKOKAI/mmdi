@@ -5,9 +5,9 @@
 @endpush
 
 @if($cliente)
-    @section('breadcrumbs', Breadcrumbs::render('cliente', $cliente, $idProy))
+    @section('breadcrumbs', Breadcrumbs::render('cliente', $cliente, $idProy,'1'))
 @else
-    @section('breadcrumbs', Breadcrumbs::render('cliente', '-1', '-1'))
+    @section('breadcrumbs', Breadcrumbs::render('cliente', '-1', '-1','1'))
 @endif
 
 @section('content')

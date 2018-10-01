@@ -96,9 +96,9 @@ Route::group(['middleware' => 'auth'], function () {
         ])->name('proyectos');
 
     Route::get('/proyecto/busca', 'ProyectoController@busca');
-    Route::get('/proyecto/{id?}/{idCli?}', 'ProyectoController@proyecto')->name('proyecto');;
     Route::get('/proyecto/guardar/{id?}/{idCli?}', 'ProyectoController@guardar');
     Route::post('/proyecto/guardar/{id?}/{idCli?}', 'ProyectoController@guardar');
+    Route::get('/proyecto/{id?}/{idCli?}', 'ProyectoController@proyecto')->name('proyecto');;
     Route::get('/proyectoPDF/bajaPDF/{id}/{iva}','ProyectoController@bajaPDF');
     Route::get('/proyectoPDF/bajaPDFSaldo/{id}','ProyectoController@bajaPDFSaldo');
 
@@ -130,15 +130,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/distribuir/{id}', 'MovimientoController@distribuir');
     Route::get('/distribuirAdicionales/{id}', 'MovimientoController@distribuirAdicionales');
 
-    Route::get('/movimientos/{idRec?}/{idCue?}', 'MovimientoController@lista')->name('movimientos');
+    Route::get('/movimientos', 'MovimientoController@lista')->name('movimientos');
     Route::get('/movimiento/guardar/{id?}/{idRec?}/{idCue?}', 'MovimientoController@guardar');
     Route::post('/movimiento/guardar/{id?}/{idRec?/{idCue?}}', 'MovimientoController@guardar');
     Route::get('/movimiento/{id?}/{idRec?}/{idCue?}', 'MovimientoController@movimiento')->name('movimiento');
 
+    Route::get('/proveedores', 'ProveedoreController@lista')->name('proveedores');
+    Route::get('/proveedor/guardar/{id?}', 'ProveedoreController@guardar');
+    Route::post('/proveedor/guardar/{id?}', 'ProveedoreController@guardar');
+    Route::get('/proveedor/{id?}/{idCoti?}', 'ProveedoreController@proveedore');
+
     Route::get('/clientes', 'ClienteController@lista')->name('clientes');
-    Route::get('/cliente/{id?}/{idProy?}', 'ClienteController@cliente');
     Route::get('/cliente/guardar/{id?}', 'ClienteController@guardar');
     Route::post('/cliente/guardar/{id?}', 'ClienteController@guardar');
+    Route::get('/cliente/{id?}/{idProy?}', 'ClienteController@cliente')->name('cliente');
 
     Route::get('/clientepago/guardar/{id?}/{idCli?}/{idProy?}', 'PagosClienteController@guardar');
     Route::post('/clientepago/guardar/{id?}/{idCli?}/{idProy?}', 'PagosClienteController@guardar');
@@ -146,18 +151,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/proveedorpago/guardar/{id?}/{idPro?}/{idCot?}', 'PagosProveedoreController@guardar');
 
     Route::get('/pagosClientes', 'PagosClienteController@lista');
-    Route::get('/pagoCliente/{id?}/{idCli?}/{idProy?}', 'PagosClienteController@pagoCliente');
-
-    Route::get('/proveedores', 'ProveedoreController@lista')->name('proveedores');
-    Route::get('/proveedor/{id?}/{idCoti?}', 'ProveedoreController@proveedore');
-    Route::get('/proveedor/guardar/{id?}', 'ProveedoreController@guardar');
-    Route::post('/proveedor/guardar/{id?}', 'ProveedoreController@guardar');
+    Route::get('/pagoCliente/{id?}/{idCli?}/{idProy?}', 'PagosClienteController@pagoCliente')->name('pagoCliente');
 
     Route::get('/pagosProveedores', 'PagosProveedoreController@lista');
-    Route::get('/pagoProveedor/{id?}/{idPro?}/{idCot?}', 'PagosProveedoreController@pagoProveedore');
+    Route::get('/pagoProveedor/{id?}/{idPro?}/{idCot?}', 'PagosProveedoreController@pagoProveedore')->name('pagoProveedor');
 
     Route::get('/information/create/ajax-proveedoresElemento/{id?}','ElementoController@proveedoresElemento');
     Route::get('/information/create/ajax-elementoCostoGanancia/{id?}','ElementoController@elementoCostoGanancia');
-
-
 });

@@ -13,7 +13,7 @@
                                     de {{$cliente->nombre}}
                                 @endif-->
                              @else
-                                Proveedore(s)
+                                Proveedor(es)
                                 <!--@if($proveedore->id != -1)
                                     de {{$proveedore->nombre}}
                                 @endif-->
@@ -73,13 +73,12 @@
                                             <!--td>{{$pago->id}}</td-->
                                             <td>{{$pago->cliProv->nombre}}</td>
                                             <td>
-                                            @if($pago->proyCoti)
-                                                {{$pago->proyCoti->nombre}}
-                                            @else
-                                                ---
-                                            @endif
+                                                @if($pago->proyCoti)
+                                                    {{$pago->proyCoti->nombre}}
+                                                @else
+                                                    ---
+                                                @endif
                                             </td>
-
                                             <td>{{$pago->tipo}}</td>
                                             <td>{{$pago->cuenta->nombre}}</td>
                                             <td>{{$pago->fecha_pago}}</td>
@@ -120,8 +119,16 @@
                             <!-- { {$proyectos->count()} } -->
                             <!-- { {$proyectos->perPage()} } -->
                             <!-- { {$proyectos->currentPage()} } -->
-                            {{$pagos->render()}}
-
+                            <!-- { {$pagos->render()} } -->
+                            @if( ! empty($proyectos))
+                                {{$pagos->appends(['pagos_p' => $pagos->currentPage(), 'proyectos_p' => $proyectos->currentPage()])->links()}}
+                            @else
+                                @if (empty($cotizaciones))
+                                    {{$pagos->appends(['pagos_p' => $pagos->currentPage()])->links()}}
+                                @else
+                                    {{$pagos->appends(['pagos_p' => $pagos->currentPage(), 'cotizaciones_p' => $cotizaciones->currentPage()])->links()}}
+                                @endif
+                            @endif
                         </div>
                     </div>
                 </div>

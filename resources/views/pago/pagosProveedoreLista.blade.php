@@ -5,5 +5,6 @@
 @endpush
 
 @section('content')
+    @include('pago.pagoFiltros')
     @include('pago.tablaPagos')
 @endsection

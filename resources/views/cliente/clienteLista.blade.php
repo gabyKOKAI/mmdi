@@ -5,6 +5,7 @@
 @endpush
 
 @section('content')
+    @include('cliente.clienteFiltros')
     @if(count($clientes)>0)
         <div class="container center">
             <div class="row">

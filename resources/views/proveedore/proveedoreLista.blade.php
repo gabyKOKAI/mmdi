@@ -5,6 +5,7 @@
 @endpush
 
 @section('content')
+    @include('proveedore.proveedoreFiltros')
     @if(count($proveedores)>0)
         <div class="container center">
             <div class="row">

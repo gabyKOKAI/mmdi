@@ -16,24 +16,41 @@ class PagosProveedoreController extends Controller
 {
     public function lista()
     {
-         $pagosProveedores = PagoProveedore::paginate(15);
+        $pagosProveedores = PagoProveedore::getPagos();
 
-         $cliente = new Cliente;
-         $cliente->id = -1;
+        $cliente = new Cliente;
+        $cliente->id = -1;
 
-         $proveedore = new Proveedore;
-         $proveedore->id = -1;
+        $proveedore = new Proveedore;
+        $proveedore->id = -1;
 
-         $proyecto = new Proyecto;
-         $proyecto->id = -2;
+        $proyecto = new Proyecto;
+        $proyecto->id = -2;
 
-         $cotizacione = new Cotizacione;
-         $cotizacione->id = -2;
+        $cotizacione = new Cotizacione;
+        $cotizacione->id = -2;
+
+        $cliProvForDropdown = Proveedore::all();
+        $proyCotiForDropdown = Cotizacione::all();
+        $cuentasForDropdown = Cuenta::where('saldo', '<>', -1)->get();
+        $tiposForDropdown = PagoProveedore::getTiposDropDown();
+        $estatusForDropdown = PagoProveedore::getEstatusDropDown();
+
+        $cliProvSelected = request('cli_prov_id');
+        $proyCotiSelected = request('proy_coti_id');
+        $cuentaSelected = request('cuenta');
+        $tipoSelected = request('tipo');
+        $estatusSelected = request('estatus');
 
 		return view('pago.pagosProveedoreLista')
 					->with(['pagos' => $pagosProveedores,
 		        			'proveedore'=>$proveedore, 'cotizacione' => $cotizacione,
 							'cliente'=>$cliente, 'proyecto' => $proyecto,
+							'cliProvForDropdown' => $cliProvForDropdown,'cliProvSelected'=>$cliProvSelected,
+                            'proyCotiForDropdown' => $proyCotiForDropdown,'proyCotiSelected'=>$proyCotiSelected,
+                            'cuentasForDropdown' => $cuentasForDropdown,'cuentaSelected'=>$cuentaSelected,
+                            'tiposForDropdown' => $tiposForDropdown,'tipoSelected'=>$tipoSelected,
+                            'estatusForDropdown' => $estatusForDropdown,'estatusSelected'=>$estatusSelected,
 		        			'esCliente'=>0]);
     }
 
@@ -131,11 +148,11 @@ class PagosProveedoreController extends Controller
         $mensaje = "";
         if($saldo<0 and $request->input('estatus')<>'Cancelado'){
 		    $tipoMensaje = "error";
-		    $mensaje = 'El pago no puede hacerse porque se está pagando de más al proveedor por la CXP. El Saldo Actual es de:'.$cotizacione->getSaldo($cotizacione);
+		    $mensaje = 'El pago no puede hacerse porque se está pagando de más al proveedor por la CXP. El Saldo Actual es de: $ '.number_format($cotizacione->getSaldo($cotizacione));
 		    $pago->id = -1;
 		}elseif($cuenta->saldo < $request->input('monto') and $request->input('estatus')<>'Cancelado'){
 		    $tipoMensaje = "error";
-		    $mensaje = 'El pago no puede hacerse porque no se tiene suficiente dinero en la cuenta. El Saldo Actual es de:'.$cuenta->saldo;
+		    $mensaje = 'El pago no puede hacerse porque no se tiene suficiente dinero en la cuenta. El Saldo Actual es de: $ '.number_format($cuenta->saldo,2);
 		    $pago->id = -1;
 		}
 		else{
@@ -161,13 +178,14 @@ class PagosProveedoreController extends Controller
 
             if($mensaje== ""){
                 $pago->save();
+                $proveedor = Proveedore::find($pago->cli_prov_id);
                 if($res == "Creado" and $pago->estatus <>  "Cancelado"){
                 	$cuenta->saldo = $cuenta->saldo - $pago->monto;                
                     $cuenta->save();
                     Movimiento::registraMovimiento(
                         $pago->fecha_pago,
                         $pago->monto,
-		                $pago->tipo.' de proveedor '. $pago->cli_prov_id.' para la CXP '.$pago->proy_coti_id,
+		                $pago->tipo.' de proveedor '.substr($proveedor->nombre,0,15).' para la CXP '.substr($cotizacione->nombre,0,15),
 		                "Salida",
                         $recurso1->id,
                         $pago->cuenta_id);
@@ -180,7 +198,7 @@ class PagosProveedoreController extends Controller
                         Movimiento::registraMovimiento(
                             $pago->fecha_pago,
                             $pago->monto,
-                            'Se cancelo'.$pago->tipo.' de proveedor '. $pago->cli_prov_id.' para la CXP '.$pago->proy_coti_id,
+                            'Se cancelo'.$pago->tipo.' de proveedor '.substr($proveedor->nombre,0,15).' para la CXP '.substr($cotizacione->nombre,0,15),
                             "Cancelado",
                             $recurso1->id,
                             $pago->cuenta_id);
@@ -191,7 +209,7 @@ class PagosProveedoreController extends Controller
                         Movimiento::registraMovimiento(
                             $pago->fecha_pago,
                             $pago->monto,
-                            'Se activa '.$pago->tipo.' de proveedor '. $pago->cli_prov_id.' para la CXP '.$pago->proy_coti_id,
+                            'Se activa '.$pago->tipo.' de proveedor '.substr($proveedor->nombre,0,15).' para la CXP '.substr($cotizacione->nombre,0,15),
                             "NoCancelado",
                             $recurso1->id,
                             $pago->cuenta_id);

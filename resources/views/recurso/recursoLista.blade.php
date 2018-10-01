@@ -42,7 +42,7 @@
                                                     <td>{{$recurso->saldo_gasto}}</td>
                                                     <td>{{$recurso->ingreso - $recurso->saldo_gasto}}</td>
                                                     <td>
-                                                        <a href="{{ URL::to('movimientos/'.$recurso->id)}}/-1" class="glyphicon glyphicon-list-alt"></a>
+                                                        <a href="{{ URL::to('movimientos?sinfiltros=1&recurso_id='.$recurso->id)}}" class="glyphicon glyphicon-list-alt"></a>
                                                     </td>
                                                 </tr>
                                             @endforeach

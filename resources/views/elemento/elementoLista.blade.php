@@ -5,5 +5,6 @@
 @endpush
 
 @section('content')
+    @include('elemento.elementoFiltros')
     @include('elemento.tablaElementos')
 @endsection

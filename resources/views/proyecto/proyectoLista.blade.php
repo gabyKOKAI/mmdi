@@ -5,6 +5,7 @@
 @endpush
 
 @section('content')
+    @include('proyecto.proyectoFiltros')
     @include('proyecto.tablaProyectos')
 @endsection
 

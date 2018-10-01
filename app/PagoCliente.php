@@ -45,4 +45,51 @@ class PagoCliente extends Model
         $tipos = ['Transferencia', 'Efectivo', 'Cheque'];
         return $tipos;
     }
+
+    public static function getPagos()
+    {
+        $pagos = PagoCliente::query();
+        $queries = [];
+
+        $columnas = ['cli_prov_id', 'proy_coti_id', 'tipo','cuenta_id','monto','estatus'];
+
+        foreach($columnas as $columna){
+            if(request()->has($columna) and request($columna)!= 'all' and request($columna)!= ''){
+                $pagos = $pagos->where($columna,'LIKE','%'.request($columna).'%');
+                $queries[$columna] = request($columna);
+            }
+        }
+
+        if(request()->has('montoMayorA') and request('montoMayorA')!= ''){
+            $montoMayorA = request('montoMayorA');
+            $pagos = $pagos->where('monto', '>=', $montoMayorA);
+            $queries['montoMayorA'] = request('montoMayorA');
+        }
+        if(request()->has('montoMenorA') and request('montoMenorA')!= ''){
+            $montoMenorA = request('montoMenorA');
+            $pagos = $pagos->where('monto', '<=', $montoMenorA);
+            $queries['montoMenorA'] = request('montoMenorA');
+        }
+
+        if(request()->has('fechaMayorA') and request('fechaMayorA')!= ''){
+            $fechaMayorA = request('fechaMayorA');
+            $pagos = $pagos->where('fecha_pago', '>=', $fechaMayorA);
+            $queries['fechaMayorA'] = request('fechaMayorA');
+        }
+        if(request()->has('fechaMenorA') and request('fechaMenorA')!= ''){
+            $fechaMenorA = request('fechaMenorA');
+            $pagos = $pagos->where('fecha_pago', '<=', $fechaMenorA);
+            $queries['fechaMenorA'] = request('fechaMenorA');
+        }
+
+		if(request()->has('sort'))
+		{
+            $pagos = $clientes->orderBy('cliente_id',request('sort'));
+            $queries['sort'] = request('sort');
+		}
+
+		$pagos = $pagos->paginate(15,['*'], 'pagos_p')->appends($queries);
+
+        return $pagos ;
+    }
 }
