@@ -26,7 +26,7 @@
 
     <div class="center">
         <div>
-               <img src='http://moramoradiseno.com/wp-content/uploads/2017/06/cropped-mm-diseno.001-2.png' style='width:300px' alt='MMDI Logo' class="center">
+               <img src='https://moramoradiseno.com/wp-content/uploads/2018/12/cropped-LOGO-MM-1-5.png' style='width:300px' alt='MMDI Logo' class="center">
         </div>
         <div class="margenTexto">
                 <p class="right">
@@ -68,7 +68,7 @@
                             @if($pago->estatus != "Cancelado")
                             <tr>
                                 <td class="center"> {{$con}}</td>
-                                <td class="center"> {{$pago->descripcion}}</td>
+                                <td class="left"> {{$pago->descripcion}}</td>
                                 <td class="center"> {{$pago->tipo}}</td>
                                 <td class="center"> {{$pago->estatus}}</td>
                                 <td class="center">{{$pago->fecha_pago}}</td>

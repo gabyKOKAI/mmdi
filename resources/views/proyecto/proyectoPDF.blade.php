@@ -26,7 +26,7 @@
 
     <div class="center">
         <div>
-               <img src='http://moramoradiseno.com/wp-content/uploads/2017/06/cropped-mm-diseno.001-2.png' style='width:300px' alt='MMDI Logo' class="center">
+               <img src='https://moramoradiseno.com/wp-content/uploads/2018/12/cropped-LOGO-MM-1-5.png' style='width:300px' alt='MMDI Logo' class="center">
         </div>
         <div class="margenTexto">
                 <p class="right">
@@ -66,7 +66,7 @@
                             <tr>
                                 <!--td class="center"> <a href="{{ URL::to('concepto/' . $concepto->id) }}">{{$concepto->id}}</a></td-->
                                 <td class="center"> {{$con}}</td>
-                                <td class="center"> {{$concepto->nombre}}</td>
+                                <td class="left"> {{$concepto->nombre}}</td>
                                 <td class="center">{{$concepto->cantidad}}</td>
                                 <td class="center">{{$concepto->unidades}}</td>
                                 <td class="center">$ {{number_format($concepto->precio,2)}}</td>

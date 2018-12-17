@@ -108,7 +108,7 @@
                                        <br>
                                        <div class="row">
                                             <div class="col-sm-4 align-self-center">
-                                                @if($proyecto)
+                                                @if($proyecto->id != -1)
                                                     <a class='btn btn-primary btn-small' href="{{action('ProyectoController@bajaPDF', [$proyecto->id,'0'])}}">Cotización con IVA</a>
                                                     <a class='btn btn-primary btn-small' href="{{action('ProyectoController@bajaPDF', [$proyecto->id,'1'])}}">Cotización sin IVA</a>
 
@@ -608,7 +608,7 @@
                                                 <br>
                                             </div>
                                             <div class="col-sm-3 align-self-center">
-                                                @if($proyecto)
+                                                @if($proyecto->id != -1)
                                                     <a class='btn btn-primary btn-small' href="{{action('ProyectoController@bajaPDFSaldo', [$proyecto->id])}}">PDF Saldo</a>
                                                 @endif
                                             </div>
