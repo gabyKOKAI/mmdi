@@ -17,69 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-# New route returs string Hola Mundo
-Route::get('/prueba', function () {
-    return 'Hola Mundo!';
-});
-
-# Nueva rutina con parametro
-Route::get('/parametro/{valor}', function($valor) {
-	return 'Paramentro es: '.$valor;
-});
-
-#Parametro Opcional
-Route::get('/parametroOpcional/{valor?}', function($valor = '') {
-
-    if($valor == '') {
-        return 'No enviaste parametro';
-    }
-    else {
-	    return 'Parametro es: '.$valor;
-    }
-
-});
-
-Route::get('/pruebaBD', function () {
-
-    $debug = [
-        'Environment' => App::environment(),
-        'Database defaultStringLength' => Illuminate\Database\Schema\Builder::$defaultStringLength,
-    ];
-
-    /*
-    The following commented out line will print your MySQL credentials.
-    Uncomment this line only if you're facing difficulties connecting to the
-    database and you need to confirm your credentials. When you're done
-    debugging, comment it back out so you don't accidentally leave it
-    running on your production server, making your credentials public.
-    */
-    #$debug['MySQL connection config'] = config('database.connections.mysql');
-
-    try {
-        $databases = DB::select('SHOW DATABASES;');
-        $debug['Database connection test'] = 'PASSED';
-        $debug['Databases'] = array_column($databases, 'Database');
-    } catch (Exception $e) {
-        $debug['Database connection test'] = 'FAILED: '.$e->getMessage();
-    }
-
-    dump($debug);
-});
-
-
 Auth::routes();
-
-Route::get('/quienEstaConectado', function () {
-    $user = Auth::user();
-
-    if ($user) {
-        dump('Estas conectado como:', $user->toArray());
-    } else {
-        dump('No hay nadie conectado conectado');
-    }
-
-    return;
-});
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/usuarios', 'UsuarioController@lista');
@@ -95,10 +33,10 @@ Route::group(['middleware' => 'auth'], function () {
         'uses' =>'ProyectoController@lista'
         ])->name('proyectos');
 
-    Route::get('/proyecto/busca', 'ProyectoController@busca');
+    ##Route::get('/proyecto/busca', 'ProyectoController@busca');
     Route::get('/proyecto/guardar/{id?}/{idCli?}', 'ProyectoController@guardar');
-    Route::post('/proyecto/guardar/{id?}/{idCli?}', 'ProyectoController@guardar');
-    Route::get('/proyecto/{id?}/{idCli?}', 'ProyectoController@proyecto')->name('proyecto');;
+    ##Route::post('/proyecto/guardar/{id?}/{idCli?}', 'ProyectoController@guardar');
+    Route::get('/proyecto/{id?}/{idCli?}', 'ProyectoController@proyecto')->name('proyecto');
     Route::get('/proyectoPDF/bajaPDF/{id}/{iva}','ProyectoController@bajaPDF');
     Route::get('/proyectoPDF/bajaPDFSaldo/{id}','ProyectoController@bajaPDFSaldo');
 

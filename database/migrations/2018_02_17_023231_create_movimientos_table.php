@@ -38,6 +38,6 @@ class CreateMovimientosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('historico_movimientos');
+        Schema::dropIfExists('movimientos');
     }
 }

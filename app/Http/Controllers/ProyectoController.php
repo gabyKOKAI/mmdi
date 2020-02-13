@@ -243,7 +243,7 @@ class ProyectoController extends Controller
         $proyecto->save();
 
 		# Redirect the user to the page to view the book
-		return redirect('/proyecto/'.$proyecto->id)->with('success', 'El proyecto '.$proyecto->nombre.' fue '.$res);
+		return redirect('/proyecto/'.$proyecto->id)->with('success', 'El proyecto '.$proyecto->nombre.' fue '.$res)->withInput();
 	}
 
 	public function bajaPDF(Request $request,$id,$sinIVA) {

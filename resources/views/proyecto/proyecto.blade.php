@@ -39,7 +39,7 @@
                                        <div class="row">
                                             <div class="col-sm-4 form-group required control-label" align="left">
                                                     <label for='nombre'>Nombre</label>
-                                                    <input type='text' name='nombre' id='nombre' value='{{$proyecto->nombre}}'  class="form-control" required>
+                                                    <input type='text' name='nombre' id='nombre' value='{{$proyecto->nombre}}{{ old('nombre') }}'  class="form-control" required>
                                             </div>
 
                                        </div>

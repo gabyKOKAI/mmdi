@@ -53,7 +53,5 @@ class CreatePagosClientesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('pagos_clientes');
-
-        $table->dropColumn('user_id');
     }
 }

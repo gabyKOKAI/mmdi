@@ -67,8 +67,7 @@
     <div class="container">
         <div class="container">
            <div class="col-sm-12 align-self-center">
-
-            @yield('breadcrumbs')
+                @yield('breadcrumbs')
             </div>
         </div>
     </div>

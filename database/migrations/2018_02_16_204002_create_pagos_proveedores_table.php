@@ -52,7 +52,5 @@ class CreatePagosProveedoresTable extends Migration
     public function down()
     {
         Schema::dropIfExists('pagos_proveedores');
-
-        $table->dropColumn('user_id');
     }
 }
